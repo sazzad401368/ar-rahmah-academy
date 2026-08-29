@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>পরীক্ষার ফলাফল - আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7f6;
+      color: #222;
+    }
+
+    header {
+      background: #075e54;
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      margin-top: 8px;
+    }
+
+    nav {
+      background: white;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    nav a {
+      color: #075e54;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .title h2 {
+      color: #075e54;
+      font-size: 30px;
+    }
+
+    .result-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 13px;
+      border: none;
+      border-radius: 7px;
+      background: #075e54;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #064c44;
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 15px;
+      background: #eef6f4;
+      border-radius: 8px;
+      text-align: center;
+      color: #075e54;
+    }
+
+    footer {
+      margin-top: 50px;
+      background: #075e54;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</h1>
+    <p>Ar-Rahmah International Noorani Academy</p>
+  </header>
+
+  <nav>
+    <a href="index.html">হোম</a>
+    <a href="about.html">আমাদের সম্পর্কে</a>
+    <a href="teachers.html">শিক্ষকবৃন্দ</a>
+    <a href="notice.html">নোটিশ</a>
+    <a href="result.html">পরীক্ষার ফলাফল</a>
+    <a href="#">যোগাযোগ</a>
+  </nav>
+
+  <div class="container">
+
+    <div class="title">
+      <h2>📊 পরীক্ষার ফলাফল</h2>
+      <p>শিক্ষার্থীর ফলাফল দেখতে নিচের তথ্য প্রদান করুন।</p>
+    </div>
+
+    <div class="result-box">
+
+      <label for="studentId">Student ID / Roll</label>
+      <input
+        type="text"
+        id="studentId"
+        placeholder="শিক্ষার্থীর রোল বা ID লিখুন"
+      >
+
+      <label for="studentClass">শ্রেণি</label>
+
+      <select id="studentClass">
+        <option value="">শ্রেণি নির্বাচন করুন</option>
+        <option>নার্সারী</option>
+        <option>প্রথম</option>
+        <option>দ্বিতীয়</option>
+        <option>তৃতীয়</option>
+        <option>পঞ্চম</option>
+      </select>
+
+      <button onclick="searchResult()">
+        ফলাফল দেখুন
+      </button>
+
+      <div id="message" class="message">
+        ফলাফল দেখতে Student ID / Roll এবং শ্রেণি নির্বাচন করুন।
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
+    <br>
+    সকল অধিকার সংরক্ষিত
+  </footer>
+
+  <script>
+    function searchResult() {
+
+      const studentId = document.getElementById("studentId").value.trim();
+      const studentClass = document.getElementById("studentClass").value;
+      const message = document.getElementById("message");
+
+      if (!studentId || !studentClass) {
+        message.innerHTML =
+          "⚠️ অনুগ্রহ করে Student ID / Roll এবং শ্রেণি নির্বাচন করুন।";
+        return;
+      }
+
+      message.innerHTML =
+        "🔎 ফলাফল খোঁজা হচ্ছে...<br><br>" +
+        "Supabase Database সংযুক্ত হলে এখানে শিক্ষার্থীর আসল ফলাফল দেখানো হবে।";
+    }
+  </script>
+
+</body>
+</html>
