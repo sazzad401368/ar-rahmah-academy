@@ -6,6 +6,9 @@
 
   <title>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</title>
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -32,10 +35,6 @@
       margin-bottom: 5px;
     }
 
-    header p {
-      font-size: 15px;
-    }
-
     nav {
       background: #065c36;
       display: flex;
@@ -47,7 +46,6 @@
       color: white;
       text-decoration: none;
       padding: 12px 18px;
-      display: block;
     }
 
     nav a:hover {
@@ -80,6 +78,9 @@
       color: white;
       text-decoration: none;
       border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
     }
 
     .section {
@@ -121,6 +122,50 @@
       margin-top: 30px;
     }
 
+    /* Login Box */
+    .login-box {
+      display: none;
+      max-width: 400px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    .login-box h2 {
+      text-align: center;
+      color: #087443;
+      margin-bottom: 20px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      background: #087443;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .message {
+      margin-top: 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+
     @media (max-width: 600px) {
       header h1 {
         font-size: 22px;
@@ -128,10 +173,6 @@
 
       .hero h2 {
         font-size: 25px;
-      }
-
-      nav a {
-        padding: 9px 12px;
       }
     }
   </style>
@@ -151,6 +192,7 @@
     <a href="#">নোটিশ</a>
     <a href="#">পরীক্ষার ফলাফল</a>
     <a href="#">যোগাযোগ</a>
+    <a href="#admin-login">🔐 Admin Login</a>
   </nav>
 
   <section class="hero">
@@ -172,33 +214,48 @@
 
       <div class="card">
         <h3>📖 নূরানী কায়দা</h3>
-        <p>
-          শুদ্ধভাবে কুরআন শিক্ষা ও পড়ার প্রাথমিক প্রশিক্ষণ।
-        </p>
+        <p>শুদ্ধভাবে কুরআন শিক্ষা ও পড়ার প্রাথমিক প্রশিক্ষণ।</p>
       </div>
 
       <div class="card">
         <h3>🕌 কুরআন ও তাজবীদ</h3>
-        <p>
-          শুদ্ধ তাজবীদের সঙ্গে কুরআন তেলাওয়াত শিক্ষা।
-        </p>
+        <p>শুদ্ধ তাজবীদের সঙ্গে কুরআন তেলাওয়াত শিক্ষা।</p>
       </div>
 
       <div class="card">
         <h3>📚 সাধারণ শিক্ষা</h3>
-        <p>
-          বাংলা, ইংরেজি, গণিত ও অন্যান্য প্রয়োজনীয় বিষয়।
-        </p>
+        <p>বাংলা, ইংরেজি, গণিত ও অন্যান্য প্রয়োজনীয় বিষয়।</p>
       </div>
 
       <div class="card">
         <h3>🌙 আদব ও আখলাক</h3>
-        <p>
-          নৈতিকতা, শিষ্টাচার ও সুন্দর চরিত্র গঠনের শিক্ষা।
-        </p>
+        <p>নৈতিকতা, শিষ্টাচার ও সুন্দর চরিত্র গঠনের শিক্ষা।</p>
       </div>
 
     </div>
+  </section>
+
+  <!-- Admin Login -->
+  <section id="admin-login" class="login-box">
+
+    <h2>🔐 Admin Login</h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Admin Email"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+    >
+
+    <button onclick="adminLogin()">Login</button>
+
+    <div id="message" class="message"></div>
+
   </section>
 
   <section class="section">
@@ -228,6 +285,107 @@
     <p>© 2026 আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
     <p>সকল অধিকার সংরক্ষিত</p>
   </footer>
+
+
+  <script>
+
+    // Supabase connection
+    const SUPABASE_URL =
+      "https://pkznaencgprqzvdzapfi.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    // Show login box when Admin Login is clicked
+    document.querySelector('a[href="#admin-login"]')
+      .addEventListener("click", function() {
+
+        document.getElementById("admin-login").style.display = "block";
+
+      });
+
+
+    // Admin Login
+    async function adminLogin() {
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const message =
+        document.getElementById("message");
+
+
+      if (!email || !password) {
+
+        message.textContent =
+          "Email এবং Password দিন।";
+
+        return;
+      }
+
+
+      message.textContent =
+        "Login হচ্ছে...";
+
+
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+
+      if (error) {
+
+        message.textContent =
+          "Login ব্যর্থ: " + error.message;
+
+        return;
+      }
+
+
+      // Check whether logged-in user is an admin
+      const { data: adminData, error: adminError } =
+        await supabaseClient
+          .from("admins")
+          .select("id")
+          .eq("id", data.user.id)
+          .maybeSingle();
+
+
+      if (adminError || !adminData) {
+
+        await supabaseClient.auth.signOut();
+
+        message.textContent =
+          "এই Account-এর Admin অনুমতি নেই।";
+
+        return;
+      }
+
+
+      message.textContent =
+        "Admin Login সফল হয়েছে!";
+
+      setTimeout(function() {
+
+        window.location.href = "admin.html";
+
+      }, 1000);
+
+    }
+
+  </script>
 
 </body>
 </html>
