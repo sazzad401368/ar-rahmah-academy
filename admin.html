@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Dashboard - Ar-Rahmah Academy</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f5;
+      color: #222;
+    }
+
+    header {
+      background: #087443;
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .welcome {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .welcome h2 {
+      color: #087443;
+      margin-bottom: 8px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .card .icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #087443;
+      margin-bottom: 8px;
+    }
+
+    .card button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: #087443;
+      color: white;
+      cursor: pointer;
+    }
+
+    .logout {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 30px;
+      background: #b42318;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🔐 Admin Dashboard</h1>
+    <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
+  </header>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h2>স্বাগতম, Admin!</h2>
+      <p>আপনি সফলভাবে Admin Panel-এ প্রবেশ করেছেন।</p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="icon">📢</div>
+        <h3>নোটিশ</h3>
+        <p>নোটিশ পরিচালনা করুন।</p>
+        <button>Manage</button>
+      </div>
+
+      <div class="card">
+        <div class="icon">👨‍🎓</div>
+        <h3>শিক্ষার্থী</h3>
+        <p>শিক্ষার্থীদের তথ্য পরিচালনা করুন।</p>
+        <button>Manage</button>
+      </div>
+
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>ফলাফল</h3>
+        <p>পরীক্ষার ফলাফল পরিচালনা করুন।</p>
+        <button>Manage</button>
+      </div>
+
+      <div class="card">
+        <div class="icon">📝</div>
+        <h3>পরীক্ষার খাতা</h3>
+        <p>পরীক্ষার খাতা পরিচালনা করুন।</p>
+        <button>Manage</button>
+      </div>
+
+      <div class="card">
+        <div class="icon">📱</div>
+        <h3>QR Code</h3>
+        <p>QR Code System পরিচালনা করুন।</p>
+        <button>Manage</button>
+      </div>
+
+      <div class="card">
+        <div class="icon">👨‍🏫</div>
+        <h3>শিক্ষক</h3>
+        <p>শিক্ষকদের তথ্য পরিচালনা করুন।</p>
+        <button>Manage</button>
+      </div>
+
+    </div>
+
+    <div id="status"></div>
+
+    <button class="logout" onclick="logout()">
+      🚪 Logout
+    </button>
+
+  </div>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://pkznaencgprqzvdzapfi.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    // Check login
+    async function checkAdmin() {
+
+      const { data: { user } } =
+        await supabaseClient.auth.getUser();
+
+      if (!user) {
+
+        window.location.href = "index.html#admin-login";
+
+        return;
+      }
+
+
+      // Check admin permission
+      const { data: adminData, error } =
+        await supabaseClient
+          .from("admins")
+          .select("id")
+          .eq("id", user.id)
+          .maybeSingle();
+
+
+      if (error || !adminData) {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href = "index.html#admin-login";
+
+        return;
+      }
+
+      document.getElementById("status").textContent =
+        "✅ Admin authentication verified";
+
+    }
+
+
+    // Logout
+    async function logout() {
+
+      await supabaseClient.auth.signOut();
+
+      window.location.href =
+        "index.html";
+
+    }
+
+
+    checkAdmin();
+
+  </script>
+
+</body>
+</html>
