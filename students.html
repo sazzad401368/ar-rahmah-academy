@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -87,10 +88,22 @@
       font-size: 15px;
     }
 
-    .save-btn {
+    input:focus {
+      outline: none;
+      border-color: #087443;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 18px;
+    }
+
+    .save-btn,
+    .update-btn,
+    .cancel-btn {
       padding: 12px 25px;
-      background: #087443;
       color: white;
       border: none;
       border-radius: 6px;
@@ -98,13 +111,41 @@
       font-size: 16px;
     }
 
+    .save-btn {
+      background: #087443;
+    }
+
     .save-btn:hover {
       background: #065c36;
+    }
+
+    .update-btn {
+      background: #2563eb;
+    }
+
+    .update-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .cancel-btn {
+      background: #777;
+    }
+
+    .cancel-btn:hover {
+      background: #555;
     }
 
     #message {
       margin-top: 12px;
       font-weight: bold;
+    }
+
+    .search-box {
+      margin-bottom: 18px;
+    }
+
+    .search-box input {
+      max-width: 500px;
     }
 
     .table-wrapper {
@@ -114,7 +155,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 600px;
+      min-width: 700px;
     }
 
     th,
@@ -129,13 +170,30 @@
       color: white;
     }
 
+    tr:nth-child(even) {
+      background: #f8faf9;
+    }
+
+    .edit-btn,
     .delete-btn {
-      background: #b42318;
       color: white;
       border: none;
       padding: 7px 12px;
       border-radius: 5px;
       cursor: pointer;
+      margin: 2px;
+    }
+
+    .edit-btn {
+      background: #2563eb;
+    }
+
+    .edit-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .delete-btn {
+      background: #b42318;
     }
 
     .delete-btn:hover {
@@ -148,7 +206,12 @@
       color: #666;
     }
 
+    .editing {
+      border: 2px solid #2563eb;
+    }
+
     @media (max-width: 600px) {
+
       header h1 {
         font-size: 20px;
       }
@@ -156,119 +219,206 @@
       .container {
         padding: 20px 12px;
       }
+
+      .box {
+        padding: 18px;
+      }
+
+      .save-btn,
+      .update-btn,
+      .cancel-btn {
+        width: 100%;
+      }
     }
   </style>
+
 </head>
 
 <body>
 
 <header>
+
   <h1>👨‍🎓 Students Management</h1>
-  <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
+
+  <p>
+    আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
+  </p>
+
 </header>
 
 <div class="container">
 
-  <div class="top-bar">
-    <h2>শিক্ষার্থী পরিচালনা</h2>
+  <!-- Top Bar -->
 
-    <a href="admin.html" class="back-btn">
-      ← Admin Panel
-    </a>
+  <div class="top-bar">
+
+```
+<h2>শিক্ষার্থী পরিচালনা</h2>
+
+<a
+  href="admin.html"
+  class="back-btn"
+>
+  ← Admin Panel
+</a>
+```
+
   </div>
 
-
-  <!-- Add Student -->
+  <!-- Add / Edit Student -->
 
   <div class="box">
 
-    <h2>➕ নতুন শিক্ষার্থী যোগ করুন</h2>
-
-    <div class="form-grid">
-
-      <input
-        type="text"
-        id="student_id"
-        placeholder="Student ID যেমন: 1002"
-      >
-
-      <input
-        type="text"
-        id="name"
-        placeholder="শিক্ষার্থীর নাম"
-      >
-
-      <input
-        type="text"
-        id="class_name"
-        placeholder="শ্রেণি"
-      >
-
-      <input
-        type="text"
-        id="roll"
-        placeholder="রোল নম্বর"
-      >
-
-    </div>
+```
+<h2 id="formTitle">
+  ➕ নতুন শিক্ষার্থী যোগ করুন
+</h2>
 
 
-    <button
-      class="save-btn"
-      onclick="addStudent()"
-    >
-      💾 শিক্ষার্থী সংরক্ষণ করুন
-    </button>
+<div class="form-grid">
+
+  <input
+    type="text"
+    id="student_id"
+    placeholder="Student ID যেমন: 1002"
+  >
+
+  <input
+    type="text"
+    id="name"
+    placeholder="শিক্ষার্থীর নাম"
+  >
+
+  <input
+    type="text"
+    id="class_name"
+    placeholder="শ্রেণি"
+  >
+
+  <input
+    type="text"
+    id="roll"
+    placeholder="রোল নম্বর"
+  >
+
+</div>
 
 
-    <div id="message"></div>
+<div class="button-group">
+
+  <button
+    id="saveButton"
+    class="save-btn"
+    onclick="addStudent()"
+  >
+    💾 শিক্ষার্থী সংরক্ষণ করুন
+  </button>
+
+
+  <button
+    id="updateButton"
+    class="update-btn"
+    onclick="updateStudent()"
+    style="display:none;"
+  >
+    ✏️ পরিবর্তন সংরক্ষণ করুন
+  </button>
+
+
+  <button
+    id="cancelButton"
+    class="cancel-btn"
+    onclick="cancelEdit()"
+    style="display:none;"
+  >
+    ❌ বাতিল
+  </button>
+
+</div>
+
+
+<div id="message"></div>
+```
 
   </div>
-
 
   <!-- Student List -->
 
   <div class="box">
 
-    <h2>📋 শিক্ষার্থী তালিকা</h2>
+```
+<h2>
+  📋 শিক্ষার্থী তালিকা
+</h2>
 
-    <div id="loading">
-      শিক্ষার্থীদের তথ্য লোড হচ্ছে...
-    </div>
+
+<!-- Search -->
+
+<div class="search-box">
+
+  <input
+    type="text"
+    id="search"
+    placeholder="🔍 নাম, Student ID, শ্রেণি বা রোল দিয়ে খুঁজুন..."
+    oninput="filterStudents()"
+  >
+
+</div>
 
 
-    <div class="table-wrapper">
+<div id="loading">
+  শিক্ষার্থীদের তথ্য লোড হচ্ছে...
+</div>
 
-      <table>
 
-        <thead>
-          <tr>
-            <th>Student ID</th>
-            <th>নাম</th>
-            <th>শ্রেণি</th>
-            <th>রোল</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+<div class="table-wrapper">
 
-        <tbody id="studentTable"></tbody>
+  <table>
 
-      </table>
+    <thead>
 
-    </div>
+      <tr>
+
+        <th>Student ID</th>
+
+        <th>নাম</th>
+
+        <th>শ্রেণি</th>
+
+        <th>রোল</th>
+
+        <th>Action</th>
+
+      </tr>
+
+    </thead>
+
+
+    <tbody id="studentTable">
+    </tbody>
+
+  </table>
+
+</div>
+```
 
   </div>
 
 </div>
 
-
 <script>
+
+
+  // =====================================
+  // SUPABASE CONNECTION
+  // =====================================
 
   const SUPABASE_URL =
     "https://pkznaencgprqzvdzapfi.supabase.co";
 
   const SUPABASE_KEY =
     "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
 
   const supabaseClient =
     window.supabase.createClient(
@@ -277,15 +427,28 @@
     );
 
 
-  // =========================
-  // Check Admin
-  // =========================
+  // সব Student এখানে রাখা হবে
+
+  let allStudents = [];
+
+
+  // বর্তমানে কোন Student Edit হচ্ছে
+
+  let editingStudentId = null;
+
+
+
+  // =====================================
+  // CHECK ADMIN
+  // =====================================
 
   async function checkAdmin() {
 
     const {
       data: { user }
-    } = await supabaseClient.auth.getUser();
+    } =
+      await supabaseClient.auth.getUser();
+
 
     if (!user) {
 
@@ -293,6 +456,7 @@
         "index.html#admin-login";
 
       return false;
+
     }
 
 
@@ -315,21 +479,25 @@
         "index.html#admin-login";
 
       return false;
+
     }
 
 
     return true;
+
   }
 
 
-  // =========================
-  // Load Students
-  // =========================
+
+  // =====================================
+  // LOAD STUDENTS
+  // =====================================
 
   async function loadStudents() {
 
     const allowed =
       await checkAdmin();
+
 
     if (!allowed) return;
 
@@ -340,7 +508,9 @@
     } =
       await supabaseClient
         .from("students")
-        .select("id, name, class_name, roll")
+        .select(
+          "id, name, class_name, roll"
+        )
         .order("id", {
           ascending: true
         });
@@ -350,6 +520,7 @@
       document.getElementById(
         "studentTable"
       );
+
 
     const loading =
       document.getElementById(
@@ -363,34 +534,66 @@
 
     if (error) {
 
+      console.error(error);
+
       table.innerHTML =
-        `<tr>
+        `
+        <tr>
           <td colspan="5">
             ❌ তথ্য লোড করা যায়নি।
+            <br>
+            ${error.message}
           </td>
-        </tr>`;
+        </tr>
+        `;
 
       return;
+
     }
 
 
-    if (!data || data.length === 0) {
+    allStudents =
+      data || [];
+
+
+    displayStudents(allStudents);
+
+  }
+
+
+
+  // =====================================
+  // DISPLAY STUDENTS
+  // =====================================
+
+  function displayStudents(students) {
+
+    const table =
+      document.getElementById(
+        "studentTable"
+      );
+
+
+    if (!students || students.length === 0) {
 
       table.innerHTML =
-        `<tr>
+        `
+        <tr>
           <td colspan="5">
-            এখনো কোনো শিক্ষার্থী যোগ করা হয়নি।
+            কোনো শিক্ষার্থী পাওয়া যায়নি।
           </td>
-        </tr>`;
+        </tr>
+        `;
 
       return;
+
     }
 
 
     table.innerHTML = "";
 
 
-    data.forEach(student => {
+    students.forEach(student => {
 
       const row =
         document.createElement("tr");
@@ -398,21 +601,28 @@
 
       row.innerHTML = `
 
-        <td>${student.id ?? ""}</td>
+        <td>${escapeHTML(student.id ?? "")}</td>
 
-        <td>${student.name ?? ""}</td>
+        <td>${escapeHTML(student.name ?? "")}</td>
 
-        <td>${student.class_name ?? ""}</td>
+        <td>${escapeHTML(student.class_name ?? "")}</td>
 
-        <td>${student.roll ?? ""}</td>
+        <td>${escapeHTML(student.roll ?? "")}</td>
 
         <td>
 
           <button
-            class="delete-btn"
-            onclick="deleteStudent('${student.id}')"
+            class="edit-btn"
+            onclick="editStudent('${escapeJS(student.id)}')"
           >
-            Delete
+            ✏️ Edit
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteStudent('${escapeJS(student.id)}')"
+          >
+            🗑️ Delete
           </button>
 
         </td>
@@ -427,34 +637,100 @@
   }
 
 
-  // =========================
-  // Add Student
-  // =========================
+
+  // =====================================
+  // SEARCH / FILTER
+  // =====================================
+
+  function filterStudents() {
+
+    const search =
+      document
+        .getElementById("search")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    if (!search) {
+
+      displayStudents(allStudents);
+
+      return;
+
+    }
+
+
+    const filtered =
+      allStudents.filter(student => {
+
+        return (
+
+          String(student.id ?? "")
+            .toLowerCase()
+            .includes(search)
+
+          ||
+
+          String(student.name ?? "")
+            .toLowerCase()
+            .includes(search)
+
+          ||
+
+          String(student.class_name ?? "")
+            .toLowerCase()
+            .includes(search)
+
+          ||
+
+          String(student.roll ?? "")
+            .toLowerCase()
+            .includes(search)
+
+        );
+
+      });
+
+
+    displayStudents(filtered);
+
+  }
+
+
+
+  // =====================================
+  // ADD STUDENT
+  // =====================================
 
   async function addStudent() {
 
     const student_id =
-      document.getElementById(
-        "student_id"
-      ).value.trim();
+      document
+        .getElementById("student_id")
+        .value
+        .trim();
 
 
     const name =
-      document.getElementById(
-        "name"
-      ).value.trim();
+      document
+        .getElementById("name")
+        .value
+        .trim();
 
 
     const class_name =
-      document.getElementById(
-        "class_name"
-      ).value.trim();
+      document
+        .getElementById("class_name")
+        .value
+        .trim();
 
 
     const roll =
-      document.getElementById(
-        "roll"
-      ).value.trim();
+      document
+        .getElementById("roll")
+        .value
+        .trim();
 
 
     const message =
@@ -474,6 +750,7 @@
         "⚠️ Student ID, নাম, শ্রেণি ও রোল—সবগুলো দিতে হবে।";
 
       return;
+
     }
 
 
@@ -481,10 +758,11 @@
       "⏳ সংরক্ষণ হচ্ছে...";
 
 
-    // Check duplicate Student ID
+    // Duplicate check
 
     const {
-      data: existingStudent
+      data: existingStudent,
+      error: checkError
     } =
       await supabaseClient
         .from("students")
@@ -493,16 +771,28 @@
         .maybeSingle();
 
 
+    if (checkError) {
+
+      message.textContent =
+        "❌ যাচাই করা যায়নি: " +
+        checkError.message;
+
+      return;
+
+    }
+
+
     if (existingStudent) {
 
       message.textContent =
         "❌ এই Student ID আগে থেকেই আছে। অন্য ID দিন।";
 
       return;
+
     }
 
 
-    // Insert Student
+    // Insert
 
     const {
       error
@@ -526,12 +816,315 @@
         error.message;
 
       return;
+
     }
 
 
     message.textContent =
       "✅ শিক্ষার্থী সফলভাবে যোগ হয়েছে।";
 
+
+    clearForm();
+
+    await loadStudents();
+
+  }
+
+
+
+  // =====================================
+  // EDIT STUDENT
+  // =====================================
+
+  function editStudent(id) {
+
+    const student =
+      allStudents.find(
+        s => String(s.id) === String(id)
+      );
+
+
+    if (!student) {
+
+      alert(
+        "❌ শিক্ষার্থীর তথ্য পাওয়া যায়নি।"
+      );
+
+      return;
+
+    }
+
+
+    editingStudentId =
+      student.id;
+
+
+    document.getElementById(
+      "student_id"
+    ).value =
+      student.id ?? "";
+
+
+    document.getElementById(
+      "name"
+    ).value =
+      student.name ?? "";
+
+
+    document.getElementById(
+      "class_name"
+    ).value =
+      student.class_name ?? "";
+
+
+    document.getElementById(
+      "roll"
+    ).value =
+      student.roll ?? "";
+
+
+    // Student ID Edit-এর সময় পরিবর্তন করা যাবে না
+
+    document.getElementById(
+      "student_id"
+    ).disabled = true;
+
+
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      "✏️ শিক্ষার্থীর তথ্য পরিবর্তন করুন";
+
+
+    document.getElementById(
+      "saveButton"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "updateButton"
+    ).style.display =
+      "inline-block";
+
+
+    document.getElementById(
+      "cancelButton"
+    ).style.display =
+      "inline-block";
+
+
+    document.getElementById(
+      "message"
+    ).textContent =
+      "✏️ তথ্য পরিবর্তন করে 'পরিবর্তন সংরক্ষণ করুন' চাপুন।";
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+
+
+  // =====================================
+  // UPDATE STUDENT
+  // =====================================
+
+  async function updateStudent() {
+
+    if (editingStudentId === null) {
+
+      return;
+
+    }
+
+
+    const name =
+      document
+        .getElementById("name")
+        .value
+        .trim();
+
+
+    const class_name =
+      document
+        .getElementById("class_name")
+        .value
+        .trim();
+
+
+    const roll =
+      document
+        .getElementById("roll")
+        .value
+        .trim();
+
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    if (
+      !name ||
+      !class_name ||
+      !roll
+    ) {
+
+      message.textContent =
+        "⚠️ নাম, শ্রেণি ও রোল দিতে হবে।";
+
+      return;
+
+    }
+
+
+    message.textContent =
+      "⏳ পরিবর্তন সংরক্ষণ হচ্ছে...";
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("students")
+        .update({
+          name: name,
+          class_name: class_name,
+          roll: roll
+        })
+        .eq(
+          "id",
+          editingStudentId
+        );
+
+
+    if (error) {
+
+      message.textContent =
+        "❌ পরিবর্তন সংরক্ষণ ব্যর্থ: " +
+        error.message;
+
+      return;
+
+    }
+
+
+    message.textContent =
+      "✅ শিক্ষার্থীর তথ্য সফলভাবে পরিবর্তন হয়েছে।";
+
+
+    cancelEdit();
+
+    await loadStudents();
+
+  }
+
+
+
+  // =====================================
+  // CANCEL EDIT
+  // =====================================
+
+  function cancelEdit() {
+
+    editingStudentId = null;
+
+
+    document.getElementById(
+      "student_id"
+    ).disabled = false;
+
+
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      "➕ নতুন শিক্ষার্থী যোগ করুন";
+
+
+    document.getElementById(
+      "saveButton"
+    ).style.display =
+      "inline-block";
+
+
+    document.getElementById(
+      "updateButton"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "cancelButton"
+    ).style.display =
+      "none";
+
+
+    clearForm();
+
+  }
+
+
+
+  // =====================================
+  // DELETE STUDENT
+  // =====================================
+
+  async function deleteStudent(id) {
+
+    const confirmed =
+      confirm(
+        "এই শিক্ষার্থীকে মুছে ফেলতে চান?"
+      );
+
+
+    if (!confirmed) return;
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("students")
+        .delete()
+        .eq(
+          "id",
+          id
+        );
+
+
+    if (error) {
+
+      alert(
+        "❌ মুছে ফেলা যায়নি: " +
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "✅ শিক্ষার্থী মুছে ফেলা হয়েছে।"
+    );
+
+
+    await loadStudents();
+
+  }
+
+
+
+  // =====================================
+  // CLEAR FORM
+  // =====================================
+
+  function clearForm() {
 
     document.getElementById(
       "student_id"
@@ -552,60 +1145,42 @@
       "roll"
     ).value = "";
 
+  }
 
-    loadStudents();
+
+
+  // =====================================
+  // SECURITY HELPERS
+  // =====================================
+
+  function escapeHTML(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 
   }
 
 
-  // =========================
-  // Delete Student
-  // =========================
+  function escapeJS(value) {
 
-  async function deleteStudent(id) {
-
-    const confirmed =
-      confirm(
-        "এই শিক্ষার্থীকে মুছে ফেলতে চান?"
-      );
-
-
-    if (!confirmed) return;
-
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("students")
-        .delete()
-        .eq("id", id);
-
-
-    if (error) {
-
-      alert(
-        "❌ মুছে ফেলা যায়নি: " +
-        error.message
-      );
-
-      return;
-    }
-
-
-    alert(
-      "✅ শিক্ষার্থী মুছে ফেলা হয়েছে।"
-    );
-
-
-    loadStudents();
+    return String(value)
+      .replace(/\\/g, "\\\\")
+      .replace(/'/g, "\\'");
 
   }
 
 
-  // Start
+
+  // =====================================
+  // START
+  // =====================================
 
   loadStudents();
+
 
 </script>
 
