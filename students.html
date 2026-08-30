@@ -75,7 +75,7 @@
 
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 15px;
     }
 
@@ -114,7 +114,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 550px;
+      min-width: 600px;
     }
 
     th,
@@ -162,417 +162,452 @@
 
 <body>
 
-  <header>
-    <h1>👨‍🎓 Students Management</h1>
-    <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
-  </header>
+<header>
+  <h1>👨‍🎓 Students Management</h1>
+  <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
+</header>
+
+<div class="container">
+
+  <div class="top-bar">
+    <h2>শিক্ষার্থী পরিচালনা</h2>
+
+    <a href="admin.html" class="back-btn">
+      ← Admin Panel
+    </a>
+  </div>
 
 
-  <div class="container">
+  <!-- Add Student -->
 
-    <div class="top-bar">
+  <div class="box">
 
-      <h2>শিক্ষার্থী পরিচালনা</h2>
+    <h2>➕ নতুন শিক্ষার্থী যোগ করুন</h2>
 
-      <a href="admin.html" class="back-btn">
-        ← Admin Panel
-      </a>
+    <div class="form-grid">
 
-    </div>
-
-
-    <!-- Add Student -->
-
-    <div class="box">
-
-      <h2>➕ নতুন শিক্ষার্থী যোগ করুন</h2>
-
-      <div class="form-grid">
-
-        <input
-          type="text"
-          id="name"
-          placeholder="শিক্ষার্থীর নাম"
-        >
-
-        <input
-          type="text"
-          id="class_name"
-          placeholder="শ্রেণি"
-        >
-
-        <input
-          type="number"
-          id="roll"
-          placeholder="রোল নম্বর"
-        >
-
-      </div>
-
-
-      <button
-        class="save-btn"
-        onclick="addStudent()"
+      <input
+        type="text"
+        id="student_id"
+        placeholder="Student ID যেমন: 1002"
       >
-        💾 শিক্ষার্থী সংরক্ষণ করুন
-      </button>
 
+      <input
+        type="text"
+        id="name"
+        placeholder="শিক্ষার্থীর নাম"
+      >
 
-      <div id="message"></div>
+      <input
+        type="text"
+        id="class_name"
+        placeholder="শ্রেণি"
+      >
+
+      <input
+        type="text"
+        id="roll"
+        placeholder="রোল নম্বর"
+      >
 
     </div>
 
 
-    <!-- Student List -->
-
-    <div class="box">
-
-      <h2>📋 শিক্ষার্থী তালিকা</h2>
-
-      <div id="loading">
-        শিক্ষার্থীদের তথ্য লোড হচ্ছে...
-      </div>
+    <button
+      class="save-btn"
+      onclick="addStudent()"
+    >
+      💾 শিক্ষার্থী সংরক্ষণ করুন
+    </button>
 
 
-      <div class="table-wrapper">
+    <div id="message"></div>
 
-        <table>
-
-          <thead>
-
-            <tr>
-              <th>ID</th>
-              <th>নাম</th>
-              <th>শ্রেণি</th>
-              <th>রোল</th>
-              <th>Action</th>
-            </tr>
-
-          </thead>
+  </div>
 
 
-          <tbody id="studentTable">
-          </tbody>
+  <!-- Student List -->
 
-        </table>
+  <div class="box">
 
-      </div>
+    <h2>📋 শিক্ষার্থী তালিকা</h2>
+
+    <div id="loading">
+      শিক্ষার্থীদের তথ্য লোড হচ্ছে...
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>নাম</th>
+            <th>শ্রেণি</th>
+            <th>রোল</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="studentTable"></tbody>
+
+      </table>
 
     </div>
 
   </div>
 
-
-  <script>
-
-    const SUPABASE_URL =
-      "https://pkznaencgprqzvdzapfi.supabase.co";
-
-    const SUPABASE_KEY =
-      "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+</div>
 
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+<script>
+
+  const SUPABASE_URL =
+    "https://pkznaencgprqzvdzapfi.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  // =========================
+  // Check Admin
+  // =========================
+
+  async function checkAdmin() {
+
+    const {
+      data: { user }
+    } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+
+      window.location.href =
+        "index.html#admin-login";
+
+      return false;
+    }
+
+
+    const {
+      data: adminData,
+      error
+    } =
+      await supabaseClient
+        .from("admins")
+        .select("id")
+        .eq("id", user.id)
+        .maybeSingle();
+
+
+    if (error || !adminData) {
+
+      await supabaseClient.auth.signOut();
+
+      window.location.href =
+        "index.html#admin-login";
+
+      return false;
+    }
+
+
+    return true;
+  }
+
+
+  // =========================
+  // Load Students
+  // =========================
+
+  async function loadStudents() {
+
+    const allowed =
+      await checkAdmin();
+
+    if (!allowed) return;
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("students")
+        .select("id, name, class_name, roll")
+        .order("id", {
+          ascending: true
+        });
+
+
+    const table =
+      document.getElementById(
+        "studentTable"
+      );
+
+    const loading =
+      document.getElementById(
+        "loading"
       );
 
 
-    // =========================
-    // Check Admin
-    // =========================
-
-    async function checkAdmin() {
-
-      const {
-        data: { user }
-      } = await supabaseClient.auth.getUser();
+    loading.style.display =
+      "none";
 
 
-      if (!user) {
+    if (error) {
 
-        window.location.href =
-          "index.html#admin-login";
-
-        return false;
-      }
-
-
-      const {
-        data: adminData,
-        error
-      } =
-        await supabaseClient
-          .from("admins")
-          .select("id")
-          .eq("id", user.id)
-          .maybeSingle();
-
-
-      if (error || !adminData) {
-
-        await supabaseClient.auth.signOut();
-
-        window.location.href =
-          "index.html#admin-login";
-
-        return false;
-      }
-
-
-      return true;
-    }
-
-
-    // =========================
-    // Load Students
-    // =========================
-
-    async function loadStudents() {
-
-      const allowed =
-        await checkAdmin();
-
-
-      if (!allowed) return;
-
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("students")
-          .select("id, name, class_name, roll")
-          .order("id", {
-            ascending: true
-          });
-
-
-      const table =
-        document.getElementById(
-          "studentTable"
-        );
-
-
-      const loading =
-        document.getElementById(
-          "loading"
-        );
-
-
-      loading.style.display =
-        "none";
-
-
-      if (error) {
-
-        table.innerHTML =
-          `<tr>
-            <td colspan="5">
-              ❌ তথ্য লোড করা যায়নি।
-            </td>
-          </tr>`;
-
-        return;
-      }
-
-
-      if (!data || data.length === 0) {
-
-        table.innerHTML =
-          `<tr>
-            <td colspan="5">
-              এখনো কোনো শিক্ষার্থী যোগ করা হয়নি।
-            </td>
-          </tr>`;
-
-        return;
-      }
-
-
-      table.innerHTML = "";
-
-
-      data.forEach(student => {
-
-        const row =
-          document.createElement("tr");
-
-
-        row.innerHTML = `
-
-          <td>${student.id ?? ""}</td>
-
-          <td>${student.name ?? ""}</td>
-
-          <td>${student.class_name ?? ""}</td>
-
-          <td>${student.roll ?? ""}</td>
-
-          <td>
-
-            <button
-              class="delete-btn"
-              onclick="deleteStudent(${student.id})"
-            >
-              Delete
-            </button>
-
+      table.innerHTML =
+        `<tr>
+          <td colspan="5">
+            ❌ তথ্য লোড করা যায়নি।
           </td>
+        </tr>`;
 
-        `;
-
-
-        table.appendChild(row);
-
-      });
-
+      return;
     }
 
 
-    // =========================
-    // Add Student
-    // =========================
+    if (!data || data.length === 0) {
 
-    async function addStudent() {
+      table.innerHTML =
+        `<tr>
+          <td colspan="5">
+            এখনো কোনো শিক্ষার্থী যোগ করা হয়নি।
+          </td>
+        </tr>`;
 
-      const name =
-        document.getElementById(
-          "name"
-        ).value.trim();
-
-
-      const class_name =
-        document.getElementById(
-          "class_name"
-        ).value.trim();
+      return;
+    }
 
 
-      const roll =
-        document.getElementById(
-          "roll"
-        ).value.trim();
+    table.innerHTML = "";
 
 
-      const message =
-        document.getElementById(
-          "message"
-        );
+    data.forEach(student => {
+
+      const row =
+        document.createElement("tr");
 
 
-      if (!name || !class_name || !roll) {
+      row.innerHTML = `
 
-        message.textContent =
-          "⚠️ নাম, শ্রেণি ও রোল অবশ্যই দিতে হবে।";
+        <td>${student.id ?? ""}</td>
 
-        return;
-      }
+        <td>${student.name ?? ""}</td>
 
+        <td>${student.class_name ?? ""}</td>
 
-      message.textContent =
-        "⏳ সংরক্ষণ হচ্ছে...";
+        <td>${student.roll ?? ""}</td>
 
+        <td>
 
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("students")
-          .insert([
-            {
-              name: name,
-              class_name: class_name,
-              roll: Number(roll)
-            }
-          ]);
+          <button
+            class="delete-btn"
+            onclick="deleteStudent('${student.id}')"
+          >
+            Delete
+          </button>
+
+        </td>
+
+      `;
 
 
-      if (error) {
+      table.appendChild(row);
 
-        message.textContent =
-          "❌ সংরক্ষণ ব্যর্থ: " +
-          error.message;
+    });
 
-        return;
-      }
+  }
 
 
-      message.textContent =
-        "✅ শিক্ষার্থী সফলভাবে যোগ হয়েছে।";
+  // =========================
+  // Add Student
+  // =========================
+
+  async function addStudent() {
+
+    const student_id =
+      document.getElementById(
+        "student_id"
+      ).value.trim();
 
 
+    const name =
       document.getElementById(
         "name"
-      ).value = "";
+      ).value.trim();
 
 
+    const class_name =
       document.getElementById(
         "class_name"
-      ).value = "";
+      ).value.trim();
 
 
+    const roll =
       document.getElementById(
         "roll"
-      ).value = "";
+      ).value.trim();
 
 
-      loadStudents();
-
-    }
-
-
-    // =========================
-    // Delete Student
-    // =========================
-
-    async function deleteStudent(id) {
-
-      const confirmed =
-        confirm(
-          "এই শিক্ষার্থীকে মুছে ফেলতে চান?"
-        );
-
-
-      if (!confirmed) return;
-
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("students")
-          .delete()
-          .eq("id", id);
-
-
-      if (error) {
-
-        alert(
-          "❌ মুছে ফেলা যায়নি: " +
-          error.message
-        );
-
-        return;
-      }
-
-
-      alert(
-        "✅ শিক্ষার্থী মুছে ফেলা হয়েছে।"
+    const message =
+      document.getElementById(
+        "message"
       );
 
 
-      loadStudents();
+    if (
+      !student_id ||
+      !name ||
+      !class_name ||
+      !roll
+    ) {
 
+      message.textContent =
+        "⚠️ Student ID, নাম, শ্রেণি ও রোল—সবগুলো দিতে হবে।";
+
+      return;
     }
 
 
-    // Start
+    message.textContent =
+      "⏳ সংরক্ষণ হচ্ছে...";
+
+
+    // Check duplicate Student ID
+
+    const {
+      data: existingStudent
+    } =
+      await supabaseClient
+        .from("students")
+        .select("id")
+        .eq("id", student_id)
+        .maybeSingle();
+
+
+    if (existingStudent) {
+
+      message.textContent =
+        "❌ এই Student ID আগে থেকেই আছে। অন্য ID দিন।";
+
+      return;
+    }
+
+
+    // Insert Student
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("students")
+        .insert([
+          {
+            id: student_id,
+            name: name,
+            class_name: class_name,
+            roll: roll
+          }
+        ]);
+
+
+    if (error) {
+
+      message.textContent =
+        "❌ সংরক্ষণ ব্যর্থ: " +
+        error.message;
+
+      return;
+    }
+
+
+    message.textContent =
+      "✅ শিক্ষার্থী সফলভাবে যোগ হয়েছে।";
+
+
+    document.getElementById(
+      "student_id"
+    ).value = "";
+
+
+    document.getElementById(
+      "name"
+    ).value = "";
+
+
+    document.getElementById(
+      "class_name"
+    ).value = "";
+
+
+    document.getElementById(
+      "roll"
+    ).value = "";
+
 
     loadStudents();
 
-  </script>
+  }
+
+
+  // =========================
+  // Delete Student
+  // =========================
+
+  async function deleteStudent(id) {
+
+    const confirmed =
+      confirm(
+        "এই শিক্ষার্থীকে মুছে ফেলতে চান?"
+      );
+
+
+    if (!confirmed) return;
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("students")
+        .delete()
+        .eq("id", id);
+
+
+    if (error) {
+
+      alert(
+        "❌ মুছে ফেলা যায়নি: " +
+        error.message
+      );
+
+      return;
+    }
+
+
+    alert(
+      "✅ শিক্ষার্থী মুছে ফেলা হয়েছে।"
+    );
+
+
+    loadStudents();
+
+  }
+
+
+  // Start
+
+  loadStudents();
+
+</script>
 
 </body>
 </html>
