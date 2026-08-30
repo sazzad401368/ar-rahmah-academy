@@ -4,74 +4,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>পরীক্ষার ফলাফল - আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</title>
+  <title>Result Management - Ar-Rahmah Academy</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
       font-family: Arial, sans-serif;
-      background: #f5f7f6;
+      background: #f4f7f5;
       color: #222;
     }
 
     header {
-      background: #075e54;
+      background: #087443;
       color: white;
+      padding: 22px 20px;
       text-align: center;
-      padding: 30px 15px;
     }
 
     header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    header p {
-      margin-top: 8px;
-    }
-
-    nav {
-      background: white;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    nav a {
-      color: #075e54;
-      text-decoration: none;
-      margin: 0 10px;
-      font-weight: bold;
+      font-size: 25px;
+      margin-bottom: 5px;
     }
 
     .container {
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 0 20px;
+      max-width: 1200px;
+      margin: auto;
+      padding: 25px 20px;
     }
 
-    .title {
-      text-align: center;
-      margin-bottom: 30px;
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
     }
 
-    .title h2 {
-      color: #075e54;
-      font-size: 30px;
+    .top-bar h2 {
+      color: #087443;
     }
 
-    .result-box {
+    .back-btn {
+      background: #555;
+      color: white;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+    }
+
+    .box {
       background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+    }
+
+    .box h2 {
+      color: #087443;
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
     }
 
     label {
       display: block;
-      margin-top: 15px;
-      margin-bottom: 7px;
+      margin-bottom: 6px;
       font-weight: bold;
+      color: #444;
     }
 
     input,
@@ -79,125 +91,1677 @@
       width: 100%;
       padding: 12px;
       border: 1px solid #ccc;
-      border-radius: 7px;
-      box-sizing: border-box;
-      font-size: 16px;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #087443;
+    }
+
+    input:disabled {
+      background: #f1f1f1;
+    }
+
+    .student-info {
+      margin-top: 15px;
+      padding: 12px;
+      background: #eef8f2;
+      border-radius: 6px;
+      color: #087443;
+      font-weight: bold;
+      display: none;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
 
     button {
-      width: 100%;
-      margin-top: 25px;
-      padding: 13px;
       border: none;
-      border-radius: 7px;
-      background: #075e54;
-      color: white;
-      font-size: 17px;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 15px;
     }
 
-    button:hover {
-      background: #064c44;
-    }
-
-    .message {
-      margin-top: 20px;
-      padding: 15px;
-      background: #eef6f4;
-      border-radius: 8px;
-      text-align: center;
-      color: #075e54;
-    }
-
-    footer {
-      margin-top: 50px;
-      background: #075e54;
+    .save-btn {
+      padding: 12px 25px;
+      background: #087443;
       color: white;
+    }
+
+    .save-btn:hover {
+      background: #065c36;
+    }
+
+    .update-btn {
+      padding: 12px 25px;
+      background: #2563eb;
+      color: white;
+    }
+
+    .update-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .cancel-btn {
+      padding: 12px 25px;
+      background: #777;
+      color: white;
+    }
+
+    .cancel-btn:hover {
+      background: #555;
+    }
+
+    #message {
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .search-box {
+      margin-bottom: 18px;
+    }
+
+    .search-box input {
+      max-width: 600px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1000px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 9px;
       text-align: center;
-      padding: 20px;
+    }
+
+    th {
+      background: #087443;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f8faf9;
+    }
+
+    .edit-btn,
+    .delete-btn {
+      color: white;
+      padding: 7px 11px;
+      margin: 2px;
+    }
+
+    .edit-btn {
+      background: #2563eb;
+    }
+
+    .edit-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .delete-btn {
+      background: #b42318;
+    }
+
+    .delete-btn:hover {
+      background: #991b1b;
+    }
+
+    .total {
+      font-weight: bold;
+      color: #087443;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 15px;
+      color: #666;
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #777;
+    }
+
+    @media (max-width: 600px) {
+
+      header h1 {
+        font-size: 20px;
+      }
+
+      .container {
+        padding: 20px 12px;
+      }
+
+      .box {
+        padding: 18px;
+      }
+
+      .save-btn,
+      .update-btn,
+      .cancel-btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</h1>
-    <p>Ar-Rahmah International Noorani Academy</p>
-  </header>
+<header>
 
-  <nav>
-    <a href="index.html">হোম</a>
-    <a href="about.html">আমাদের সম্পর্কে</a>
-    <a href="teachers.html">শিক্ষকবৃন্দ</a>
-    <a href="notice.html">নোটিশ</a>
-    <a href="result.html">পরীক্ষার ফলাফল</a>
-    <a href="#">যোগাযোগ</a>
-  </nav>
+  <h1>📊 Result Management</h1>
 
-  <div class="container">
+  <p>
+    আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
+  </p>
 
-    <div class="title">
-      <h2>📊 পরীক্ষার ফলাফল</h2>
-      <p>শিক্ষার্থীর ফলাফল দেখতে নিচের তথ্য প্রদান করুন।</p>
+</header>
+
+
+<div class="container">
+
+
+  <!-- TOP BAR -->
+
+  <div class="top-bar">
+
+    <h2>📊 ফলাফল পরিচালনা</h2>
+
+    <a
+      href="admin.html"
+      class="back-btn"
+    >
+      ← Admin Panel
+    </a>
+
+  </div>
+
+
+
+  <!-- ADD / EDIT RESULT -->
+
+  <div class="box">
+
+    <h2 id="formTitle">
+      ➕ নতুন ফলাফল যোগ করুন
+    </h2>
+
+
+    <div class="form-grid">
+
+
+      <!-- Student ID -->
+
+      <div>
+
+        <label>
+          Student ID
+        </label>
+
+        <input
+          type="text"
+          id="student_id"
+          placeholder="যেমন: 1001"
+          oninput="findStudent()"
+        >
+
+        <div
+          class="hint"
+        >
+          শিক্ষার্থীর Student ID লিখুন
+        </div>
+
+      </div>
+
+
+      <!-- Exam Name -->
+
+      <div>
+
+        <label>
+          পরীক্ষার নাম
+        </label>
+
+        <input
+          type="text"
+          id="exam_name"
+          placeholder="যেমন: বার্ষিক পরীক্ষা"
+        >
+
+      </div>
+
+
+      <!-- Bangla -->
+
+      <div>
+
+        <label>
+          🇧🇩 বাংলা
+        </label>
+
+        <input
+          type="number"
+          id="bangla"
+          min="0"
+          max="100"
+          placeholder="০ - ১০০"
+        >
+
+      </div>
+
+
+      <!-- English -->
+
+      <div>
+
+        <label>
+          🇬🇧 ইংরেজি
+        </label>
+
+        <input
+          type="number"
+          id="english"
+          min="0"
+          max="100"
+          placeholder="০ - ১০০"
+        >
+
+      </div>
+
+
+      <!-- Math -->
+
+      <div>
+
+        <label>
+          ➗ গণিত
+        </label>
+
+        <input
+          type="number"
+          id="math"
+          min="0"
+          max="100"
+          placeholder="০ - ১০০"
+        >
+
+      </div>
+
+
+      <!-- Arabic -->
+
+      <div>
+
+        <label>
+          🕌 আরবি
+        </label>
+
+        <input
+          type="number"
+          id="arabic"
+          min="0"
+          max="100"
+          placeholder="০ - ১০০"
+        >
+
+      </div>
+
+
+      <!-- General Knowledge -->
+
+      <div>
+
+        <label>
+          🌍 সাধারণ জ্ঞান
+        </label>
+
+        <input
+          type="number"
+          id="general_knowledge"
+          min="0"
+          max="100"
+          placeholder="০ - ১০০"
+        >
+
+      </div>
+
     </div>
 
-    <div class="result-box">
 
-      <label for="studentId">Student ID / Roll</label>
-      <input
-        type="text"
-        id="studentId"
-        placeholder="শিক্ষার্থীর রোল বা ID লিখুন"
+    <!-- Student Information -->
+
+    <div
+      id="studentInfo"
+      class="student-info"
+    ></div>
+
+
+    <!-- Buttons -->
+
+    <div class="button-group">
+
+      <button
+        id="saveButton"
+        class="save-btn"
+        onclick="addResult()"
       >
-
-      <label for="studentClass">শ্রেণি</label>
-
-      <select id="studentClass">
-        <option value="">শ্রেণি নির্বাচন করুন</option>
-        <option>নার্সারী</option>
-        <option>প্রথম</option>
-        <option>দ্বিতীয়</option>
-        <option>তৃতীয়</option>
-        <option>পঞ্চম</option>
-      </select>
-
-      <button onclick="searchResult()">
-        ফলাফল দেখুন
+        💾 ফলাফল সংরক্ষণ করুন
       </button>
 
-      <div id="message" class="message">
-        ফলাফল দেখতে Student ID / Roll এবং শ্রেণি নির্বাচন করুন।
-      </div>
+
+      <button
+        id="updateButton"
+        class="update-btn"
+        onclick="updateResult()"
+        style="display:none;"
+      >
+        ✏️ পরিবর্তন সংরক্ষণ করুন
+      </button>
+
+
+      <button
+        id="cancelButton"
+        class="cancel-btn"
+        onclick="cancelEdit()"
+        style="display:none;"
+      >
+        ❌ বাতিল
+      </button>
+
+    </div>
+
+
+    <div id="message"></div>
+
+  </div>
+
+
+
+  <!-- RESULT LIST -->
+
+  <div class="box">
+
+    <h2>
+      📋 ফলাফল তালিকা
+    </h2>
+
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        id="search"
+        placeholder="🔍 Student ID, নাম বা পরীক্ষার নাম দিয়ে খুঁজুন..."
+        oninput="filterResults()"
+      >
+
+    </div>
+
+
+    <div id="loading">
+      ফলাফলের তথ্য লোড হচ্ছে...
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Student ID</th>
+
+            <th>শিক্ষার্থীর নাম</th>
+
+            <th>পরীক্ষা</th>
+
+            <th>বাংলা</th>
+
+            <th>ইংরেজি</th>
+
+            <th>গণিত</th>
+
+            <th>আরবি</th>
+
+            <th>সাধারণ জ্ঞান</th>
+
+            <th>মোট</th>
+
+            <th>শতকরা</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody id="resultTable">
+        </tbody>
+
+      </table>
 
     </div>
 
   </div>
 
-  <footer>
-    © 2026 আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
-    <br>
-    সকল অধিকার সংরক্ষিত
-  </footer>
+</div>
 
-  <script>
-    function searchResult() {
 
-      const studentId = document.getElementById("studentId").value.trim();
-      const studentClass = document.getElementById("studentClass").value;
-      const message = document.getElementById("message");
 
-      if (!studentId || !studentClass) {
-        message.innerHTML =
-          "⚠️ অনুগ্রহ করে Student ID / Roll এবং শ্রেণি নির্বাচন করুন।";
-        return;
-      }
+<script>
 
-      message.innerHTML =
-        "🔎 ফলাফল খোঁজা হচ্ছে...<br><br>" +
-        "Supabase Database সংযুক্ত হলে এখানে শিক্ষার্থীর আসল ফলাফল দেখানো হবে।";
+
+  // =====================================
+  // SUPABASE
+  // =====================================
+
+  const SUPABASE_URL =
+    "https://pkznaencgprqzvdzapfi.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  // =====================================
+  // VARIABLES
+  // =====================================
+
+  let allResults = [];
+
+  let allStudents = [];
+
+  let editingResultId = null;
+
+
+
+  // =====================================
+  // CHECK ADMIN
+  // =====================================
+
+  async function checkAdmin() {
+
+    const {
+      data: { user }
+    } =
+      await supabaseClient.auth.getUser();
+
+
+    if (!user) {
+
+      window.location.href =
+        "index.html#admin-login";
+
+      return false;
+
     }
-  </script>
+
+
+    const {
+      data: adminData,
+      error
+    } =
+      await supabaseClient
+        .from("admins")
+        .select("id")
+        .eq("id", user.id)
+        .maybeSingle();
+
+
+    if (error || !adminData) {
+
+      await supabaseClient.auth.signOut();
+
+      window.location.href =
+        "index.html#admin-login";
+
+      return false;
+
+    }
+
+
+    return true;
+
+  }
+
+
+
+  // =====================================
+  // LOAD STUDENTS
+  // =====================================
+
+  async function loadStudents() {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("students")
+        .select(
+          "id, name, class_name, roll"
+        );
+
+
+    if (error) {
+
+      console.error(
+        "Students load error:",
+        error
+      );
+
+      return;
+
+    }
+
+
+    allStudents =
+      data || [];
+
+  }
+
+
+
+  // =====================================
+  // FIND STUDENT
+  // =====================================
+
+  async function findStudent() {
+
+    const studentId =
+      document
+        .getElementById("student_id")
+        .value
+        .trim();
+
+
+    const info =
+      document.getElementById(
+        "studentInfo"
+      );
+
+
+    if (!studentId) {
+
+      info.style.display =
+        "none";
+
+      return;
+
+    }
+
+
+    const student =
+      allStudents.find(
+        s =>
+          String(s.id) ===
+          String(studentId)
+      );
+
+
+    if (student) {
+
+      info.innerHTML =
+        "👨‍🎓 শিক্ষার্থী: " +
+        escapeHTML(student.name) +
+        " &nbsp; | &nbsp; শ্রেণি: " +
+        escapeHTML(student.class_name) +
+        " &nbsp; | &nbsp; রোল: " +
+        escapeHTML(student.roll);
+
+
+      info.style.display =
+        "block";
+
+    } else {
+
+      info.innerHTML =
+        "⚠️ এই Student ID-এর কোনো শিক্ষার্থী পাওয়া যায়নি।";
+
+
+      info.style.display =
+        "block";
+
+    }
+
+  }
+
+
+
+  // =====================================
+  // LOAD RESULTS
+  // =====================================
+
+  async function loadResults() {
+
+    const allowed =
+      await checkAdmin();
+
+
+    if (!allowed) return;
+
+
+    await loadStudents();
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("exam_results")
+        .select(
+          "id, student_id, exam_name, bangla, english, math, arabic, general_knowledge, created_at"
+        )
+        .order(
+          "id",
+          {
+            ascending: true
+          }
+        );
+
+
+    const table =
+      document.getElementById(
+        "resultTable"
+      );
+
+
+    const loading =
+      document.getElementById(
+        "loading"
+      );
+
+
+    loading.style.display =
+      "none";
+
+
+    if (error) {
+
+      console.error(error);
+
+      table.innerHTML =
+        `
+        <tr>
+          <td colspan="11">
+            ❌ ফলাফল লোড করা যায়নি।
+            <br>
+            ${escapeHTML(error.message)}
+          </td>
+        </tr>
+        `;
+
+      return;
+
+    }
+
+
+    allResults =
+      data || [];
+
+
+    displayResults(
+      allResults
+    );
+
+  }
+
+
+
+  // =====================================
+  // DISPLAY RESULTS
+  // =====================================
+
+  function displayResults(results) {
+
+    const table =
+      document.getElementById(
+        "resultTable"
+      );
+
+
+    if (
+      !results ||
+      results.length === 0
+    ) {
+
+      table.innerHTML =
+        `
+        <tr>
+          <td colspan="11">
+            এখনো কোনো ফলাফল যোগ করা হয়নি।
+          </td>
+        </tr>
+        `;
+
+      return;
+
+    }
+
+
+    table.innerHTML = "";
+
+
+    results.forEach(result => {
+
+      const student =
+        allStudents.find(
+          s =>
+            String(s.id) ===
+            String(result.student_id)
+        );
+
+
+      const studentName =
+        student
+          ? student.name
+          : "অজানা";
+
+
+      const bangla =
+        Number(result.bangla) || 0;
+
+      const english =
+        Number(result.english) || 0;
+
+      const math =
+        Number(result.math) || 0;
+
+      const arabic =
+        Number(result.arabic) || 0;
+
+      const generalKnowledge =
+        Number(
+          result.general_knowledge
+        ) || 0;
+
+
+      const total =
+        bangla +
+        english +
+        math +
+        arabic +
+        generalKnowledge;
+
+
+      const percentage =
+        (total / 500) * 100;
+
+
+      const row =
+        document.createElement("tr");
+
+
+      row.innerHTML =
+        `
+
+        <td>
+          ${escapeHTML(
+            result.student_id ?? ""
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            studentName
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            result.exam_name ?? ""
+          )}
+        </td>
+
+        <td>${bangla}</td>
+
+        <td>${english}</td>
+
+        <td>${math}</td>
+
+        <td>${arabic}</td>
+
+        <td>${generalKnowledge}</td>
+
+        <td class="total">
+          ${total}
+        </td>
+
+        <td>
+          ${percentage.toFixed(2)}%
+        </td>
+
+        <td>
+
+          <button
+            class="edit-btn"
+            onclick="editResult('${escapeJS(result.id)}')"
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteResult('${escapeJS(result.id)}')"
+          >
+            🗑️ Delete
+          </button>
+
+        </td>
+
+        `;
+
+
+      table.appendChild(row);
+
+    });
+
+  }
+
+
+
+  // =====================================
+  // SEARCH RESULTS
+  // =====================================
+
+  function filterResults() {
+
+    const search =
+      document
+        .getElementById("search")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    if (!search) {
+
+      displayResults(
+        allResults
+      );
+
+      return;
+
+    }
+
+
+    const filtered =
+      allResults.filter(
+        result => {
+
+          const student =
+            allStudents.find(
+              s =>
+                String(s.id) ===
+                String(result.student_id)
+            );
+
+
+          const studentName =
+            student
+              ? String(student.name)
+              : "";
+
+
+          return (
+
+            String(
+              result.student_id ?? ""
+            )
+              .toLowerCase()
+              .includes(search)
+
+            ||
+
+            studentName
+              .toLowerCase()
+              .includes(search)
+
+            ||
+
+            String(
+              result.exam_name ?? ""
+            )
+              .toLowerCase()
+              .includes(search)
+
+          );
+
+        }
+      );
+
+
+    displayResults(
+      filtered
+    );
+
+  }
+
+
+
+  // =====================================
+  // ADD RESULT
+  // =====================================
+
+  async function addResult() {
+
+    const student_id =
+      document
+        .getElementById("student_id")
+        .value
+        .trim();
+
+
+    const exam_name =
+      document
+        .getElementById("exam_name")
+        .value
+        .trim();
+
+
+    const bangla =
+      document
+        .getElementById("bangla")
+        .value
+        .trim();
+
+
+    const english =
+      document
+        .getElementById("english")
+        .value
+        .trim();
+
+
+    const math =
+      document
+        .getElementById("math")
+        .value
+        .trim();
+
+
+    const arabic =
+      document
+        .getElementById("arabic")
+        .value
+        .trim();
+
+
+    const generalKnowledge =
+      document
+        .getElementById(
+          "general_knowledge"
+        )
+        .value
+        .trim();
+
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    // Required fields
+
+    if (
+      !student_id ||
+      !exam_name ||
+      bangla === "" ||
+      english === "" ||
+      math === "" ||
+      arabic === "" ||
+      generalKnowledge === ""
+    ) {
+
+      message.textContent =
+        "⚠️ সব তথ্য পূরণ করুন।";
+
+      return;
+
+    }
+
+
+    // Check student
+
+    const student =
+      allStudents.find(
+        s =>
+          String(s.id) ===
+          String(student_id)
+      );
+
+
+    if (!student) {
+
+      message.textContent =
+        "❌ এই Student ID-এর কোনো শিক্ষার্থী নেই।";
+
+      return;
+
+    }
+
+
+    // Marks validation
+
+    const marks = [
+      Number(bangla),
+      Number(english),
+      Number(math),
+      Number(arabic),
+      Number(generalKnowledge)
+    ];
+
+
+    if (
+      marks.some(
+        mark =>
+          !Number.isFinite(mark) ||
+          mark < 0 ||
+          mark > 100
+      )
+    ) {
+
+      message.textContent =
+        "⚠️ প্রতিটি বিষয়ের নম্বর ০ থেকে ১০০-এর মধ্যে হতে হবে।";
+
+      return;
+
+    }
+
+
+    message.textContent =
+      "⏳ ফলাফল সংরক্ষণ হচ্ছে...";
+
+
+    // ---------------------------------
+    // Generate Result ID
+    // ---------------------------------
+
+    const {
+      data: lastResult,
+      error: lastError
+    } =
+      await supabaseClient
+        .from("exam_results")
+        .select("id")
+        .order(
+          "id",
+          {
+            ascending: false
+          }
+        )
+        .limit(1)
+        .maybeSingle();
+
+
+    if (lastError) {
+
+      message.textContent =
+        "❌ Result ID যাচাই করা যায়নি: " +
+        lastError.message;
+
+      return;
+
+    }
+
+
+    const newId =
+      lastResult
+        ? Number(lastResult.id) + 1
+        : 1;
+
+
+    // ---------------------------------
+    // Insert
+    // ---------------------------------
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("exam_results")
+        .insert([
+          {
+            id: newId,
+            student_id: student_id,
+            exam_name: exam_name,
+            bangla: Number(bangla),
+            english: Number(english),
+            math: Number(math),
+            arabic: Number(arabic),
+            general_knowledge:
+              Number(generalKnowledge)
+          }
+        ]);
+
+
+    if (error) {
+
+      message.textContent =
+        "❌ ফলাফল সংরক্ষণ ব্যর্থ: " +
+        error.message;
+
+      return;
+
+    }
+
+
+    message.textContent =
+      "✅ ফলাফল সফলভাবে সংরক্ষণ হয়েছে।";
+
+
+    clearForm();
+
+
+    await loadResults();
+
+  }
+
+
+
+  // =====================================
+  // EDIT RESULT
+  // =====================================
+
+  function editResult(id) {
+
+    const result =
+      allResults.find(
+        r =>
+          String(r.id) ===
+          String(id)
+      );
+
+
+    if (!result) {
+
+      alert(
+        "❌ ফলাফল পাওয়া যায়নি।"
+      );
+
+      return;
+
+    }
+
+
+    editingResultId =
+      result.id;
+
+
+    document.getElementById(
+      "student_id"
+    ).value =
+      result.student_id ?? "";
+
+
+    document.getElementById(
+      "exam_name"
+    ).value =
+      result.exam_name ?? "";
+
+
+    document.getElementById(
+      "bangla"
+    ).value =
+      result.bangla ?? 0;
+
+
+    document.getElementById(
+      "english"
+    ).value =
+      result.english ?? 0;
+
+
+    document.getElementById(
+      "math"
+    ).value =
+      result.math ?? 0;
+
+
+    document.getElementById(
+      "arabic"
+    ).value =
+      result.arabic ?? 0;
+
+
+    document.getElementById(
+      "general_knowledge"
+    ).value =
+      result.general_knowledge ?? 0;
+
+
+    document.getElementById(
+      "student_id"
+    ).disabled = true;
+
+
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      "✏️ ফলাফলের তথ্য পরিবর্তন করুন";
+
+
+    document.getElementById(
+      "saveButton"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "updateButton"
+    ).style.display =
+      "inline-block";
+
+
+    document.getElementById(
+      "cancelButton"
+    ).style.display =
+      "inline-block";
+
+
+    document.getElementById(
+      "message"
+    ).textContent =
+      "✏️ তথ্য পরিবর্তন করে সংরক্ষণ করুন।";
+
+
+    findStudent();
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+
+
+  // =====================================
+  // UPDATE RESULT
+  // =====================================
+
+  async function updateResult() {
+
+    if (
+      editingResultId === null
+    ) {
+
+      return;
+
+    }
+
+
+    const exam_name =
+      document
+        .getElementById("exam_name")
+        .value
+        .trim();
+
+
+    const bangla =
+      document
+        .getElementById("bangla")
+        .value
+        .trim();
+
+
+    const english =
+      document
+        .getElementById("english")
+        .value
+        .trim();
+
+
+    const math =
+      document
+        .getElementById("math")
+        .value
+        .trim();
+
+
+    const arabic =
+      document
+        .getElementById("arabic")
+        .value
+        .trim();
+
+
+    const generalKnowledge =
+      document
+        .getElementById(
+          "general_knowledge"
+        )
+        .value
+        .trim();
+
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    if (
+      !exam_name ||
+      bangla === "" ||
+      english === "" ||
+      math === "" ||
+      arabic === "" ||
+      generalKnowledge === ""
+    ) {
+
+      message.textContent =
+        "⚠️ সব তথ্য পূরণ করুন।";
+
+      return;
+
+    }
+
+
+    const marks = [
+      Number(bangla),
+      Number(english),
+      Number(math),
+      Number(arabic),
+      Number(generalKnowledge)
+    ];
+
+
+    if (
+      marks.some(
+        mark =>
+          !Number.isFinite(mark) ||
+          mark < 0 ||
+          mark > 100
+      )
+    ) {
+
+      message.textContent =
+        "⚠️ প্রতিটি বিষয়ের নম্বর ০ থেকে ১০০-এর মধ্যে হতে হবে।";
+
+      return;
+
+    }
+
+
+    message.textContent =
+      "⏳ পরিবর্তন সংরক্ষণ হচ্ছে...";
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("exam_results")
+        .update({
+          exam_name: exam_name,
+          bangla: Number(bangla),
+          english: Number(english),
+          math: Number(math),
+          arabic: Number(arabic),
+          general_knowledge:
+            Number(generalKnowledge)
+        })
+        .eq(
+          "id",
+          editingResultId
+        );
+
+
+    if (error) {
+
+      message.textContent =
+        "❌ পরিবর্তন সংরক্ষণ ব্যর্থ: " +
+        error.message;
+
+      return;
+
+    }
+
+
+    message.textContent =
+      "✅ ফলাফলের তথ্য সফলভাবে পরিবর্তন হয়েছে।";
+
+
+    cancelEdit();
+
+
+    await loadResults();
+
+  }
+
+
+
+  // =====================================
+  // CANCEL EDIT
+  // =====================================
+
+  function cancelEdit() {
+
+    editingResultId = null;
+
+
+    document.getElementById(
+      "student_id"
+    ).disabled = false;
+
+
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      "➕ নতুন ফলাফল যোগ করুন";
+
+
+    document.getElementById(
+      "saveButton"
+    ).style.display =
+      "inline-block";
+
+
+    document.getElementById(
+      "updateButton"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "cancelButton"
+    ).style.display =
+      "none";
+
+
+    clearForm();
+
+
+    document.getElementById(
+      "studentInfo"
+    ).style.display =
+      "none";
+
+  }
+
+
+
+  // =====================================
+  // DELETE RESULT
+  // =====================================
+
+  async function deleteResult(id) {
+
+    const confirmed =
+      confirm(
+        "এই ফলাফলটি মুছে ফেলতে চান?"
+      );
+
+
+    if (!confirmed) {
+
+      return;
+
+    }
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("exam_results")
+        .delete()
+        .eq(
+          "id",
+          id
+        );
+
+
+    if (error) {
+
+      alert(
+        "❌ ফলাফল মুছে ফেলা যায়নি: " +
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "✅ ফলাফল সফলভাবে মুছে ফেলা হয়েছে।"
+    );
+
+
+    await loadResults();
+
+  }
+
+
+
+  // =====================================
+  // CLEAR FORM
+  // =====================================
+
+  function clearForm() {
+
+    document.getElementById(
+      "student_id"
+    ).value = "";
+
+
+    document.getElementById(
+      "exam_name"
+    ).value = "";
+
+
+    document.getElementById(
+      "bangla"
+    ).value = "";
+
+
+    document.getElementById(
+      "english"
+    ).value = "";
+
+
+    document.getElementById(
+      "math"
+    ).value = "";
+
+
+    document.getElementById(
+      "arabic"
+    ).value = "";
+
+
+    document.getElementById(
+      "general_knowledge"
+    ).value = "";
+
+  }
+
+
+
+  // =====================================
+  // SECURITY HELPERS
+  // =====================================
+
+  function escapeHTML(value) {
+
+    return String(value)
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+  }
+
+
+  function escapeJS(value) {
+
+    return String(value)
+      .replace(
+        /\\/g,
+        "\\\\"
+      )
+      .replace(
+        /'/g,
+        "\\'"
+      );
+
+  }
+
+
+
+  // =====================================
+  // START
+  // =====================================
+
+  loadResults();
+
+</script>
 
 </body>
 </html>
