@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Exam Management | Ar-Rahmah Academy</title>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #087443;
+      --primary-dark: #055c35;
+      --light-green: #e9f7ef;
+      --background: #f4f7f6;
+      --white: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --danger: #c62828;
+      --danger-dark: #a61f1f;
+      --border: #d9e2dd;
+      --shadow: 0 5px 20px rgba(0,0,0,0.07);
+      --radius: 16px;
+    }
+
+    body {
+      font-family:
+        "Noto Sans Bengali",
+        "Hind Siliguri",
+        Arial,
+        sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      background: linear-gradient(135deg, #087443, #075b36);
+      color: white;
+      padding: 24px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand h1 {
+      font-size: 25px;
+      margin-bottom: 5px;
+    }
+
+    .brand p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .admin-badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 10px 15px;
+      border-radius: 30px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px 50px;
+    }
+
+    /* =========================
+       TOP ACTION
+    ========================= */
+
+    .top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .page-title {
+      color: var(--primary);
+      font-size: 24px;
+    }
+
+    .back-btn {
+      padding: 11px 18px;
+      border: 1px solid var(--primary);
+      border-radius: 9px;
+      background: white;
+      color: var(--primary);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background: var(--light-green);
+    }
+
+    /* =========================
+       FORM CARD
+    ========================= */
+
+    .form-card {
+      background: white;
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+    }
+
+    .form-card h2 {
+      color: var(--primary);
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 7px;
+      color: var(--text);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      outline: none;
+      font-size: 15px;
+      font-family: inherit;
+      background: white;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(8,116,67,0.10);
+    }
+
+    .form-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .save-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 9px;
+      background: var(--primary);
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .save-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .cancel-btn {
+      padding: 12px 24px;
+      border: 1px solid #9ca3af;
+      border-radius: 9px;
+      background: white;
+      color: #374151;
+      font-size: 15px;
+      cursor: pointer;
+      display: none;
+    }
+
+    .cancel-btn:hover {
+      background: #f3f4f6;
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    #status {
+      margin-bottom: 25px;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .status-success {
+      background: #e8f7ee;
+      color: #087443;
+      display: block !important;
+    }
+
+    .status-error {
+      background: #fdecec;
+      color: #b42318;
+      display: block !important;
+    }
+
+    /* =========================
+       EXAM LIST
+    ========================= */
+
+    .list-card {
+      background: white;
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .list-header h2 {
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    .refresh-btn {
+      padding: 10px 17px;
+      border: 1px solid var(--primary);
+      border-radius: 9px;
+      background: white;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .refresh-btn:hover {
+      background: var(--light-green);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th {
+      background: var(--light-green);
+      color: var(--primary);
+      padding: 13px 10px;
+      text-align: left;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 13px 10px;
+      border-bottom: 1px solid #edf1ef;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: #fafdfb;
+    }
+
+    .exam-name {
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .edit-btn,
+    .delete-btn {
+      border: none;
+      border-radius: 7px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    .edit-btn {
+      background: #e8f7ee;
+      color: var(--primary);
+    }
+
+    .edit-btn:hover {
+      background: #d4efdf;
+    }
+
+    .delete-btn {
+      background: #fdecec;
+      color: var(--danger);
+    }
+
+    .delete-btn:hover {
+      background: #f8d7d7;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 35px 15px;
+      color: var(--muted);
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader-box {
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #d9eee3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 650px) {
+
+      header {
+        padding: 20px 15px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .brand h1 {
+        font-size: 21px;
+      }
+
+      .container {
+        margin-top: 20px;
+        padding: 0 14px 35px;
+      }
+
+      .form-card,
+      .list-card {
+        padding: 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .page-title {
+        font-size: 21px;
+      }
+
+      .top-actions {
+        align-items: stretch;
+      }
+
+      .back-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       LOADING
+  ========================= -->
+
+  <div id="loading">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <p>Admin Panel যাচাই করা হচ্ছে...</p>
+    </div>
+  </div>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header>
+
+    <div class="header-content">
+
+      <div class="brand">
+        <h1>📝 Exam Management</h1>
+        <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
+      </div>
+
+      <div class="admin-badge">
+        👤 Administrator
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main class="container">
+
+    <div class="top-actions">
+
+      <h2 class="page-title">
+        📝 পরীক্ষা পরিচালনা
+      </h2>
+
+      <button
+        class="back-btn"
+        onclick="goBack()">
+        ← Admin Dashboard
+      </button>
+
+    </div>
+
+
+    <!-- =========================
+         STATUS
+    ========================= -->
+
+    <div id="status"></div>
+
+
+    <!-- =========================
+         ADD / EDIT FORM
+    ========================= -->
+
+    <section class="form-card">
+
+      <h2 id="formTitle">
+        ➕ নতুন পরীক্ষা যোগ করুন
+      </h2>
+
+      <form id="examForm">
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+
+            <label for="examName">
+              📝 পরীক্ষার নাম
+            </label>
+
+            <input
+              type="text"
+              id="examName"
+              placeholder="যেমন: অর্ধবার্ষিক পরীক্ষা"
+              required>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="examYear">
+              📅 পরীক্ষার বছর
+            </label>
+
+            <input
+              type="number"
+              id="examYear"
+              placeholder="2026"
+              min="2000"
+              max="2100"
+              required>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="startDate">
+              📅 শুরুর তারিখ
+            </label>
+
+            <input
+              type="date"
+              id="startDate"
+              required>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="endDate">
+              📅 শেষ তারিখ
+            </label>
+
+            <input
+              type="date"
+              id="endDate"
+              required>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-buttons">
+
+          <button
+            type="submit"
+            class="save-btn"
+            id="saveBtn">
+            💾 পরীক্ষা সংরক্ষণ করুন
+          </button>
+
+          <button
+            type="button"
+            class="cancel-btn"
+            id="cancelBtn"
+            onclick="cancelEdit()">
+            ❌ বাতিল
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+
+    <!-- =========================
+         EXAM LIST
+    ========================= -->
+
+    <section class="list-card">
+
+      <div class="list-header">
+
+        <h2>
+          📋 পরীক্ষার তালিকা
+        </h2>
+
+        <button
+          class="refresh-btn"
+          onclick="loadExams()">
+          🔄 Refresh
+        </button>
+
+      </div>
+
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>#</th>
+              <th>পরীক্ষার নাম</th>
+              <th>বছর</th>
+              <th>শুরুর তারিখ</th>
+              <th>শেষ তারিখ</th>
+              <th>Action</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="examTableBody">
+
+            <tr>
+              <td colspan="6" class="empty">
+                পরীক্ষা লোড হচ্ছে...
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+    /* =========================================
+       SUPABASE CONFIG
+    ========================================= */
+
+    const SUPABASE_URL =
+      "https://pkznaencgprqzvdzapfi.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    /* =========================================
+       EDIT STATE
+    ========================================= */
+
+    let editingId = null;
+
+
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+
+    function goBack() {
+      window.location.href = "admin.html";
+    }
+
+
+    /* =========================================
+       STATUS
+    ========================================= */
+
+    function showStatus(message, type = "success") {
+
+      const status =
+        document.getElementById("status");
+
+      status.textContent = message;
+
+      status.className =
+        type === "error"
+          ? "status-error"
+          : "status-success";
+
+    }
+
+
+    function hideStatus() {
+
+      const status =
+        document.getElementById("status");
+
+      status.textContent = "";
+
+      status.className = "";
+
+    }
+
+
+    /* =========================================
+       ADMIN AUTHENTICATION
+    ========================================= */
+
+    async function checkAdmin() {
+
+      try {
+
+        const {
+          data: { user },
+          error: userError
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        if (userError || !user) {
+
+          window.location.href =
+            "index.html#admin-login";
+
+          return false;
+        }
+
+
+        /* Check admins table */
+
+        const {
+          data: adminData,
+          error: adminError
+        } =
+          await supabaseClient
+            .from("admins")
+            .select("id")
+            .eq("id", user.id)
+            .maybeSingle();
+
+
+        if (adminError || !adminData) {
+
+          await supabaseClient.auth.signOut();
+
+          window.location.href =
+            "index.html#admin-login";
+
+          return false;
+        }
+
+
+        return true;
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        window.location.href =
+          "index.html#admin-login";
+
+        return false;
+      }
+
+    }
+
+
+    /* =========================================
+       LOAD EXAMS
+    ========================================= */
+
+    async function loadExams() {
+
+      const tbody =
+        document.getElementById(
+          "examTableBody"
+        );
+
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" class="empty">
+            ⏳ পরীক্ষা লোড হচ্ছে...
+          </td>
+        </tr>
+      `;
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("exams")
+            .select(
+              "id, name, year, start_date, end_date, created_at"
+            )
+            .order(
+              "year",
+              { ascending: false }
+            )
+            .order(
+              "start_date",
+              { ascending: false }
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        if (!data || data.length === 0) {
+
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" class="empty">
+                📭 এখনো কোনো পরীক্ষা যোগ করা হয়নি।
+              </td>
+            </tr>
+          `;
+
+          return;
+        }
+
+
+        tbody.innerHTML = "";
+
+
+        data.forEach((exam, index) => {
+
+          const row =
+            document.createElement("tr");
+
+
+          row.innerHTML = `
+
+            <td>
+              ${index + 1}
+            </td>
+
+            <td class="exam-name">
+              ${escapeHTML(exam.name)}
+            </td>
+
+            <td>
+              ${exam.year ?? "—"}
+            </td>
+
+            <td>
+              ${formatDate(exam.start_date)}
+            </td>
+
+            <td>
+              ${formatDate(exam.end_date)}
+            </td>
+
+            <td>
+
+              <div class="action-buttons">
+
+                <button
+                  class="edit-btn"
+                  onclick="editExam('${exam.id}')">
+                  ✏️ Edit
+                </button>
+
+                <button
+                  class="delete-btn"
+                  onclick="deleteExam('${exam.id}')">
+                  🗑️ Delete
+                </button>
+
+              </div>
+
+            </td>
+
+          `;
+
+
+          tbody.appendChild(row);
+
+        });
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty">
+              ❌ পরীক্ষা লোড করা যায়নি।
+            </td>
+          </tr>
+        `;
+
+        showStatus(
+          "❌ পরীক্ষা লোড করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       SAVE EXAM
+    ========================================= */
+
+    document
+      .getElementById("examForm")
+      .addEventListener(
+        "submit",
+        async function(event) {
+
+          event.preventDefault();
+
+          hideStatus();
+
+
+          const name =
+            document
+              .getElementById("examName")
+              .value
+              .trim();
+
+          const year =
+            Number(
+              document
+                .getElementById("examYear")
+                .value
+            );
+
+          const startDate =
+            document
+              .getElementById("startDate")
+              .value;
+
+          const endDate =
+            document
+              .getElementById("endDate")
+              .value;
+
+
+          /* Validation */
+
+          if (!name) {
+
+            showStatus(
+              "⚠️ পরীক্ষার নাম লিখুন।",
+              "error"
+            );
+
+            return;
+          }
+
+
+          if (!year) {
+
+            showStatus(
+              "⚠️ পরীক্ষার বছর লিখুন।",
+              "error"
+            );
+
+            return;
+          }
+
+
+          if (!startDate || !endDate) {
+
+            showStatus(
+              "⚠️ পরীক্ষার শুরু ও শেষ তারিখ নির্বাচন করুন।",
+              "error"
+            );
+
+            return;
+          }
+
+
+          if (endDate < startDate) {
+
+            showStatus(
+              "⚠️ শেষ তারিখ শুরুর তারিখের আগে হতে পারবে না।",
+              "error"
+            );
+
+            return;
+          }
+
+
+          const saveBtn =
+            document.getElementById("saveBtn");
+
+
+          saveBtn.disabled = true;
+
+          saveBtn.textContent =
+            "⏳ সংরক্ষণ হচ্ছে...";
+
+
+          try {
+
+            /* =========================
+               EDIT
+            ========================= */
+
+            if (editingId) {
+
+              const {
+                error
+              } =
+                await supabaseClient
+                  .from("exams")
+                  .update({
+                    name: name,
+                    year: year,
+                    start_date: startDate,
+                    end_date: endDate
+                  })
+                  .eq(
+                    "id",
+                    editingId
+                  );
+
+
+              if (error) {
+                throw error;
+              }
+
+
+              showStatus(
+                "✅ পরীক্ষার তথ্য সফলভাবে পরিবর্তন করা হয়েছে।"
+              );
+
+            }
+
+
+            /* =========================
+               INSERT
+            ========================= */
+
+            else {
+
+              const {
+                error
+              } =
+                await supabaseClient
+                  .from("exams")
+                  .insert({
+
+                    id:
+                      crypto.randomUUID(),
+
+                    name:
+                      name,
+
+                    year:
+                      year,
+
+                    start_date:
+                      startDate,
+
+                    end_date:
+                      endDate
+
+                  });
+
+
+              if (error) {
+                throw error;
+              }
+
+
+              showStatus(
+                "✅ নতুন পরীক্ষা সফলভাবে সংরক্ষণ করা হয়েছে।"
+              );
+
+            }
+
+
+            resetForm();
+
+            await loadExams();
+
+          }
+
+          catch (error) {
+
+            console.error(error);
+
+            showStatus(
+              "❌ তথ্য সংরক্ষণ করা যায়নি।",
+              "error"
+            );
+
+          }
+
+          finally {
+
+            saveBtn.disabled = false;
+
+            saveBtn.textContent =
+              editingId
+                ? "💾 পরিবর্তন সংরক্ষণ করুন"
+                : "💾 পরীক্ষা সংরক্ষণ করুন";
+
+          }
+
+        }
+      );
+
+
+    /* =========================================
+       EDIT EXAM
+    ========================================= */
+
+    async function editExam(id) {
+
+      hideStatus();
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("exams")
+            .select(
+              "id, name, year, start_date, end_date"
+            )
+            .eq("id", id)
+            .single();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        editingId = data.id;
+
+
+        document
+          .getElementById("examName")
+          .value =
+            data.name || "";
+
+
+        document
+          .getElementById("examYear")
+          .value =
+            data.year || "";
+
+
+        document
+          .getElementById("startDate")
+          .value =
+            data.start_date || "";
+
+
+        document
+          .getElementById("endDate")
+          .value =
+            data.end_date || "";
+
+
+        document
+          .getElementById("formTitle")
+          .textContent =
+            "✏️ পরীক্ষার তথ্য পরিবর্তন করুন";
+
+
+        document
+          .getElementById("saveBtn")
+          .textContent =
+            "💾 পরিবর্তন সংরক্ষণ করুন";
+
+
+        document
+          .getElementById("cancelBtn")
+          .style.display =
+            "inline-block";
+
+
+        document
+          .querySelector(".form-card")
+          .scrollIntoView({
+            behavior: "smooth"
+          });
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        showStatus(
+          "❌ পরীক্ষার তথ্য পাওয়া যায়নি।",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       DELETE EXAM
+    ========================================= */
+
+    async function deleteExam(id) {
+
+      const confirmed =
+        confirm(
+          "আপনি কি এই পরীক্ষাটি Delete করতে চান?\n\nএই কাজটি পরে Undo করা যাবে না।"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("exams")
+            .delete()
+            .eq("id", id);
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        showStatus(
+          "✅ পরীক্ষাটি সফলভাবে Delete করা হয়েছে।"
+        );
+
+
+        await loadExams();
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        showStatus(
+          "❌ পরীক্ষা Delete করা যায়নি।",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       CANCEL EDIT
+    ========================================= */
+
+    function cancelEdit() {
+
+      resetForm();
+
+      showStatus(
+        "ℹ️ Edit বাতিল করা হয়েছে।"
+      );
+
+    }
+
+
+    /* =========================================
+       RESET FORM
+    ========================================= */
+
+    function resetForm() {
+
+      editingId = null;
+
+      document
+        .getElementById("examForm")
+        .reset();
+
+
+      document
+        .getElementById("formTitle")
+        .textContent =
+          "➕ নতুন পরীক্ষা যোগ করুন";
+
+
+      document
+        .getElementById("saveBtn")
+        .textContent =
+          "💾 পরীক্ষা সংরক্ষণ করুন";
+
+
+      document
+        .getElementById("cancelBtn")
+        .style.display =
+          "none";
+
+    }
+
+
+    /* =========================================
+       DATE FORMAT
+    ========================================= */
+
+    function formatDate(dateString) {
+
+      if (!dateString) {
+        return "—";
+      }
+
+
+      const parts =
+        dateString.split("-");
+
+
+      if (parts.length !== 3) {
+        return dateString;
+      }
+
+
+      return (
+        parts[2] +
+        "-" +
+        parts[1] +
+        "-" +
+        parts[0]
+      );
+
+    }
+
+
+    /* =========================================
+       HTML SECURITY
+    ========================================= */
+
+    function escapeHTML(value) {
+
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+    }
+
+
+    /* =========================================
+       INITIALIZE
+    ========================================= */
+
+    async function initializePage() {
+
+      const isAdmin =
+        await checkAdmin();
+
+
+      if (!isAdmin) {
+        return;
+      }
+
+
+      await loadExams();
+
+
+      document
+        .getElementById("loading")
+        .style.display =
+          "none";
+
+    }
+
+
+    /* START */
+
+    initializePage();
+
+  </script>
+
+</body>
+</html>
