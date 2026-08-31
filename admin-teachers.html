@@ -1,0 +1,1211 @@
+```html
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Teacher Management | Ar-Rahmah Academy</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #087443;
+      --dark: #055c35;
+      --bg: #f4f7f6;
+      --white: #fff;
+      --text: #222;
+      --muted: #6b7280;
+      --danger: #c62828;
+      --blue: #2563eb;
+    }
+
+    body {
+      font-family:
+        "Noto Sans Bengali",
+        "Hind Siliguri",
+        Arial,
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* Header */
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 25px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 14px;
+      opacity: .9;
+    }
+
+    /* Container */
+
+    .container {
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 0 15px 40px;
+    }
+
+    /* Top */
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 9px;
+      padding: 11px 18px;
+      cursor: pointer;
+      font-size: 15px;
+      font-family: inherit;
+    }
+
+    .back-btn {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .add-btn {
+      background: var(--primary);
+      color: white;
+    }
+
+    .add-btn:hover {
+      background: var(--dark);
+    }
+
+    /* Status */
+
+    #status {
+      display: none;
+      padding: 12px;
+      margin-bottom: 18px;
+      text-align: center;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .success {
+      display: block !important;
+      background: #e8f7ee;
+      color: var(--primary);
+    }
+
+    .error {
+      display: block !important;
+      background: #fdecec;
+      color: var(--danger);
+    }
+
+    /* Form */
+
+    .form-box {
+      display: none;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.07);
+    }
+
+    .form-box.show {
+      display: block;
+    }
+
+    .form-box h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 21px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      outline: none;
+      font-size: 15px;
+      font-family: inherit;
+    }
+
+    .form-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(8,116,67,.10);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .save-btn {
+      background: var(--primary);
+      color: white;
+    }
+
+    .cancel-btn {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    /* Title */
+
+    .section-title {
+      color: var(--primary);
+      margin: 25px 0 15px;
+    }
+
+    /* Search */
+
+    .search-box {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    /* Teacher Grid */
+
+    .teacher-list {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .teacher-card {
+      background: white;
+      padding: 22px;
+      border-radius: 15px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.07);
+      transition: .2s;
+    }
+
+    .teacher-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #e8f7ee;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 29px;
+      margin-bottom: 14px;
+    }
+
+    .teacher-name {
+      color: var(--primary);
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .teacher-info {
+      color: #555;
+      margin-bottom: 7px;
+      line-height: 1.6;
+    }
+
+    .teacher-date {
+      color: #9ca3af;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      border: none;
+      border-radius: 7px;
+      padding: 8px 13px;
+      color: white;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .edit-btn {
+      background: var(--blue);
+    }
+
+    .delete-btn {
+      background: var(--danger);
+    }
+
+    .empty {
+      background: white;
+      padding: 35px 20px;
+      text-align: center;
+      border-radius: 15px;
+      color: var(--muted);
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+      grid-column: 1 / -1;
+    }
+
+    /* Loading */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #dcefe5;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: auto auto 12px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      header h1 {
+        font-size: 21px;
+      }
+
+      .form-box {
+        padding: 18px;
+      }
+
+      .teacher-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Loading -->
+  <div id="loading">
+
+    <div class="loader">
+
+      <div class="spinner"></div>
+
+      <p>
+        Admin যাচাই করা হচ্ছে...
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- Header -->
+
+  <header>
+
+    <h1>
+      👨‍🏫 Teacher Management
+    </h1>
+
+    <p>
+      আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
+    </p>
+
+  </header>
+
+
+  <main class="container">
+
+
+    <!-- Top Bar -->
+
+    <div class="top-bar">
+
+      <button
+        class="btn back-btn"
+        onclick="goDashboard()">
+
+        ← Admin Dashboard
+
+      </button>
+
+
+      <button
+        class="btn add-btn"
+        onclick="showAddForm()">
+
+        ➕ নতুন শিক্ষক
+
+      </button>
+
+    </div>
+
+
+    <!-- Status -->
+
+    <div id="status"></div>
+
+
+    <!-- Form -->
+
+    <section
+      id="formBox"
+      class="form-box">
+
+      <h2 id="formTitle">
+        ➕ নতুন শিক্ষক যোগ করুন
+      </h2>
+
+
+      <input
+        type="hidden"
+        id="teacherId">
+
+
+      <div class="form-group">
+
+        <label for="name">
+          👤 শিক্ষকের নাম
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          placeholder="শিক্ষকের নাম লিখুন">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="designation">
+          🎓 পদবি
+        </label>
+
+        <input
+          type="text"
+          id="designation"
+          placeholder="যেমন: প্রধান শিক্ষক">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="phone">
+          📱 মোবাইল নম্বর
+        </label>
+
+        <input
+          type="tel"
+          id="phone"
+          placeholder="মোবাইল নম্বর লিখুন">
+
+      </div>
+
+
+      <div class="form-actions">
+
+        <button
+          class="btn save-btn"
+          onclick="saveTeacher()">
+
+          💾 সংরক্ষণ করুন
+
+        </button>
+
+
+        <button
+          class="btn cancel-btn"
+          onclick="hideForm()">
+
+          বাতিল
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Search -->
+
+    <div class="search-box">
+
+      <input
+        type="search"
+        id="search"
+        placeholder="🔎 শিক্ষকের নাম বা পদবি দিয়ে খুঁজুন..."
+        oninput="filterTeachers()">
+
+    </div>
+
+
+    <h2 class="section-title">
+      📋 সকল শিক্ষক
+    </h2>
+
+
+    <!-- Teacher List -->
+
+    <section
+      id="teacherList"
+      class="teacher-list">
+    </section>
+
+
+  </main>
+
+
+  <script>
+
+    /* ===================================
+       SUPABASE
+    =================================== */
+
+    const SUPABASE_URL =
+      "https://pkznaencgprqzvdzapfi.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    let teachers = [];
+
+
+    /* ===================================
+       ADMIN CHECK
+    =================================== */
+
+    async function checkAdmin() {
+
+      try {
+
+        const {
+          data: { user },
+          error
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        if (error || !user) {
+
+          window.location.href =
+            "index.html#admin-login";
+
+          return false;
+        }
+
+
+        const {
+          data: adminData,
+          error: adminError
+        } =
+          await supabaseClient
+            .from("admins")
+            .select("id")
+            .eq("id", user.id)
+            .maybeSingle();
+
+
+        if (adminError || !adminData) {
+
+          await supabaseClient.auth.signOut();
+
+          window.location.href =
+            "index.html#admin-login";
+
+          return false;
+        }
+
+
+        return true;
+
+      } catch (error) {
+
+        console.error(error);
+
+        window.location.href =
+          "index.html#admin-login";
+
+        return false;
+      }
+
+    }
+
+
+    /* ===================================
+       STATUS
+    =================================== */
+
+    function showStatus(
+      message,
+      type = "success"
+    ) {
+
+      const status =
+        document.getElementById("status");
+
+      status.textContent = message;
+
+      status.className =
+        type === "error"
+          ? "error"
+          : "success";
+
+
+      setTimeout(() => {
+
+        status.textContent = "";
+        status.className = "";
+
+      }, 3500);
+
+    }
+
+
+    /* ===================================
+       LOAD TEACHERS
+    =================================== */
+
+    async function loadTeachers() {
+
+      const list =
+        document.getElementById(
+          "teacherList"
+        );
+
+
+      list.innerHTML =
+        '<div class="empty">⏳ শিক্ষক তথ্য লোড হচ্ছে...</div>';
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("teachers")
+          .select("*")
+          .order("created_at", {
+            ascending: false
+          });
+
+
+      if (error) {
+
+        console.error(error);
+
+        list.innerHTML =
+          '<div class="empty">⚠️ শিক্ষক তথ্য লোড করা যায়নি।</div>';
+
+        showStatus(
+          "শিক্ষক তথ্য লোড করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      teachers = data || [];
+
+      renderTeachers(teachers);
+
+    }
+
+
+    /* ===================================
+       RENDER TEACHERS
+    =================================== */
+
+    function renderTeachers(list) {
+
+      const container =
+        document.getElementById(
+          "teacherList"
+        );
+
+
+      if (!list.length) {
+
+        container.innerHTML =
+          '<div class="empty">👨‍🏫 কোনো শিক্ষক পাওয়া যায়নি।</div>';
+
+        return;
+      }
+
+
+      container.innerHTML =
+        list.map(teacher => {
+
+          const name =
+            teacher.name || "শিক্ষক";
+
+
+          const initial =
+            name.charAt(0);
+
+
+          const date =
+            teacher.created_at
+              ? new Date(
+                  teacher.created_at
+                ).toLocaleDateString(
+                  "bn-BD",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                  }
+                )
+              : "";
+
+
+          return `
+
+            <article class="teacher-card">
+
+              <div class="avatar">
+                ${escapeHtml(initial)}
+              </div>
+
+              <div class="teacher-name">
+                ${escapeHtml(name)}
+              </div>
+
+              <div class="teacher-info">
+                🎓 ${
+                  escapeHtml(
+                    teacher.designation ||
+                    "পদবি উল্লেখ নেই"
+                  )
+                }
+              </div>
+
+              <div class="teacher-info">
+                📱 ${
+                  escapeHtml(
+                    teacher.phone ||
+                    "মোবাইল নম্বর নেই"
+                  )
+                }
+              </div>
+
+              <div class="teacher-date">
+                📅 ${date}
+              </div>
+
+              <div class="actions">
+
+                <button
+                  class="action-btn edit-btn"
+                  onclick="editTeacher(${teacher.id})">
+                  ✏️ Edit
+                </button>
+
+                <button
+                  class="action-btn delete-btn"
+                  onclick="deleteTeacher(${teacher.id})">
+                  🗑️ Delete
+                </button>
+
+              </div>
+
+            </article>
+
+          `;
+
+        }).join("");
+
+    }
+
+
+    /* ===================================
+       SEARCH
+    =================================== */
+
+    function filterTeachers() {
+
+      const query =
+        document.getElementById(
+          "search"
+        ).value
+          .trim()
+          .toLowerCase();
+
+
+      if (!query) {
+
+        renderTeachers(teachers);
+
+        return;
+      }
+
+
+      const filtered =
+        teachers.filter(teacher => {
+
+          const name =
+            String(
+              teacher.name || ""
+            ).toLowerCase();
+
+
+          const designation =
+            String(
+              teacher.designation || ""
+            ).toLowerCase();
+
+
+          const phone =
+            String(
+              teacher.phone || ""
+            ).toLowerCase();
+
+
+          return (
+            name.includes(query) ||
+            designation.includes(query) ||
+            phone.includes(query)
+          );
+
+        });
+
+
+      renderTeachers(filtered);
+
+    }
+
+
+    /* ===================================
+       ADD FORM
+    =================================== */
+
+    function showAddForm() {
+
+      document.getElementById(
+        "formBox"
+      ).classList.add("show");
+
+
+      document.getElementById(
+        "formTitle"
+      ).textContent =
+        "➕ নতুন শিক্ষক যোগ করুন";
+
+
+      document.getElementById(
+        "teacherId"
+      ).value = "";
+
+
+      document.getElementById(
+        "name"
+      ).value = "";
+
+
+      document.getElementById(
+        "designation"
+      ).value = "";
+
+
+      document.getElementById(
+        "phone"
+      ).value = "";
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    /* ===================================
+       HIDE FORM
+    =================================== */
+
+    function hideForm() {
+
+      document.getElementById(
+        "formBox"
+      ).classList.remove("show");
+
+    }
+
+
+    /* ===================================
+       SAVE TEACHER
+    =================================== */
+
+    async function saveTeacher() {
+
+      const id =
+        document.getElementById(
+          "teacherId"
+        ).value;
+
+
+      const name =
+        document.getElementById(
+          "name"
+        ).value.trim();
+
+
+      const designation =
+        document.getElementById(
+          "designation"
+        ).value.trim();
+
+
+      const phone =
+        document.getElementById(
+          "phone"
+        ).value.trim();
+
+
+      if (!name) {
+
+        showStatus(
+          "⚠️ শিক্ষকের নাম লিখুন।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      if (!designation) {
+
+        showStatus(
+          "⚠️ শিক্ষকের পদবি লিখুন।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      try {
+
+        if (id) {
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .from("teachers")
+              .update({
+                name: name,
+                designation: designation,
+                phone: phone
+              })
+              .eq("id", id);
+
+
+          if (error) {
+            throw error;
+          }
+
+
+          showStatus(
+            "✅ শিক্ষকের তথ্য আপডেট হয়েছে।"
+          );
+
+        } else {
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .from("teachers")
+              .insert({
+                name: name,
+                designation: designation,
+                phone: phone
+              });
+
+
+          if (error) {
+            throw error;
+          }
+
+
+          showStatus(
+            "✅ নতুন শিক্ষক যোগ হয়েছে।"
+          );
+
+        }
+
+
+        hideForm();
+
+        await loadTeachers();
+
+      } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+          "❌ তথ্য সংরক্ষণ করা যায়নি।",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* ===================================
+       EDIT
+    =================================== */
+
+    async function editTeacher(id) {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("teachers")
+          .select("*")
+          .eq("id", id)
+          .maybeSingle();
+
+
+      if (error || !data) {
+
+        showStatus(
+          "শিক্ষকের তথ্য পাওয়া যায়নি।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      document.getElementById(
+        "teacherId"
+      ).value = data.id;
+
+
+      document.getElementById(
+        "name"
+      ).value = data.name || "";
+
+
+      document.getElementById(
+        "designation"
+      ).value =
+        data.designation || "";
+
+
+      document.getElementById(
+        "phone"
+      ).value =
+        data.phone || "";
+
+
+      document.getElementById(
+        "formTitle"
+      ).textContent =
+        "✏️ শিক্ষকের তথ্য পরিবর্তন করুন";
+
+
+      document.getElementById(
+        "formBox"
+      ).classList.add("show");
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    /* ===================================
+       DELETE
+    =================================== */
+
+    async function deleteTeacher(id) {
+
+      const confirmed =
+        confirm(
+          "আপনি কি এই শিক্ষকের তথ্য মুছে ফেলতে চান?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("teachers")
+          .delete()
+          .eq("id", id);
+
+
+      if (error) {
+
+        console.error(error);
+
+        showStatus(
+          "❌ শিক্ষক মুছে ফেলা যায়নি।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      showStatus(
+        "🗑️ শিক্ষক সফলভাবে মুছে ফেলা হয়েছে।"
+      );
+
+
+      await loadTeachers();
+
+    }
+
+
+    /* ===================================
+       HTML SECURITY
+    =================================== */
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* ===================================
+       DASHBOARD
+    =================================== */
+
+    function goDashboard() {
+
+      window.location.href =
+        "admin.html";
+
+    }
+
+
+    /* ===================================
+       INITIALIZE
+    =================================== */
+
+    async function initialize() {
+
+      const isAdmin =
+        await checkAdmin();
+
+
+      if (!isAdmin) {
+        return;
+      }
+
+
+      await loadTeachers();
+
+
+      document.getElementById(
+        "loading"
+      ).style.display = "none";
+
+    }
+
+
+    initialize();
+
+  </script>
+
+</body>
+</html>
+```
