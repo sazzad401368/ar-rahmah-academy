@@ -1,184 +1,739 @@
+```html
 <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Admin Dashboard - Ar-Rahmah Academy</title>
+  <title>Admin Dashboard | Ar-Rahmah Academy</title>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #087443;
+      --primary-dark: #055c35;
+      --light-green: #e9f7ef;
+      --background: #f4f7f6;
+      --white: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --danger: #c62828;
+      --shadow: 0 5px 20px rgba(0,0,0,0.07);
+      --radius: 16px;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f7f5;
-      color: #222;
+      font-family:
+        "Noto Sans Bengali",
+        "Hind Siliguri",
+        Arial,
+        sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
     }
+
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
-      background: #087443;
+      background:
+        linear-gradient(135deg, #087443, #075b36);
       color: white;
-      padding: 25px 20px;
-      text-align: center;
+      padding: 24px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
     }
 
-    header h1 {
-      font-size: 26px;
-      margin-bottom: 5px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-
-    .welcome {
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      margin-bottom: 25px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    }
-
-    .welcome h2 {
-      color: #087443;
-      margin-bottom: 8px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    .header-content {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 20px;
     }
 
-    .card {
+    .brand h1 {
+      font-size: 25px;
+      margin-bottom: 5px;
+    }
+
+    .brand p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .admin-badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 10px 15px;
+      border-radius: 30px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
+    }
+
+    /* =========================
+       WELCOME
+    ========================= */
+
+    .welcome {
+      background: var(--white);
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+      border-left: 5px solid var(--primary);
+    }
+
+    .welcome h2 {
+      color: var(--primary);
+      margin-bottom: 7px;
+      font-size: 23px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* =========================
+       STATISTICS
+    ========================= */
+
+    .section-title {
+      margin: 30px 0 15px;
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+    }
+
+    .stat-card {
       background: white;
-      padding: 30px 20px;
+      padding: 22px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: 0.25s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+    }
+
+    .stat-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 14px;
+      background: var(--light-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .stat-info p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .stat-number {
+      font-size: 25px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    /* =========================
+       MANAGEMENT CARDS
+    ========================= */
+
+    .management-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .management-card {
+      background: white;
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       text-align: center;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      transition: 0.25s;
     }
 
-    .card .icon {
-      font-size: 40px;
-      margin-bottom: 10px;
+    .management-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.10);
     }
 
-    .card h3 {
-      color: #087443;
+    .management-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .management-card h3 {
+      color: var(--primary);
       margin-bottom: 8px;
+      font-size: 19px;
     }
 
-    .card button {
-      margin-top: 15px;
-      padding: 10px 20px;
+    .management-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 45px;
+    }
+
+    .manage-btn {
+      margin-top: 17px;
+      width: 100%;
+      padding: 11px 15px;
       border: none;
-      border-radius: 6px;
-      background: #087443;
+      border-radius: 9px;
+      background: var(--primary);
       color: white;
+      font-size: 15px;
       cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .manage-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .disabled-btn {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .disabled-btn:hover {
+      background: #9ca3af;
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    #status {
+      margin: 25px 0;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .status-success {
+      background: #e8f7ee;
+      color: #087443;
+    }
+
+    .status-error {
+      background: #fdecec;
+      color: #b42318;
+    }
+
+    /* =========================
+       FOOTER ACTIONS
+    ========================= */
+
+    .bottom-actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .logout {
-      display: block;
-      margin: 30px auto 0;
-      padding: 12px 30px;
-      background: #b42318;
-      color: white;
+      padding: 12px 28px;
       border: none;
-      border-radius: 6px;
+      border-radius: 9px;
+      background: var(--danger);
+      color: white;
+      font-size: 15px;
       cursor: pointer;
-      font-size: 16px;
     }
 
-    #status {
+    .logout:hover {
+      background: #a61f1f;
+    }
+
+    .refresh {
+      padding: 12px 28px;
+      border: 1px solid var(--primary);
+      border-radius: 9px;
+      background: white;
+      color: var(--primary);
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .refresh:hover {
+      background: var(--light-green);
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader-box {
       text-align: center;
-      margin-top: 15px;
-      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #d9eee3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 650px) {
+
+      header {
+        padding: 20px 15px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .brand h1 {
+        font-size: 21px;
+      }
+
+      .container {
+        margin-top: 20px;
+        padding: 0 14px 30px;
+      }
+
+      .welcome {
+        padding: 20px;
+      }
+
+      .welcome h2 {
+        font-size: 20px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 15px 10px;
+        gap: 9px;
+      }
+
+      .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 23px;
+      }
+
+      .stat-number {
+        font-size: 21px;
+      }
+
+      .management-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>🔐 Admin Dashboard</h1>
-    <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
-  </header>
-
-  <div class="container">
-
-    <div class="welcome">
-      <h2>স্বাগতম, Admin!</h2>
-      <p>আপনি সফলভাবে Admin Panel-এ প্রবেশ করেছেন।</p>
+  <!-- Loading -->
+  <div id="loading">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <p>Admin Panel যাচাই করা হচ্ছে...</p>
     </div>
-
-    <div class="cards">
-
-      <div class="card">
-        <div class="icon">📢</div>
-        <h3>নোটিশ</h3>
-        <p>নোটিশ পরিচালনা করুন।</p>
-        <button>Manage</button>
-      </div>
-
-      <div class="card">
-  <div class="icon">👨‍🎓</div>
-  <h3>শিক্ষার্থী</h3>
-  <p>শিক্ষার্থীদের তথ্য পরিচালনা করুন।</p>
-  <button onclick="window.location.href='students.html'">
-    Manage
-  </button>
-</div>
-
-     <div class="card"> 
-  <div class="icon">📊</div> 
-  <h3>ফলাফল</h3> 
-  <p>পরীক্ষার ফলাফল পরিচালনা করুন।</p> 
-  <button onclick="window.location.href='result.html'">
-    Manage
-  </button> 
-</div>
-
-      <div class="card">
-        <div class="icon">📝</div>
-        <h3>পরীক্ষার খাতা</h3>
-        <p>পরীক্ষার খাতা পরিচালনা করুন।</p>
-        <button>Manage</button>
-      </div>
-
-      <div class="card">
-        <div class="icon">📱</div>
-        <h3>QR Code</h3>
-        <p>QR Code System পরিচালনা করুন।</p>
-        <button>Manage</button>
-      </div>
-
-      <div class="card">
-        <div class="icon">👨‍🏫</div>
-        <h3>শিক্ষক</h3>
-        <p>শিক্ষকদের তথ্য পরিচালনা করুন।</p>
-        <button>Manage</button>
-      </div>
-
-    </div>
-
-    <div id="status"></div>
-
-    <button class="logout" onclick="logout()">
-      🚪 Logout
-    </button>
-
   </div>
 
+
+  <!-- HEADER -->
+  <header>
+
+    <div class="header-content">
+
+      <div class="brand">
+        <h1>🔐 Admin Dashboard</h1>
+        <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
+      </div>
+
+      <div class="admin-badge">
+        👤 Administrator
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- Welcome -->
+    <section class="welcome">
+
+      <h2>আসসালামু আলাইকুম, Admin! 👋</h2>
+
+      <p>
+        আপনার Admin Panel-এ স্বাগতম।
+        এখান থেকে একাডেমির শিক্ষার্থী, ফলাফল,
+        শিক্ষক, পরীক্ষা ও নোটিশ পরিচালনা করতে পারবেন।
+      </p>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+    <h2 class="section-title">
+      📊 একাডেমির সংক্ষিপ্ত তথ্য
+    </h2>
+
+    <section class="stats">
+
+      <div class="stat-card">
+
+        <div class="stat-icon">👨‍🎓</div>
+
+        <div class="stat-info">
+          <p>মোট শিক্ষার্থী</p>
+          <div
+            id="studentCount"
+            class="stat-number">
+            —
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">👨‍🏫</div>
+
+        <div class="stat-info">
+          <p>মোট শিক্ষক</p>
+          <div
+            id="teacherCount"
+            class="stat-number">
+            —
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">📝</div>
+
+        <div class="stat-info">
+          <p>মোট পরীক্ষা</p>
+          <div
+            id="examCount"
+            class="stat-number">
+            —
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">📊</div>
+
+        <div class="stat-info">
+          <p>মোট ফলাফল</p>
+          <div
+            id="resultCount"
+            class="stat-number">
+            —
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">📢</div>
+
+        <div class="stat-info">
+          <p>মোট নোটিশ</p>
+          <div
+            id="noticeCount"
+            class="stat-number">
+            —
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- MANAGEMENT -->
+    <h2 class="section-title">
+      ⚙️ Management
+    </h2>
+
+    <section class="management-grid">
+
+
+      <!-- Students -->
+      <div class="management-card">
+
+        <div class="management-icon">
+          👨‍🎓
+        </div>
+
+        <h3>শিক্ষার্থী</h3>
+
+        <p>
+          শিক্ষার্থীদের তথ্য যোগ,
+          পরিবর্তন ও পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn"
+          onclick="goTo('students.html')">
+          👨‍🎓 Manage Students
+        </button>
+
+      </div>
+
+
+      <!-- Results -->
+      <div class="management-card">
+
+        <div class="management-icon">
+          📊
+        </div>
+
+        <h3>ফলাফল</h3>
+
+        <p>
+          পরীক্ষার ফলাফল যোগ,
+          পরিবর্তন ও পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn"
+          onclick="goTo('result.html')">
+          📊 Manage Results
+        </button>
+
+      </div>
+
+
+      <!-- Notices -->
+      <div class="management-card">
+
+        <div class="management-icon">
+          📢
+        </div>
+
+        <h3>নোটিশ</h3>
+
+        <p>
+          একাডেমির গুরুত্বপূর্ণ
+          নোটিশ পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn disabled-btn"
+          onclick="comingSoon()">
+          📢 Coming Soon
+        </button>
+
+      </div>
+
+
+      <!-- Exams -->
+      <div class="management-card">
+
+        <div class="management-icon">
+          📝
+        </div>
+
+        <h3>পরীক্ষা</h3>
+
+        <p>
+          পরীক্ষা তৈরি ও
+          পরীক্ষার তথ্য পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn disabled-btn"
+          onclick="comingSoon()">
+          📝 Coming Soon
+        </button>
+
+      </div>
+
+
+      <!-- Exam Papers -->
+      <div class="management-card">
+
+        <div class="management-icon">
+          📄
+        </div>
+
+        <h3>পরীক্ষার খাতা</h3>
+
+        <p>
+          পরীক্ষার প্রশ্নপত্র ও
+          ফাইল পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn disabled-btn"
+          onclick="comingSoon()">
+          📄 Coming Soon
+        </button>
+
+      </div>
+
+
+      <!-- Teachers -->
+      <div class="management-card">
+
+        <div class="management-icon">
+          👨‍🏫
+        </div>
+
+        <h3>শিক্ষক</h3>
+
+        <p>
+          শিক্ষকদের তথ্য
+          পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn disabled-btn"
+          onclick="comingSoon()">
+          👨‍🏫 Coming Soon
+        </button>
+
+      </div>
+
+
+      <!-- QR -->
+      <div class="management-card">
+
+        <div class="management-icon">
+          📱
+        </div>
+
+        <h3>QR Code</h3>
+
+        <p>
+          ফলাফল ও অন্যান্য
+          QR Code পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn disabled-btn"
+          onclick="comingSoon()">
+          📱 Coming Soon
+        </button>
+
+      </div>
+
+
+    </section>
+
+
+    <!-- STATUS -->
+    <div id="status"></div>
+
+
+    <!-- ACTIONS -->
+    <div class="bottom-actions">
+
+      <button
+        class="refresh"
+        onclick="loadStatistics()">
+        🔄 Refresh Dashboard
+      </button>
+
+      <button
+        class="logout"
+        onclick="logout()">
+        🚪 Logout
+      </button>
+
+    </div>
+
+  </main>
+
+
   <script>
+
+    /* =========================================
+       SUPABASE CONFIG
+    ========================================= */
 
     const SUPABASE_URL =
       "https://pkznaencgprqzvdzapfi.supabase.co";
@@ -193,58 +748,322 @@
       );
 
 
-    // Check login
+    /* =========================================
+       PAGE NAVIGATION
+    ========================================= */
+
+    function goTo(page) {
+      window.location.href = page;
+    }
+
+
+    /* =========================================
+       STATUS MESSAGE
+    ========================================= */
+
+    function showStatus(message, type = "success") {
+
+      const status =
+        document.getElementById("status");
+
+      status.textContent = message;
+
+      status.className =
+        type === "error"
+          ? "status-error"
+          : "status-success";
+
+    }
+
+
+    /* =========================================
+       ADMIN AUTHENTICATION
+    ========================================= */
+
     async function checkAdmin() {
 
-      const { data: { user } } =
-        await supabaseClient.auth.getUser();
+      try {
 
-      if (!user) {
+        const {
+          data: { user },
+          error: userError
+        } =
+          await supabaseClient.auth.getUser();
 
-        window.location.href = "index.html#admin-login";
 
+        if (userError || !user) {
+
+          window.location.href =
+            "index.html#admin-login";
+
+          return false;
+        }
+
+
+        /* Check admins table */
+
+        const {
+          data: adminData,
+          error: adminError
+        } =
+          await supabaseClient
+            .from("admins")
+            .select("id")
+            .eq("id", user.id)
+            .maybeSingle();
+
+
+        if (adminError || !adminData) {
+
+          await supabaseClient.auth.signOut();
+
+          window.location.href =
+            "index.html#admin-login";
+
+          return false;
+        }
+
+
+        showStatus(
+          "✅ Admin authentication verified"
+        );
+
+        return true;
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        window.location.href =
+          "index.html#admin-login";
+
+        return false;
+      }
+
+    }
+
+
+    /* =========================================
+       DATABASE COUNT HELPER
+    ========================================= */
+
+    async function getCount(tableName) {
+
+      const {
+        count,
+        error
+      } =
+        await supabaseClient
+          .from(tableName)
+          .select("*", {
+            count: "exact",
+            head: true
+          });
+
+
+      if (error) {
+
+        console.error(
+          `Error loading ${tableName}:`,
+          error
+        );
+
+        return null;
+      }
+
+
+      return count ?? 0;
+
+    }
+
+
+    /* =========================================
+       LOAD DASHBOARD STATISTICS
+    ========================================= */
+
+    async function loadStatistics() {
+
+      const studentElement =
+        document.getElementById("studentCount");
+
+      const teacherElement =
+        document.getElementById("teacherCount");
+
+      const examElement =
+        document.getElementById("examCount");
+
+      const resultElement =
+        document.getElementById("resultCount");
+
+      const noticeElement =
+        document.getElementById("noticeCount");
+
+
+      /* Loading */
+
+      studentElement.textContent = "…";
+      teacherElement.textContent = "…";
+      examElement.textContent = "…";
+      resultElement.textContent = "…";
+      noticeElement.textContent = "…";
+
+
+      try {
+
+        /*
+          Your existing Supabase tables:
+          students
+          teachers
+          exams
+          results
+          notices
+        */
+
+        const [
+          students,
+          teachers,
+          exams,
+          results,
+          notices
+        ] = await Promise.all([
+
+          getCount("students"),
+
+          getCount("teachers"),
+
+          getCount("exams"),
+
+          getCount("results"),
+
+          getCount("notices")
+
+        ]);
+
+
+        studentElement.textContent =
+          students === null ? "—" : students;
+
+        teacherElement.textContent =
+          teachers === null ? "—" : teachers;
+
+        examElement.textContent =
+          exams === null ? "—" : exams;
+
+        resultElement.textContent =
+          results === null ? "—" : results;
+
+        noticeElement.textContent =
+          notices === null ? "—" : notices;
+
+
+        showStatus(
+          "✅ Dashboard data successfully loaded"
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        showStatus(
+          "⚠️ Dashboard data load করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+    ========================================= */
+
+    async function logout() {
+
+      const confirmed =
+        confirm(
+          "আপনি কি Admin Panel থেকে Logout করতে চান?"
+        );
+
+
+      if (!confirmed) {
         return;
       }
 
 
-      // Check admin permission
-      const { data: adminData, error } =
-        await supabaseClient
-          .from("admins")
-          .select("id")
-          .eq("id", user.id)
-          .maybeSingle();
-
-
-      if (error || !adminData) {
+      try {
 
         await supabaseClient.auth.signOut();
 
-        window.location.href = "index.html#admin-login";
+        window.location.href =
+          "index.html";
 
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        showStatus(
+          "Logout করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       COMING SOON
+    ========================================= */
+
+    function comingSoon() {
+
+      alert(
+        "এই Management Page-এর কাজ এখনো তৈরি করা হয়নি।\n\nপরবর্তী ধাপে এটি তৈরি করা হবে।"
+      );
+
+    }
+
+
+    /* =========================================
+       INITIALIZE DASHBOARD
+    ========================================= */
+
+    async function initializeDashboard() {
+
+      const isAdmin =
+        await checkAdmin();
+
+
+      if (!isAdmin) {
         return;
       }
 
-      document.getElementById("status").textContent =
-        "✅ Admin authentication verified";
+
+      await loadStatistics();
+
+
+      /* Hide loading */
+
+      document.getElementById(
+        "loading"
+      ).style.display = "none";
 
     }
 
 
-    // Logout
-    async function logout() {
+    /* Start */
 
-      await supabaseClient.auth.signOut();
-
-      window.location.href =
-        "index.html";
-
-    }
-
-
-    checkAdmin();
+    initializeDashboard();
 
   </script>
 
 </body>
 </html>
+```
