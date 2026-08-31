@@ -1019,12 +1019,15 @@
 
       } catch (error) {
 
-        console.error(error);
+  console.error("TEACHER SAVE ERROR:", error);
 
-        showStatus(
-          "❌ তথ্য সংরক্ষণ করা যায়নি।",
-          "error"
-        );
+  showStatus(
+    "❌ তথ্য সংরক্ষণ করা যায়নি: " +
+    (error.message || "Unknown error"),
+    "error"
+  );
+
+}
 
       }
 
