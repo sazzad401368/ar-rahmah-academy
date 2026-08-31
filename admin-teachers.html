@@ -20,11 +20,13 @@
       --primary: #087443;
       --dark: #055c35;
       --bg: #f4f7f6;
-      --white: #fff;
-      --text: #222;
+      --white: #ffffff;
+      --text: #222222;
       --muted: #6b7280;
       --danger: #c62828;
       --blue: #2563eb;
+      --border: #d1d5db;
+      --shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
     }
 
     body {
@@ -33,32 +35,50 @@
         "Hind Siliguri",
         Arial,
         sans-serif;
+
       background: var(--bg);
       color: var(--text);
     }
 
+    /* ===============================
+       HEADER
+    =============================== */
+
     header {
-      background: linear-gradient(135deg, var(--primary), var(--dark));
+      background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--dark)
+      );
+
       color: white;
-      padding: 25px 20px;
+      padding: 28px 20px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 25px;
-      margin-bottom: 6px;
+      font-size: 26px;
+      margin-bottom: 7px;
     }
 
     header p {
       font-size: 14px;
-      opacity: .9;
+      opacity: 0.9;
     }
+
+    /* ===============================
+       CONTAINER
+    =============================== */
 
     .container {
       max-width: 1100px;
       margin: 25px auto;
-      padding: 0 15px 40px;
+      padding: 0 15px 50px;
     }
+
+    /* ===============================
+       TOP BAR
+    =============================== */
 
     .top-bar {
       display: flex;
@@ -76,12 +96,22 @@
       cursor: pointer;
       font-size: 15px;
       font-family: inherit;
+      transition: 0.2s;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .back-btn {
       background: white;
       color: var(--primary);
       border: 1px solid var(--primary);
+    }
+
+    .back-btn:hover {
+      background: #e8f7ee;
     }
 
     .add-btn {
@@ -93,9 +123,13 @@
       background: var(--dark);
     }
 
+    /* ===============================
+       STATUS
+    =============================== */
+
     #status {
       display: none;
-      padding: 12px;
+      padding: 13px 15px;
       margin-bottom: 18px;
       text-align: center;
       border-radius: 9px;
@@ -104,17 +138,30 @@
       word-break: break-word;
     }
 
-    .success {
-      display: block !important;
+    #status.success {
+      display: block;
       background: #e8f7ee;
       color: var(--primary);
+      border: 1px solid #b7e4c7;
     }
 
-    .error {
-      display: block !important;
+    #status.error {
+      display: block;
       background: #fdecec;
       color: var(--danger);
+      border: 1px solid #f3b7b7;
     }
+
+    #status.info {
+      display: block;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* ===============================
+       FORM
+    =============================== */
 
     .form-box {
       display: none;
@@ -122,7 +169,7 @@
       padding: 25px;
       border-radius: 15px;
       margin-bottom: 25px;
-      box-shadow: 0 4px 18px rgba(0,0,0,.07);
+      box-shadow: var(--shadow);
     }
 
     .form-box.show {
@@ -148,16 +195,18 @@
     .form-group input {
       width: 100%;
       padding: 12px;
-      border: 1px solid #d1d5db;
+      border: 1px solid var(--border);
       border-radius: 8px;
       outline: none;
       font-size: 15px;
       font-family: inherit;
+      transition: 0.2s;
     }
 
     .form-group input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(8,116,67,.10);
+      box-shadow:
+        0 0 0 3px rgba(8, 116, 67, 0.1);
     }
 
     .form-actions {
@@ -172,33 +221,60 @@
       color: white;
     }
 
+    .save-btn:hover {
+      background: var(--dark);
+    }
+
     .cancel-btn {
       background: #e5e7eb;
       color: #374151;
     }
 
-    .section-title {
-      color: var(--primary);
-      margin: 25px 0 15px;
+    .cancel-btn:hover {
+      background: #d1d5db;
     }
+
+    /* ===============================
+       SEARCH
+    =============================== */
 
     .search-box {
       background: white;
       padding: 15px;
       border-radius: 12px;
       margin-bottom: 18px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+      box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.06);
     }
 
     .search-box input {
       width: 100%;
       padding: 12px;
-      border: 1px solid #d1d5db;
+      border: 1px solid var(--border);
       border-radius: 8px;
       font-size: 15px;
       outline: none;
       font-family: inherit;
     }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow:
+        0 0 0 3px rgba(8, 116, 67, 0.1);
+    }
+
+    /* ===============================
+       SECTION TITLE
+    =============================== */
+
+    .section-title {
+      color: var(--primary);
+      margin: 25px 0 15px;
+    }
+
+    /* ===============================
+       TEACHER LIST
+    =============================== */
 
     .teacher-list {
       display: grid;
@@ -207,16 +283,22 @@
       gap: 18px;
     }
 
+    /* ===============================
+       TEACHER CARD
+    =============================== */
+
     .teacher-card {
       background: white;
       padding: 22px;
       border-radius: 15px;
-      box-shadow: 0 4px 18px rgba(0,0,0,.07);
-      transition: .2s;
+      box-shadow: var(--shadow);
+      transition: 0.2s;
     }
 
     .teacher-card:hover {
       transform: translateY(-3px);
+      box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
     .avatar {
@@ -225,10 +307,14 @@
       border-radius: 50%;
       background: #e8f7ee;
       color: var(--primary);
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 29px;
+      font-weight: bold;
+
       margin-bottom: 14px;
     }
 
@@ -251,6 +337,10 @@
       margin-bottom: 15px;
     }
 
+    /* ===============================
+       ACTION BUTTONS
+    =============================== */
+
     .actions {
       display: flex;
       gap: 8px;
@@ -264,15 +354,28 @@
       color: white;
       cursor: pointer;
       font-size: 13px;
+      font-family: inherit;
     }
 
     .edit-btn {
       background: var(--blue);
     }
 
+    .edit-btn:hover {
+      background: #1d4ed8;
+    }
+
     .delete-btn {
       background: var(--danger);
     }
+
+    .delete-btn:hover {
+      background: #a91f1f;
+    }
+
+    /* ===============================
+       EMPTY
+    =============================== */
 
     .empty {
       background: white;
@@ -280,17 +383,25 @@
       text-align: center;
       border-radius: 15px;
       color: var(--muted);
-      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+      box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.06);
+
       grid-column: 1 / -1;
     }
+
+    /* ===============================
+       LOADING SCREEN
+    =============================== */
 
     #loading {
       position: fixed;
       inset: 0;
-      background: rgba(255,255,255,.97);
+      background: rgba(255, 255, 255, 0.97);
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       z-index: 9999;
     }
 
@@ -302,11 +413,16 @@
     .spinner {
       width: 45px;
       height: 45px;
+
       border: 4px solid #dcefe5;
       border-top-color: var(--primary);
+
       border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin: auto auto 12px;
+
+      animation: spin 0.8s linear infinite;
+
+      margin:
+        auto auto 12px;
     }
 
     @keyframes spin {
@@ -315,9 +431,18 @@
       }
     }
 
+    /* ===============================
+       MOBILE
+    =============================== */
+
     @media (max-width: 600px) {
+
       header h1 {
         font-size: 21px;
+      }
+
+      .container {
+        margin-top: 18px;
       }
 
       .form-box {
@@ -327,25 +452,45 @@
       .teacher-list {
         grid-template-columns: 1fr;
       }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .top-bar .btn {
+        width: 100%;
+      }
+
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Loading -->
+  <!-- =============================
+       LOADING
+  ============================== -->
+
   <div id="loading">
+
     <div class="loader">
+
       <div class="spinner"></div>
 
       <p>
         Admin যাচাই করা হচ্ছে...
       </p>
+
     </div>
+
   </div>
 
 
-  <!-- Header -->
+  <!-- =============================
+       HEADER
+  ============================== -->
+
   <header>
 
     <h1>
@@ -361,10 +506,14 @@
 
   <main class="container">
 
-    <!-- Top Bar -->
+    <!-- =============================
+         TOP BAR
+    ============================== -->
+
     <div class="top-bar">
 
       <button
+        type="button"
         class="btn back-btn"
         onclick="goDashboard()">
 
@@ -374,6 +523,7 @@
 
 
       <button
+        type="button"
         class="btn add-btn"
         onclick="showAddForm()">
 
@@ -384,11 +534,17 @@
     </div>
 
 
-    <!-- Status -->
+    <!-- =============================
+         STATUS
+    ============================== -->
+
     <div id="status"></div>
 
 
-    <!-- Form -->
+    <!-- =============================
+         FORM
+    ============================== -->
+
     <section
       id="formBox"
       class="form-box">
@@ -397,6 +553,12 @@
         ➕ নতুন শিক্ষক যোগ করুন
       </h2>
 
+
+      <!--
+        গুরুত্বপূর্ণ:
+        teacherId শুধুমাত্র EDIT-এর জন্য ব্যবহার হবে।
+        নতুন শিক্ষক যোগ করার সময় ID পাঠানো হবে না।
+      -->
 
       <input
         type="hidden"
@@ -412,7 +574,8 @@
         <input
           type="text"
           id="name"
-          placeholder="শিক্ষকের নাম লিখুন">
+          placeholder="শিক্ষকের নাম লিখুন"
+          autocomplete="name">
 
       </div>
 
@@ -440,7 +603,8 @@
         <input
           type="tel"
           id="phone"
-          placeholder="মোবাইল নম্বর লিখুন">
+          placeholder="মোবাইল নম্বর লিখুন"
+          autocomplete="tel">
 
       </div>
 
@@ -448,6 +612,8 @@
       <div class="form-actions">
 
         <button
+          type="button"
+          id="saveButton"
           class="btn save-btn"
           onclick="saveTeacher()">
 
@@ -457,6 +623,7 @@
 
 
         <button
+          type="button"
           class="btn cancel-btn"
           onclick="hideForm()">
 
@@ -469,24 +636,34 @@
     </section>
 
 
-    <!-- Search -->
+    <!-- =============================
+         SEARCH
+    ============================== -->
+
     <div class="search-box">
 
       <input
         type="search"
         id="search"
-        placeholder="🔎 শিক্ষকের নাম বা পদবি দিয়ে খুঁজুন..."
+        placeholder="🔎 শিক্ষকের নাম, পদবি বা মোবাইল দিয়ে খুঁজুন..."
         oninput="filterTeachers()">
 
     </div>
 
+
+    <!-- =============================
+         TITLE
+    ============================== -->
 
     <h2 class="section-title">
       📋 সকল শিক্ষক
     </h2>
 
 
-    <!-- Teacher List -->
+    <!-- =============================
+         TEACHER LIST
+    ============================== -->
+
     <section
       id="teacherList"
       class="teacher-list">
@@ -497,15 +674,16 @@
 
   <script>
 
-    /* ===================================
-       SUPABASE
-    =================================== */
+    /* =====================================================
+       SUPABASE CONFIGURATION
+    ===================================================== */
 
     const SUPABASE_URL =
       "https://pkznaencgprqzvdzapfi.supabase.co";
 
     const SUPABASE_KEY =
       "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
 
     const supabaseClient =
       window.supabase.createClient(
@@ -517,16 +695,18 @@
     let teachers = [];
 
 
-    /* ===================================
+    /* =====================================================
        ADMIN CHECK
-    =================================== */
+    ===================================================== */
 
     async function checkAdmin() {
 
       try {
 
         const {
-          data: { user },
+          data: {
+            user
+          },
           error
         } =
           await supabaseClient.auth.getUser();
@@ -552,12 +732,23 @@
             .maybeSingle();
 
 
-        if (adminError || !adminData) {
+        if (adminError) {
 
           console.error(
             "ADMIN CHECK ERROR:",
             adminError
           );
+
+          showStatus(
+            "❌ Admin যাচাই করতে সমস্যা হয়েছে।",
+            "error"
+          );
+
+          return false;
+        }
+
+
+        if (!adminData) {
 
           await supabaseClient.auth.signOut();
 
@@ -570,7 +761,9 @@
 
         return true;
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         console.error(
           "ADMIN CHECK ERROR:",
@@ -586,9 +779,9 @@
     }
 
 
-    /* ===================================
-       STATUS
-    =================================== */
+    /* =====================================================
+       STATUS MESSAGE
+    ===================================================== */
 
     function showStatus(
       message,
@@ -598,28 +791,34 @@
       const status =
         document.getElementById("status");
 
+
       status.textContent =
         message;
 
+
       status.className =
-        type === "error"
-          ? "error"
-          : "success";
+        type;
 
 
-      setTimeout(() => {
+      clearTimeout(
+        window.statusTimer
+      );
 
-        status.textContent = "";
-        status.className = "";
 
-      }, 5000);
+      window.statusTimer =
+        setTimeout(() => {
+
+          status.textContent = "";
+          status.className = "";
+
+        }, 5000);
 
     }
 
 
-    /* ===================================
+    /* =====================================================
        LOAD TEACHERS
-    =================================== */
+    ===================================================== */
 
     async function loadTeachers() {
 
@@ -633,52 +832,66 @@
         '<div class="empty">⏳ শিক্ষক তথ্য লোড হচ্ছে...</div>';
 
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("teachers")
-          .select("*")
-          .order("created_at", {
-            ascending: false
-          });
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("teachers")
+            .select("*")
+            .order(
+              "created_at",
+              {
+                ascending: false
+              }
+            );
 
 
-      if (error) {
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        teachers =
+          data || [];
+
+
+        renderTeachers(
+          teachers
+        );
+
+      }
+
+      catch (error) {
 
         console.error(
           "LOAD TEACHERS ERROR:",
           error
         );
 
+
         list.innerHTML =
           '<div class="empty">⚠️ শিক্ষক তথ্য লোড করা যায়নি।</div>';
 
+
         showStatus(
           "❌ শিক্ষক তথ্য লোড করতে সমস্যা হয়েছে: " +
-          (error.message || "Unknown error"),
+          getErrorMessage(error),
           "error"
         );
 
-        return;
       }
-
-
-      teachers =
-        data || [];
-
-
-      renderTeachers(
-        teachers
-      );
 
     }
 
 
-    /* ===================================
+    /* =====================================================
        RENDER TEACHERS
-    =================================== */
+    ===================================================== */
 
     function renderTeachers(list) {
 
@@ -688,7 +901,7 @@
         );
 
 
-      if (!list.length) {
+      if (!list || !list.length) {
 
         container.innerHTML =
           '<div class="empty">👨‍🏫 কোনো শিক্ষক পাওয়া যায়নি।</div>';
@@ -698,20 +911,35 @@
 
 
       container.innerHTML =
-        list.map(teacher => {
+        list.map(
+          teacher => {
 
-          const name =
-            teacher.name ||
-            "শিক্ষক";
-
-
-          const initial =
-            name.charAt(0);
+            const name =
+              teacher.name ||
+              "শিক্ষক";
 
 
-          const date =
-            teacher.created_at
-              ? new Date(
+            const initial =
+              name.charAt(0);
+
+
+            const designation =
+              teacher.designation ||
+              "পদবি উল্লেখ নেই";
+
+
+            const phone =
+              teacher.phone ||
+              "মোবাইল নম্বর নেই";
+
+
+            let date = "";
+
+
+            if (teacher.created_at) {
+
+              date =
+                new Date(
                   teacher.created_at
                 ).toLocaleDateString(
                   "bn-BD",
@@ -720,84 +948,106 @@
                     month: "long",
                     day: "numeric"
                   }
-                )
-              : "";
+                );
+
+            }
 
 
-          return `
+            return `
 
-            <article class="teacher-card">
+              <article
+                class="teacher-card">
 
-              <div class="avatar">
-                ${escapeHtml(initial)}
-              </div>
+                <div class="avatar">
 
-              <div class="teacher-name">
-                ${escapeHtml(name)}
-              </div>
+                  ${escapeHtml(initial)}
 
-              <div class="teacher-info">
-                🎓 ${
-                  escapeHtml(
-                    teacher.designation ||
-                    "পদবি উল্লেখ নেই"
-                  )
+                </div>
+
+
+                <div class="teacher-name">
+
+                  ${escapeHtml(name)}
+
+                </div>
+
+
+                <div class="teacher-info">
+
+                  🎓
+                  ${escapeHtml(designation)}
+
+                </div>
+
+
+                <div class="teacher-info">
+
+                  📱
+                  ${escapeHtml(phone)}
+
+                </div>
+
+
+                ${
+                  date
+                    ? `
+                      <div class="teacher-date">
+
+                        📅 ${escapeHtml(date)}
+
+                      </div>
+                    `
+                    : ""
                 }
-              </div>
-
-              <div class="teacher-info">
-                📱 ${
-                  escapeHtml(
-                    teacher.phone ||
-                    "মোবাইল নম্বর নেই"
-                  )
-                }
-              </div>
-
-              <div class="teacher-date">
-                📅 ${date}
-              </div>
-
-              <div class="actions">
-
-                <button
-                  class="action-btn edit-btn"
-                  onclick="editTeacher('${escapeJs(teacher.id)}')">
-
-                  ✏️ Edit
-
-                </button>
 
 
-                <button
-                  class="action-btn delete-btn"
-                  onclick="deleteTeacher('${escapeJs(teacher.id)}')">
+                <div class="actions">
 
-                  🗑️ Delete
+                  <button
+                    type="button"
+                    class="action-btn edit-btn"
+                    onclick="editTeacher(${safeJsValue(teacher.id)})">
 
-                </button>
+                    ✏️ Edit
 
-              </div>
+                  </button>
 
-            </article>
 
-          `;
+                  <button
+                    type="button"
+                    class="action-btn delete-btn"
+                    onclick="deleteTeacher(${safeJsValue(teacher.id)})">
 
-        }).join("");
+                    🗑️ Delete
+
+                  </button>
+
+                </div>
+
+              </article>
+
+            `;
+
+          }
+        ).join("");
 
     }
 
 
-    /* ===================================
+    /* =====================================================
        SEARCH
-    =================================== */
+    ===================================================== */
 
     function filterTeachers() {
 
-      const query =
+      const input =
         document.getElementById(
           "search"
-        ).value
+        );
+
+
+      const query =
+        input.value
           .trim()
           .toLowerCase();
 
@@ -851,9 +1101,9 @@
     }
 
 
-    /* ===================================
-       ADD FORM
-    =================================== */
+    /* =====================================================
+       SHOW ADD FORM
+    ===================================================== */
 
     function showAddForm() {
 
@@ -888,6 +1138,17 @@
       ).value = "";
 
 
+      document.getElementById(
+        "saveButton"
+      ).textContent =
+        "💾 সংরক্ষণ করুন";
+
+
+      document.getElementById(
+        "name"
+      ).focus();
+
+
       window.scrollTo({
         top: 0,
         behavior: "smooth"
@@ -896,9 +1157,9 @@
     }
 
 
-    /* ===================================
+    /* =====================================================
        HIDE FORM
-    =================================== */
+    ===================================================== */
 
     function hideForm() {
 
@@ -908,19 +1169,24 @@
         "show"
       );
 
+
+      document.getElementById(
+        "teacherId"
+      ).value = "";
+
     }
 
 
-    /* ===================================
+    /* =====================================================
        SAVE TEACHER
-    =================================== */
+    ===================================================== */
 
     async function saveTeacher() {
 
       const id =
         document.getElementById(
           "teacherId"
-        ).value;
+        ).value.trim();
 
 
       const name =
@@ -941,12 +1207,20 @@
         ).value.trim();
 
 
+      /* -----------------------------
+         VALIDATION
+      ----------------------------- */
+
       if (!name) {
 
         showStatus(
           "⚠️ শিক্ষকের নাম লিখুন।",
           "error"
         );
+
+        document.getElementById(
+          "name"
+        ).focus();
 
         return;
       }
@@ -959,15 +1233,33 @@
           "error"
         );
 
+        document.getElementById(
+          "designation"
+        ).focus();
+
         return;
       }
 
 
+      const saveButton =
+        document.getElementById(
+          "saveButton"
+        );
+
+
+      saveButton.disabled =
+        true;
+
+
+      saveButton.textContent =
+        "⏳ সংরক্ষণ হচ্ছে...";
+
+
       try {
 
-        /* =============================
+        /* =================================================
            UPDATE EXISTING TEACHER
-        ============================= */
+        ================================================= */
 
         if (id) {
 
@@ -979,9 +1271,12 @@
               .update({
                 name: name,
                 designation: designation,
-                phone: phone
+                phone: phone || null
               })
-              .eq("id", id);
+              .eq(
+                "id",
+                id
+              );
 
 
           if (error) {
@@ -992,21 +1287,22 @@
 
 
           showStatus(
-            "✅ শিক্ষকের তথ্য আপডেট হয়েছে।"
+            "✅ শিক্ষকের তথ্য সফলভাবে আপডেট হয়েছে।",
+            "success"
           );
 
         }
 
 
-        /* =============================
+        /* =================================================
            ADD NEW TEACHER
-        ============================= */
+
+           ⚠️ এখানে ID পাঠানো হচ্ছে না।
+
+           Database-এর DEFAULT ID নিজে তৈরি করবে।
+        ================================================= */
 
         else {
-
-          const newTeacherId =
-            crypto.randomUUID();
-
 
           const {
             error
@@ -1014,10 +1310,9 @@
             await supabaseClient
               .from("teachers")
               .insert({
-                id: newTeacherId,
                 name: name,
                 designation: designation,
-                phone: phone
+                phone: phone || null
               });
 
 
@@ -1029,18 +1324,44 @@
 
 
           showStatus(
-            "✅ নতুন শিক্ষক যোগ হয়েছে।"
+            "✅ নতুন শিক্ষক সফলভাবে যোগ হয়েছে।",
+            "success"
           );
 
         }
 
 
+        /* -----------------------------
+           RESET FORM
+        ----------------------------- */
+
         hideForm();
+
+
+        document.getElementById(
+          "name"
+        ).value = "";
+
+
+        document.getElementById(
+          "designation"
+        ).value = "";
+
+
+        document.getElementById(
+          "phone"
+        ).value = "";
+
+
+        /* -----------------------------
+           RELOAD
+        ----------------------------- */
 
         await loadTeachers();
 
+      }
 
-      } catch (error) {
+      catch (error) {
 
         console.error(
           "TEACHER SAVE ERROR:",
@@ -1050,44 +1371,40 @@
 
         showStatus(
           "❌ তথ্য সংরক্ষণ করা যায়নি: " +
-          (
-            error.message ||
-            "Unknown error"
-          ),
+          getErrorMessage(error),
           "error"
         );
+
+      }
+
+      finally {
+
+        saveButton.disabled =
+          false;
+
+
+        saveButton.textContent =
+          "💾 সংরক্ষণ করুন";
 
       }
 
     }
 
 
-    /* ===================================
-       EDIT
-    =================================== */
+    /* =====================================================
+       EDIT TEACHER
+    ===================================================== */
 
     async function editTeacher(id) {
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("teachers")
-          .select("*")
-          .eq("id", id)
-          .maybeSingle();
-
-
-      if (error || !data) {
-
-        console.error(
-          "EDIT TEACHER ERROR:",
-          error
-        );
+      if (
+        id === null ||
+        id === undefined ||
+        id === ""
+      ) {
 
         showStatus(
-          "❌ শিক্ষকের তথ্য পাওয়া যায়নি।",
+          "❌ শিক্ষকের ID পাওয়া যায়নি।",
           "error"
         );
 
@@ -1095,58 +1412,154 @@
       }
 
 
-      document.getElementById(
-        "teacherId"
-      ).value =
-        data.id || "";
+      showStatus(
+        "⏳ শিক্ষকের তথ্য লোড হচ্ছে...",
+        "info"
+      );
 
 
-      document.getElementById(
-        "name"
-      ).value =
-        data.name || "";
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("teachers")
+            .select("*")
+            .eq(
+              "id",
+              id
+            )
+            .maybeSingle();
 
 
-      document.getElementById(
-        "designation"
-      ).value =
-        data.designation || "";
+        if (error) {
+
+          throw error;
+
+        }
 
 
-      document.getElementById(
-        "phone"
-      ).value =
-        data.phone || "";
+        if (!data) {
+
+          showStatus(
+            "❌ শিক্ষকের তথ্য পাওয়া যায়নি।",
+            "error"
+          );
+
+          return;
+        }
 
 
-      document.getElementById(
-        "formTitle"
-      ).textContent =
-        "✏️ শিক্ষকের তথ্য পরিবর্তন করুন";
+        document.getElementById(
+          "teacherId"
+        ).value =
+          data.id;
 
 
-      document.getElementById(
-        "formBox"
-      ).classList.add("show");
+        document.getElementById(
+          "name"
+        ).value =
+          data.name || "";
 
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+        document.getElementById(
+          "designation"
+        ).value =
+          data.designation || "";
+
+
+        document.getElementById(
+          "phone"
+        ).value =
+          data.phone || "";
+
+
+        document.getElementById(
+          "formTitle"
+        ).textContent =
+          "✏️ শিক্ষকের তথ্য পরিবর্তন করুন";
+
+
+        document.getElementById(
+          "saveButton"
+        ).textContent =
+          "💾 পরিবর্তন সংরক্ষণ করুন";
+
+
+        document.getElementById(
+          "formBox"
+        ).classList.add(
+          "show"
+        );
+
+
+        document.getElementById(
+          "name"
+        ).focus();
+
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+
+        document.getElementById(
+          "status"
+        ).textContent = "";
+
+
+        document.getElementById(
+          "status"
+        ).className = "";
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "EDIT TEACHER ERROR:",
+          error
+        );
+
+
+        showStatus(
+          "❌ শিক্ষকের তথ্য লোড করা যায়নি: " +
+          getErrorMessage(error),
+          "error"
+        );
+
+      }
 
     }
 
 
-    /* ===================================
-       DELETE
-    =================================== */
+    /* =====================================================
+       DELETE TEACHER
+    ===================================================== */
 
     async function deleteTeacher(id) {
 
+      if (
+        id === null ||
+        id === undefined ||
+        id === ""
+      ) {
+
+        showStatus(
+          "❌ শিক্ষকের ID পাওয়া যায়নি।",
+          "error"
+        );
+
+        return;
+      }
+
+
       const confirmed =
         confirm(
-          "আপনি কি এই শিক্ষকের তথ্য মুছে ফেলতে চান?"
+          "⚠️ আপনি কি এই শিক্ষকের তথ্য মুছে ফেলতে চান?\n\nএই কাজটি পরে ফিরিয়ে আনা যাবে না।"
         );
 
 
@@ -1159,13 +1572,22 @@
 
       try {
 
+        showStatus(
+          "⏳ শিক্ষক তথ্য মুছে ফেলা হচ্ছে...",
+          "info"
+        );
+
+
         const {
           error
         } =
           await supabaseClient
             .from("teachers")
             .delete()
-            .eq("id", id);
+            .eq(
+              "id",
+              id
+            );
 
 
         if (error) {
@@ -1176,14 +1598,16 @@
 
 
         showStatus(
-          "🗑️ শিক্ষক সফলভাবে মুছে ফেলা হয়েছে।"
+          "🗑️ শিক্ষক সফলভাবে মুছে ফেলা হয়েছে।",
+          "success"
         );
 
 
         await loadTeachers();
 
+      }
 
-      } catch (error) {
+      catch (error) {
 
         console.error(
           "DELETE TEACHER ERROR:",
@@ -1193,10 +1617,7 @@
 
         showStatus(
           "❌ শিক্ষক মুছে ফেলা যায়নি: " +
-          (
-            error.message ||
-            "Unknown error"
-          ),
+          getErrorMessage(error),
           "error"
         );
 
@@ -1205,9 +1626,57 @@
     }
 
 
-    /* ===================================
+    /* =====================================================
+       ERROR MESSAGE
+    ===================================================== */
+
+    function getErrorMessage(error) {
+
+      if (!error) {
+
+        return "অজানা সমস্যা";
+
+      }
+
+
+      if (
+        error.message &&
+        error.message.trim()
+      ) {
+
+        return error.message;
+
+      }
+
+
+      if (
+        error.details &&
+        error.details.trim()
+      ) {
+
+        return error.details;
+
+      }
+
+
+      if (
+        error.hint &&
+        error.hint.trim()
+      ) {
+
+        return error.hint;
+
+      }
+
+
+      return "অজানা সমস্যা হয়েছে।";
+
+    }
+
+
+    /* =====================================================
        HTML SECURITY
-    =================================== */
+    ===================================================== */
 
     function escapeHtml(value) {
 
@@ -1236,32 +1705,54 @@
     }
 
 
-    /* ===================================
-       JAVASCRIPT SECURITY
-    =================================== */
+    /* =====================================================
+       SAFE JAVASCRIPT VALUE
+    ===================================================== */
 
-    function escapeJs(value) {
+    function safeJsValue(value) {
 
-      return String(value)
-        .replace(
-          /\\/g,
-          "\\\\"
-        )
-        .replace(
-          /'/g,
-          "\\'"
-        )
-        .replace(
-          /"/g,
-          '\\"'
-        );
+      if (
+        typeof value === "number"
+      ) {
+
+        return String(value);
+
+      }
+
+
+      if (
+        value === null ||
+        value === undefined
+      ) {
+
+        return "null";
+
+      }
+
+
+      return "'" +
+        String(value)
+          .replace(
+            /\\/g,
+            "\\\\"
+          )
+          .replace(
+            /'/g,
+            "\\'"
+          )
+          .replace(
+            /"/g,
+            '\\"'
+          )
+        +
+        "'";
 
     }
 
 
-    /* ===================================
+    /* =====================================================
        DASHBOARD
-    =================================== */
+    ===================================================== */
 
     function goDashboard() {
 
@@ -1271,35 +1762,60 @@
     }
 
 
-    /* ===================================
+    /* =====================================================
        INITIALIZE
-    =================================== */
+    ===================================================== */
 
     async function initialize() {
 
-      const isAdmin =
-        await checkAdmin();
+      try {
+
+        const isAdmin =
+          await checkAdmin();
 
 
-      if (!isAdmin) {
+        if (!isAdmin) {
 
-        return;
+          return;
+
+        }
+
+
+        await loadTeachers();
 
       }
 
+      catch (error) {
 
-      await loadTeachers();
+        console.error(
+          "INITIALIZE ERROR:",
+          error
+        );
 
 
-      document.getElementById(
-        "loading"
-      ).style.display =
-        "none";
+        showStatus(
+          "❌ পেজ চালু করতে সমস্যা হয়েছে: " +
+          getErrorMessage(error),
+          "error"
+        );
+
+      }
+
+      finally {
+
+        document.getElementById(
+          "loading"
+        ).style.display =
+          "none";
+
+      }
 
     }
 
 
-    /* START */
+    /* =====================================================
+       START
+    ===================================================== */
 
     initialize();
 
