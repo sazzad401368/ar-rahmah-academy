@@ -41,79 +41,6 @@
     }
 
     /* =========================
-       LOADING
-    ========================= */
-
-    #loading {
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,0.97);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    .loader-box {
-      width: min(90%, 430px);
-      text-align: center;
-      color: var(--primary);
-      background: white;
-      padding: 30px 20px;
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-    }
-
-    .spinner {
-      width: 45px;
-      height: 45px;
-      border: 4px solid #d9eee3;
-      border-top: 4px solid var(--primary);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 15px;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    #loadingMessage {
-      font-size: 16px;
-      line-height: 1.7;
-    }
-
-    #loadingError {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 10px;
-      background: #fdecec;
-      color: #b42318;
-      font-size: 14px;
-      line-height: 1.7;
-      text-align: left;
-    }
-
-    #retryBtn {
-      display: none;
-      margin: 15px auto 0;
-      padding: 10px 22px;
-      border: none;
-      border-radius: 8px;
-      background: var(--primary);
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    #retryBtn:hover {
-      background: var(--primary-dark);
-    }
-
-    /* =========================
        HEADER
     ========================= */
 
@@ -249,7 +176,7 @@
     }
 
     /* =========================
-       MANAGEMENT
+       MANAGEMENT CARDS
     ========================= */
 
     .management-grid {
@@ -340,7 +267,7 @@
     }
 
     /* =========================
-       BOTTOM ACTIONS
+       FOOTER ACTIONS
     ========================= */
 
     .bottom-actions {
@@ -377,6 +304,41 @@
 
     .refresh:hover {
       background: var(--light-green);
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader-box {
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #d9eee3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* =========================
@@ -441,27 +403,14 @@
 <body>
 
   <!-- =========================
-       LOADING SCREEN
+       LOADING
   ========================= -->
 
   <div id="loading">
-
     <div class="loader-box">
-
       <div class="spinner"></div>
-
-      <p id="loadingMessage">
-        Admin Panel যাচাই করা হচ্ছে...
-      </p>
-
-      <div id="loadingError"></div>
-
-      <button id="retryBtn" onclick="initializeDashboard()">
-        🔄 আবার চেষ্টা করুন
-      </button>
-
+      <p>Admin Panel যাচাই করা হচ্ছে...</p>
     </div>
-
   </div>
 
 
@@ -474,15 +423,8 @@
     <div class="header-content">
 
       <div class="brand">
-
-        <h1>
-          🔐 Admin Dashboard
-        </h1>
-
-        <p>
-          আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
-        </p>
-
+        <h1>🔐 Admin Dashboard</h1>
+        <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
       </div>
 
       <div class="admin-badge">
@@ -500,13 +442,14 @@
 
   <main class="container">
 
-    <!-- Welcome -->
+
+    <!-- =========================
+         WELCOME
+    ========================= -->
 
     <section class="welcome">
 
-      <h2>
-        আসসালামু আলাইকুম, Admin! 👋
-      </h2>
+      <h2>আসসালামু আলাইকুম, Admin! 👋</h2>
 
       <p>
         আপনার Admin Panel-এ স্বাগতম।
@@ -517,14 +460,18 @@
     </section>
 
 
-    <!-- Statistics -->
+    <!-- =========================
+         STATISTICS
+    ========================= -->
 
     <h2 class="section-title">
       📊 একাডেমির সংক্ষিপ্ত তথ্য
     </h2>
 
-
     <section class="stats">
+
+
+      <!-- Students Count -->
 
       <div class="stat-card">
 
@@ -534,9 +481,7 @@
 
         <div class="stat-info">
 
-          <p>
-            মোট শিক্ষার্থী
-          </p>
+          <p>মোট শিক্ষার্থী</p>
 
           <div
             id="studentCount"
@@ -549,6 +494,8 @@
       </div>
 
 
+      <!-- Teachers Count -->
+
       <div class="stat-card">
 
         <div class="stat-icon">
@@ -557,9 +504,7 @@
 
         <div class="stat-info">
 
-          <p>
-            মোট শিক্ষক
-          </p>
+          <p>মোট শিক্ষক</p>
 
           <div
             id="teacherCount"
@@ -572,6 +517,8 @@
       </div>
 
 
+      <!-- Exams Count -->
+
       <div class="stat-card">
 
         <div class="stat-icon">
@@ -580,9 +527,7 @@
 
         <div class="stat-info">
 
-          <p>
-            মোট পরীক্ষা
-          </p>
+          <p>মোট পরীক্ষা</p>
 
           <div
             id="examCount"
@@ -595,6 +540,8 @@
       </div>
 
 
+      <!-- Results Count -->
+
       <div class="stat-card">
 
         <div class="stat-icon">
@@ -603,9 +550,7 @@
 
         <div class="stat-info">
 
-          <p>
-            মোট ফলাফল
-          </p>
+          <p>মোট ফলাফল</p>
 
           <div
             id="resultCount"
@@ -618,6 +563,8 @@
       </div>
 
 
+      <!-- Notices Count -->
+
       <div class="stat-card">
 
         <div class="stat-icon">
@@ -626,9 +573,7 @@
 
         <div class="stat-info">
 
-          <p>
-            মোট নোটিশ
-          </p>
+          <p>মোট নোটিশ</p>
 
           <div
             id="noticeCount"
@@ -640,20 +585,24 @@
 
       </div>
 
+
     </section>
 
 
-    <!-- Management -->
+    <!-- =========================
+         MANAGEMENT
+    ========================= -->
 
     <h2 class="section-title">
       ⚙️ Management
     </h2>
 
-
     <section class="management-grid">
 
 
-      <!-- Students -->
+      <!-- =========================
+           STUDENTS
+      ========================= -->
 
       <div class="management-card">
 
@@ -661,9 +610,7 @@
           👨‍🎓
         </div>
 
-        <h3>
-          শিক্ষার্থী
-        </h3>
+        <h3>শিক্ষার্থী</h3>
 
         <p>
           শিক্ষার্থীদের তথ্য যোগ,
@@ -681,7 +628,9 @@
       </div>
 
 
-      <!-- Results -->
+      <!-- =========================
+           RESULTS
+      ========================= -->
 
       <div class="management-card">
 
@@ -689,9 +638,7 @@
           📊
         </div>
 
-        <h3>
-          ফলাফল
-        </h3>
+        <h3>ফলাফল</h3>
 
         <p>
           পরীক্ষার ফলাফল যোগ,
@@ -709,7 +656,9 @@
       </div>
 
 
-      <!-- Notices -->
+      <!-- =========================
+           NOTICES
+      ========================= -->
 
       <div class="management-card">
 
@@ -717,9 +666,7 @@
           📢
         </div>
 
-        <h3>
-          নোটিশ
-        </h3>
+        <h3>নোটিশ</h3>
 
         <p>
           একাডেমির গুরুত্বপূর্ণ
@@ -737,7 +684,10 @@
       </div>
 
 
-      <!-- Exams -->
+      <!-- =========================
+           EXAMS
+           ✅ NOW ENABLED
+      ========================= -->
 
       <div class="management-card">
 
@@ -745,9 +695,7 @@
           📝
         </div>
 
-        <h3>
-          পরীক্ষা
-        </h3>
+        <h3>পরীক্ষা</h3>
 
         <p>
           পরীক্ষা তৈরি ও
@@ -765,7 +713,10 @@
       </div>
 
 
-      <!-- Exam Papers -->
+      <!-- =========================
+           EXAM PAPERS
+           COMING SOON
+      ========================= -->
 
       <div class="management-card">
 
@@ -773,9 +724,7 @@
           📄
         </div>
 
-        <h3>
-          পরীক্ষার খাতা
-        </h3>
+        <h3>পরীক্ষার খাতা</h3>
 
         <p>
           পরীক্ষার প্রশ্নপত্র ও
@@ -793,7 +742,9 @@
       </div>
 
 
-      <!-- Teachers -->
+      <!-- =========================
+           TEACHERS
+      ========================= -->
 
       <div class="management-card">
 
@@ -801,9 +752,7 @@
           👨‍🏫
         </div>
 
-        <h3>
-          শিক্ষক
-        </h3>
+        <h3>শিক্ষক</h3>
 
         <p>
           শিক্ষকদের তথ্য
@@ -821,7 +770,10 @@
       </div>
 
 
-      <!-- QR -->
+      <!-- =========================
+           QR CODE
+           COMING SOON
+      ========================= -->
 
       <div class="management-card">
 
@@ -829,9 +781,7 @@
           📱
         </div>
 
-        <h3>
-          QR Code
-        </h3>
+        <h3>QR Code</h3>
 
         <p>
           ফলাফল ও অন্যান্য
@@ -852,12 +802,16 @@
     </section>
 
 
-    <!-- Status -->
+    <!-- =========================
+         STATUS
+    ========================= -->
 
     <div id="status"></div>
 
 
-    <!-- Actions -->
+    <!-- =========================
+         ACTIONS
+    ========================= -->
 
     <div class="bottom-actions">
 
@@ -869,7 +823,6 @@
 
       </button>
 
-
       <button
         class="logout"
         onclick="logout()">
@@ -880,6 +833,7 @@
 
     </div>
 
+
   </main>
 
 
@@ -888,6 +842,7 @@
   ========================= -->
 
   <script>
+
 
     /* =========================================
        SUPABASE CONFIG
@@ -898,7 +853,6 @@
 
     const SUPABASE_KEY =
       "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
-
 
     const supabaseClient =
       window.supabase.createClient(
@@ -930,8 +884,7 @@
       const status =
         document.getElementById("status");
 
-      status.textContent =
-        message;
+      status.textContent = message;
 
       status.className =
         type === "error"
@@ -942,141 +895,35 @@
 
 
     /* =========================================
-       LOADING MESSAGE
-    ========================================= */
-
-    function showLoadingMessage(message) {
-
-      document.getElementById(
-        "loadingMessage"
-      ).textContent = message;
-
-    }
-
-
-    /* =========================================
-       SHOW LOADING ERROR
-    ========================================= */
-
-    function showLoadingError(message) {
-
-      const errorBox =
-        document.getElementById(
-          "loadingError"
-        );
-
-      errorBox.textContent =
-        message;
-
-      errorBox.style.display =
-        "block";
-
-      document.getElementById(
-        "retryBtn"
-      ).style.display =
-        "block";
-
-      document.querySelector(
-        ".spinner"
-      ).style.display =
-        "none";
-
-    }
-
-
-    /* =========================================
-       HIDE LOADING
-    ========================================= */
-
-    function hideLoading() {
-
-      document.getElementById(
-        "loading"
-      ).style.display =
-        "none";
-
-    }
-
-
-    /* =========================================
        ADMIN AUTHENTICATION
     ========================================= */
 
     async function checkAdmin() {
 
-      showLoadingMessage(
-        "🔐 Admin Login যাচাই করা হচ্ছে..."
-      );
-
-
       try {
 
-        /*
-          STEP 1
-          Get logged-in user
-        */
-
         const {
-          data,
-          error
+          data: { user },
+          error: userError
         } =
           await supabaseClient.auth.getUser();
 
 
-        if (error) {
+        /* No logged-in user */
 
-          console.error(
-            "Auth Error:",
-            error
-          );
+        if (userError || !user) {
 
-          showLoadingError(
-            "❌ Supabase Auth থেকে User তথ্য পাওয়া যায়নি।\n\n" +
-            "Error: " +
-            error.message
-          );
+          window.location.href =
+            "index.html#admin-login";
 
           return false;
 
         }
 
 
-        const user =
-          data?.user;
-
-
-        /*
-          STEP 2
-          No logged-in user
-        */
-
-        if (!user) {
-
-          showLoadingError(
-            "❌ কোনো Admin Login পাওয়া যায়নি।\n\n" +
-            "প্রথমে Admin Login করুন।"
-          );
-
-          return false;
-
-        }
-
-
-        console.log(
-          "Logged-in User:",
-          user
-        );
-
-
-        /*
-          STEP 3
-          Check admins table
-        */
-
-        showLoadingMessage(
-          "👤 Admin Account যাচাই করা হচ্ছে..."
-        );
-
+        /* =====================================
+           CHECK ADMINS TABLE
+        ===================================== */
 
         const {
           data: adminData,
@@ -1089,82 +936,35 @@
             .maybeSingle();
 
 
-        /*
-          STEP 4
-          Database error
-        */
+        /* User is not admin */
 
-        if (adminError) {
+        if (adminError || !adminData) {
 
-          console.error(
-            "Admins Table Error:",
-            adminError
-          );
+          await supabaseClient.auth.signOut();
 
-          showLoadingError(
-            "❌ Admin তথ্য যাচাই করা যায়নি।\n\n" +
-            "Error: " +
-            adminError.message
-          );
+          window.location.href =
+            "index.html#admin-login";
 
           return false;
 
         }
-
-
-        /*
-          STEP 5
-          User exists but not in admins
-        */
-
-        if (!adminData) {
-
-          console.error(
-            "User is not in admins table:",
-            user.id
-          );
-
-          showLoadingError(
-            "❌ এই User-এর Admin অনুমতি নেই।\n\n" +
-            "Admin ID পাওয়া গেছে, কিন্তু admins table-এ মিল পাওয়া যায়নি।"
-          );
-
-          return false;
-
-        }
-
-
-        /*
-          STEP 6
-          Success
-        */
-
-        console.log(
-          "Admin verified successfully."
-        );
 
 
         showStatus(
           "✅ Admin authentication verified"
         );
 
-
         return true;
 
       }
 
+
       catch (error) {
 
-        console.error(
-          "Unexpected Admin Error:",
-          error
-        );
+        console.error(error);
 
-        showLoadingError(
-          "❌ Admin যাচাই করার সময় অপ্রত্যাশিত সমস্যা হয়েছে।\n\n" +
-          "Error: " +
-          error.message
-        );
+        window.location.href =
+          "index.html#admin-login";
 
         return false;
 
@@ -1174,53 +974,36 @@
 
 
     /* =========================================
-       DATABASE COUNT
+       DATABASE COUNT HELPER
     ========================================= */
 
-    async function getCount(
-      tableName
-    ) {
+    async function getCount(tableName) {
 
-      try {
-
-        const {
-          count,
-          error
-        } =
-          await supabaseClient
-            .from(tableName)
-            .select("*", {
-              count: "exact",
-              head: true
-            });
+      const {
+        count,
+        error
+      } =
+        await supabaseClient
+          .from(tableName)
+          .select("*", {
+            count: "exact",
+            head: true
+          });
 
 
-        if (error) {
-
-          console.error(
-            `Error loading ${tableName}:`,
-            error
-          );
-
-          return null;
-
-        }
-
-
-        return count ?? 0;
-
-      }
-
-      catch (error) {
+      if (error) {
 
         console.error(
-          `Unexpected ${tableName} error:`,
+          `Error loading ${tableName}:`,
           error
         );
 
         return null;
 
       }
+
+
+      return count ?? 0;
 
     }
 
@@ -1257,27 +1040,29 @@
         );
 
 
-      /*
-        Loading
-      */
+      /* =====================================
+         SHOW LOADING
+      ===================================== */
 
-      studentElement.textContent =
-        "…";
-
-      teacherElement.textContent =
-        "…";
-
-      examElement.textContent =
-        "…";
-
-      resultElement.textContent =
-        "…";
-
-      noticeElement.textContent =
-        "…";
+      studentElement.textContent = "…";
+      teacherElement.textContent = "…";
+      examElement.textContent = "…";
+      resultElement.textContent = "…";
+      noticeElement.textContent = "…";
 
 
       try {
+
+        /*
+          Existing Supabase tables:
+
+          students
+          teachers
+          exams
+          results
+          notices
+        */
+
 
         const [
           students,
@@ -1287,48 +1072,46 @@
           notices
         ] = await Promise.all([
 
-          getCount(
-            "students"
-          ),
+          getCount("students"),
 
-          getCount(
-            "teachers"
-          ),
+          getCount("teachers"),
 
-          getCount(
-            "exams"
-          ),
+          getCount("exams"),
 
-          getCount(
-            "results"
-          ),
+          getCount("results"),
 
-          getCount(
-            "notices"
-          )
+          getCount("notices")
 
         ]);
 
+
+        /* =====================================
+           DISPLAY COUNTS
+        ===================================== */
 
         studentElement.textContent =
           students === null
             ? "—"
             : students;
 
+
         teacherElement.textContent =
           teachers === null
             ? "—"
             : teachers;
+
 
         examElement.textContent =
           exams === null
             ? "—"
             : exams;
 
+
         resultElement.textContent =
           results === null
             ? "—"
             : results;
+
 
         noticeElement.textContent =
           notices === null
@@ -1342,12 +1125,10 @@
 
       }
 
+
       catch (error) {
 
-        console.error(
-          "Statistics Error:",
-          error
-        );
+        console.error(error);
 
         showStatus(
           "⚠️ Dashboard data load করতে সমস্যা হয়েছে।",
@@ -1372,31 +1153,28 @@
 
 
       if (!confirmed) {
+
         return;
+
       }
 
 
       try {
 
-        await supabaseClient
-          .auth
-          .signOut();
-
+        await supabaseClient.auth.signOut();
 
         window.location.href =
           "index.html";
 
       }
 
+
       catch (error) {
 
-        console.error(
-          "Logout Error:",
-          error
-        );
+        console.error(error);
 
         showStatus(
-          "❌ Logout করতে সমস্যা হয়েছে।",
+          "Logout করতে সমস্যা হয়েছে।",
           "error"
         );
 
@@ -1424,48 +1202,6 @@
 
     async function initializeDashboard() {
 
-      /*
-        Reset loading screen
-      */
-
-      const loading =
-        document.getElementById(
-          "loading"
-        );
-
-      const errorBox =
-        document.getElementById(
-          "loadingError"
-        );
-
-      const retryBtn =
-        document.getElementById(
-          "retryBtn"
-        );
-
-      const spinner =
-        document.querySelector(
-          ".spinner"
-        );
-
-
-      loading.style.display =
-        "flex";
-
-      errorBox.style.display =
-        "none";
-
-      retryBtn.style.display =
-        "none";
-
-      spinner.style.display =
-        "block";
-
-
-      /*
-        Check Admin
-      */
-
       const isAdmin =
         await checkAdmin();
 
@@ -1477,23 +1213,16 @@
       }
 
 
-      /*
-        Load statistics
-      */
-
-      showLoadingMessage(
-        "📊 Dashboard তথ্য লোড করা হচ্ছে..."
-      );
-
-
       await loadStatistics();
 
 
-      /*
-        Hide loading
-      */
+      /* =====================================
+         HIDE LOADING
+      ===================================== */
 
-      hideLoading();
+      document.getElementById(
+        "loading"
+      ).style.display = "none";
 
     }
 
@@ -1502,14 +1231,8 @@
        START DASHBOARD
     ========================================= */
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
+    initializeDashboard();
 
-        initializeDashboard();
-
-      }
-    );
 
   </script>
 
