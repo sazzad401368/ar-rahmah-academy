@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -39,6 +38,79 @@
       background: var(--background);
       color: var(--text);
       min-height: 100vh;
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader-box {
+      width: min(90%, 430px);
+      text-align: center;
+      color: var(--primary);
+      background: white;
+      padding: 30px 20px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #d9eee3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #loadingMessage {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    #loadingError {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fdecec;
+      color: #b42318;
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    #retryBtn {
+      display: none;
+      margin: 15px auto 0;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #retryBtn:hover {
+      background: var(--primary-dark);
     }
 
     /* =========================
@@ -116,7 +188,7 @@
     }
 
     /* =========================
-       STATISTICS
+       SECTION TITLE
     ========================= */
 
     .section-title {
@@ -124,6 +196,10 @@
       color: var(--primary);
       font-size: 20px;
     }
+
+    /* =========================
+       STATISTICS
+    ========================= */
 
     .stats {
       display: grid;
@@ -173,7 +249,7 @@
     }
 
     /* =========================
-       MANAGEMENT CARDS
+       MANAGEMENT
     ========================= */
 
     .management-grid {
@@ -264,7 +340,7 @@
     }
 
     /* =========================
-       FOOTER ACTIONS
+       BOTTOM ACTIONS
     ========================= */
 
     .bottom-actions {
@@ -301,41 +377,6 @@
 
     .refresh:hover {
       background: var(--light-green);
-    }
-
-    /* =========================
-       LOADING
-    ========================= */
-
-    #loading {
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,0.96);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    .loader-box {
-      text-align: center;
-      color: var(--primary);
-    }
-
-    .spinner {
-      width: 45px;
-      height: 45px;
-      border: 4px solid #d9eee3;
-      border-top: 4px solid var(--primary);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 15px;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
     }
 
     /* =========================
@@ -399,23 +440,49 @@
 
 <body>
 
-  <!-- Loading -->
+  <!-- =========================
+       LOADING SCREEN
+  ========================= -->
+
   <div id="loading">
+
     <div class="loader-box">
+
       <div class="spinner"></div>
-      <p>Admin Panel যাচাই করা হচ্ছে...</p>
+
+      <p id="loadingMessage">
+        Admin Panel যাচাই করা হচ্ছে...
+      </p>
+
+      <div id="loadingError"></div>
+
+      <button id="retryBtn" onclick="initializeDashboard()">
+        🔄 আবার চেষ্টা করুন
+      </button>
+
     </div>
+
   </div>
 
 
-  <!-- HEADER -->
+  <!-- =========================
+       HEADER
+  ========================= -->
+
   <header>
 
     <div class="header-content">
 
       <div class="brand">
-        <h1>🔐 Admin Dashboard</h1>
-        <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
+
+        <h1>
+          🔐 Admin Dashboard
+        </h1>
+
+        <p>
+          আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
+        </p>
+
       </div>
 
       <div class="admin-badge">
@@ -427,13 +494,19 @@
   </header>
 
 
-  <!-- MAIN -->
+  <!-- =========================
+       MAIN
+  ========================= -->
+
   <main class="container">
 
     <!-- Welcome -->
+
     <section class="welcome">
 
-      <h2>আসসালামু আলাইকুম, Admin! 👋</h2>
+      <h2>
+        আসসালামু আলাইকুম, Admin! 👋
+      </h2>
 
       <p>
         আপনার Admin Panel-এ স্বাগতম।
@@ -444,24 +517,33 @@
     </section>
 
 
-    <!-- STATISTICS -->
+    <!-- Statistics -->
+
     <h2 class="section-title">
       📊 একাডেমির সংক্ষিপ্ত তথ্য
     </h2>
+
 
     <section class="stats">
 
       <div class="stat-card">
 
-        <div class="stat-icon">👨‍🎓</div>
+        <div class="stat-icon">
+          👨‍🎓
+        </div>
 
         <div class="stat-info">
-          <p>মোট শিক্ষার্থী</p>
+
+          <p>
+            মোট শিক্ষার্থী
+          </p>
+
           <div
             id="studentCount"
             class="stat-number">
             —
           </div>
+
         </div>
 
       </div>
@@ -469,15 +551,22 @@
 
       <div class="stat-card">
 
-        <div class="stat-icon">👨‍🏫</div>
+        <div class="stat-icon">
+          👨‍🏫
+        </div>
 
         <div class="stat-info">
-          <p>মোট শিক্ষক</p>
+
+          <p>
+            মোট শিক্ষক
+          </p>
+
           <div
             id="teacherCount"
             class="stat-number">
             —
           </div>
+
         </div>
 
       </div>
@@ -485,15 +574,22 @@
 
       <div class="stat-card">
 
-        <div class="stat-icon">📝</div>
+        <div class="stat-icon">
+          📝
+        </div>
 
         <div class="stat-info">
-          <p>মোট পরীক্ষা</p>
+
+          <p>
+            মোট পরীক্ষা
+          </p>
+
           <div
             id="examCount"
             class="stat-number">
             —
           </div>
+
         </div>
 
       </div>
@@ -501,15 +597,22 @@
 
       <div class="stat-card">
 
-        <div class="stat-icon">📊</div>
+        <div class="stat-icon">
+          📊
+        </div>
 
         <div class="stat-info">
-          <p>মোট ফলাফল</p>
+
+          <p>
+            মোট ফলাফল
+          </p>
+
           <div
             id="resultCount"
             class="stat-number">
             —
           </div>
+
         </div>
 
       </div>
@@ -517,15 +620,22 @@
 
       <div class="stat-card">
 
-        <div class="stat-icon">📢</div>
+        <div class="stat-icon">
+          📢
+        </div>
 
         <div class="stat-info">
-          <p>মোট নোটিশ</p>
+
+          <p>
+            মোট নোটিশ
+          </p>
+
           <div
             id="noticeCount"
             class="stat-number">
             —
           </div>
+
         </div>
 
       </div>
@@ -533,22 +643,27 @@
     </section>
 
 
-    <!-- MANAGEMENT -->
+    <!-- Management -->
+
     <h2 class="section-title">
       ⚙️ Management
     </h2>
+
 
     <section class="management-grid">
 
 
       <!-- Students -->
+
       <div class="management-card">
 
         <div class="management-icon">
           👨‍🎓
         </div>
 
-        <h3>শিক্ষার্থী</h3>
+        <h3>
+          শিক্ষার্থী
+        </h3>
 
         <p>
           শিক্ষার্থীদের তথ্য যোগ,
@@ -558,20 +673,25 @@
         <button
           class="manage-btn"
           onclick="goTo('students.html')">
+
           👨‍🎓 Manage Students
+
         </button>
 
       </div>
 
 
       <!-- Results -->
+
       <div class="management-card">
 
         <div class="management-icon">
           📊
         </div>
 
-        <h3>ফলাফল</h3>
+        <h3>
+          ফলাফল
+        </h3>
 
         <p>
           পরীক্ষার ফলাফল যোগ,
@@ -581,42 +701,53 @@
         <button
           class="manage-btn"
           onclick="goTo('result.html')">
+
           📊 Manage Results
+
         </button>
 
       </div>
 
 
       <!-- Notices -->
+
       <div class="management-card">
 
         <div class="management-icon">
           📢
         </div>
 
-        <h3>নোটিশ</h3>
+        <h3>
+          নোটিশ
+        </h3>
 
         <p>
           একাডেমির গুরুত্বপূর্ণ
           নোটিশ পরিচালনা করুন।
         </p>
 
-       <button 
-  class="manage-btn" 
-  onclick="goTo('notices.html')"> 
-  📢 Manage Notices 
-</button>
+        <button
+          class="manage-btn"
+          onclick="goTo('notices.html')">
+
+          📢 Manage Notices
+
+        </button>
+
       </div>
 
 
       <!-- Exams -->
+
       <div class="management-card">
 
         <div class="management-icon">
           📝
         </div>
 
-        <h3>পরীক্ষা</h3>
+        <h3>
+          পরীক্ষা
+        </h3>
 
         <p>
           পরীক্ষা তৈরি ও
@@ -624,22 +755,27 @@
         </p>
 
         <button
-          class="manage-btn disabled-btn"
-          onclick="comingSoon()">
-          📝 Coming Soon
+          class="manage-btn"
+          onclick="goTo('admin-exams.html')">
+
+          📝 Manage Exams
+
         </button>
 
       </div>
 
 
       <!-- Exam Papers -->
+
       <div class="management-card">
 
         <div class="management-icon">
           📄
         </div>
 
-        <h3>পরীক্ষার খাতা</h3>
+        <h3>
+          পরীক্ষার খাতা
+        </h3>
 
         <p>
           পরীক্ষার প্রশ্নপত্র ও
@@ -649,43 +785,53 @@
         <button
           class="manage-btn disabled-btn"
           onclick="comingSoon()">
+
           📄 Coming Soon
+
         </button>
 
       </div>
 
 
       <!-- Teachers -->
+
       <div class="management-card">
 
         <div class="management-icon">
           👨‍🏫
         </div>
 
-        <h3>শিক্ষক</h3>
+        <h3>
+          শিক্ষক
+        </h3>
 
         <p>
           শিক্ষকদের তথ্য
           পরিচালনা করুন।
         </p>
 
-        <button 
-  class="manage-btn" 
-  onclick="goTo('admin-teachers.html')"> 
-  👨‍🏫 Manage Teachers 
-</button>
+        <button
+          class="manage-btn"
+          onclick="goTo('admin-teachers.html')">
+
+          👨‍🏫 Manage Teachers
+
+        </button>
 
       </div>
 
 
       <!-- QR -->
+
       <div class="management-card">
 
         <div class="management-icon">
           📱
         </div>
 
-        <h3>QR Code</h3>
+        <h3>
+          QR Code
+        </h3>
 
         <p>
           ফলাফল ও অন্যান্য
@@ -695,7 +841,9 @@
         <button
           class="manage-btn disabled-btn"
           onclick="comingSoon()">
+
           📱 Coming Soon
+
         </button>
 
       </div>
@@ -704,29 +852,40 @@
     </section>
 
 
-    <!-- STATUS -->
+    <!-- Status -->
+
     <div id="status"></div>
 
 
-    <!-- ACTIONS -->
+    <!-- Actions -->
+
     <div class="bottom-actions">
 
       <button
         class="refresh"
         onclick="loadStatistics()">
+
         🔄 Refresh Dashboard
+
       </button>
+
 
       <button
         class="logout"
         onclick="logout()">
+
         🚪 Logout
+
       </button>
 
     </div>
 
   </main>
 
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
 
   <script>
 
@@ -740,6 +899,7 @@
     const SUPABASE_KEY =
       "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
 
+
     const supabaseClient =
       window.supabase.createClient(
         SUPABASE_URL,
@@ -752,7 +912,9 @@
     ========================================= */
 
     function goTo(page) {
+
       window.location.href = page;
+
     }
 
 
@@ -760,12 +922,16 @@
        STATUS MESSAGE
     ========================================= */
 
-    function showStatus(message, type = "success") {
+    function showStatus(
+      message,
+      type = "success"
+    ) {
 
       const status =
         document.getElementById("status");
 
-      status.textContent = message;
+      status.textContent =
+        message;
 
       status.className =
         type === "error"
@@ -776,30 +942,141 @@
 
 
     /* =========================================
+       LOADING MESSAGE
+    ========================================= */
+
+    function showLoadingMessage(message) {
+
+      document.getElementById(
+        "loadingMessage"
+      ).textContent = message;
+
+    }
+
+
+    /* =========================================
+       SHOW LOADING ERROR
+    ========================================= */
+
+    function showLoadingError(message) {
+
+      const errorBox =
+        document.getElementById(
+          "loadingError"
+        );
+
+      errorBox.textContent =
+        message;
+
+      errorBox.style.display =
+        "block";
+
+      document.getElementById(
+        "retryBtn"
+      ).style.display =
+        "block";
+
+      document.querySelector(
+        ".spinner"
+      ).style.display =
+        "none";
+
+    }
+
+
+    /* =========================================
+       HIDE LOADING
+    ========================================= */
+
+    function hideLoading() {
+
+      document.getElementById(
+        "loading"
+      ).style.display =
+        "none";
+
+    }
+
+
+    /* =========================================
        ADMIN AUTHENTICATION
     ========================================= */
 
     async function checkAdmin() {
 
+      showLoadingMessage(
+        "🔐 Admin Login যাচাই করা হচ্ছে..."
+      );
+
+
       try {
 
+        /*
+          STEP 1
+          Get logged-in user
+        */
+
         const {
-          data: { user },
-          error: userError
+          data,
+          error
         } =
           await supabaseClient.auth.getUser();
 
 
-        if (userError || !user) {
+        if (error) {
 
-          window.location.href =
-            "index.html#admin-login";
+          console.error(
+            "Auth Error:",
+            error
+          );
+
+          showLoadingError(
+            "❌ Supabase Auth থেকে User তথ্য পাওয়া যায়নি।\n\n" +
+            "Error: " +
+            error.message
+          );
 
           return false;
+
         }
 
 
-        /* Check admins table */
+        const user =
+          data?.user;
+
+
+        /*
+          STEP 2
+          No logged-in user
+        */
+
+        if (!user) {
+
+          showLoadingError(
+            "❌ কোনো Admin Login পাওয়া যায়নি।\n\n" +
+            "প্রথমে Admin Login করুন।"
+          );
+
+          return false;
+
+        }
+
+
+        console.log(
+          "Logged-in User:",
+          user
+        );
+
+
+        /*
+          STEP 3
+          Check admins table
+        */
+
+        showLoadingMessage(
+          "👤 Admin Account যাচাই করা হচ্ছে..."
+        );
+
 
         const {
           data: adminData,
@@ -812,20 +1089,65 @@
             .maybeSingle();
 
 
-        if (adminError || !adminData) {
+        /*
+          STEP 4
+          Database error
+        */
 
-          await supabaseClient.auth.signOut();
+        if (adminError) {
 
-          window.location.href =
-            "index.html#admin-login";
+          console.error(
+            "Admins Table Error:",
+            adminError
+          );
+
+          showLoadingError(
+            "❌ Admin তথ্য যাচাই করা যায়নি।\n\n" +
+            "Error: " +
+            adminError.message
+          );
 
           return false;
+
         }
+
+
+        /*
+          STEP 5
+          User exists but not in admins
+        */
+
+        if (!adminData) {
+
+          console.error(
+            "User is not in admins table:",
+            user.id
+          );
+
+          showLoadingError(
+            "❌ এই User-এর Admin অনুমতি নেই।\n\n" +
+            "Admin ID পাওয়া গেছে, কিন্তু admins table-এ মিল পাওয়া যায়নি।"
+          );
+
+          return false;
+
+        }
+
+
+        /*
+          STEP 6
+          Success
+        */
+
+        console.log(
+          "Admin verified successfully."
+        );
 
 
         showStatus(
           "✅ Admin authentication verified"
         );
+
 
         return true;
 
@@ -833,47 +1155,72 @@
 
       catch (error) {
 
-        console.error(error);
+        console.error(
+          "Unexpected Admin Error:",
+          error
+        );
 
-        window.location.href =
-          "index.html#admin-login";
+        showLoadingError(
+          "❌ Admin যাচাই করার সময় অপ্রত্যাশিত সমস্যা হয়েছে।\n\n" +
+          "Error: " +
+          error.message
+        );
 
         return false;
+
       }
 
     }
 
 
     /* =========================================
-       DATABASE COUNT HELPER
+       DATABASE COUNT
     ========================================= */
 
-    async function getCount(tableName) {
+    async function getCount(
+      tableName
+    ) {
 
-      const {
-        count,
-        error
-      } =
-        await supabaseClient
-          .from(tableName)
-          .select("*", {
-            count: "exact",
-            head: true
-          });
+      try {
+
+        const {
+          count,
+          error
+        } =
+          await supabaseClient
+            .from(tableName)
+            .select("*", {
+              count: "exact",
+              head: true
+            });
 
 
-      if (error) {
+        if (error) {
+
+          console.error(
+            `Error loading ${tableName}:`,
+            error
+          );
+
+          return null;
+
+        }
+
+
+        return count ?? 0;
+
+      }
+
+      catch (error) {
 
         console.error(
-          `Error loading ${tableName}:`,
+          `Unexpected ${tableName} error:`,
           error
         );
 
         return null;
+
       }
-
-
-      return count ?? 0;
 
     }
 
@@ -885,40 +1232,52 @@
     async function loadStatistics() {
 
       const studentElement =
-        document.getElementById("studentCount");
+        document.getElementById(
+          "studentCount"
+        );
 
       const teacherElement =
-        document.getElementById("teacherCount");
+        document.getElementById(
+          "teacherCount"
+        );
 
       const examElement =
-        document.getElementById("examCount");
+        document.getElementById(
+          "examCount"
+        );
 
       const resultElement =
-        document.getElementById("resultCount");
+        document.getElementById(
+          "resultCount"
+        );
 
       const noticeElement =
-        document.getElementById("noticeCount");
+        document.getElementById(
+          "noticeCount"
+        );
 
 
-      /* Loading */
+      /*
+        Loading
+      */
 
-      studentElement.textContent = "…";
-      teacherElement.textContent = "…";
-      examElement.textContent = "…";
-      resultElement.textContent = "…";
-      noticeElement.textContent = "…";
+      studentElement.textContent =
+        "…";
+
+      teacherElement.textContent =
+        "…";
+
+      examElement.textContent =
+        "…";
+
+      resultElement.textContent =
+        "…";
+
+      noticeElement.textContent =
+        "…";
 
 
       try {
-
-        /*
-          Your existing Supabase tables:
-          students
-          teachers
-          exams
-          results
-          notices
-        */
 
         const [
           students,
@@ -928,33 +1287,53 @@
           notices
         ] = await Promise.all([
 
-          getCount("students"),
+          getCount(
+            "students"
+          ),
 
-          getCount("teachers"),
+          getCount(
+            "teachers"
+          ),
 
-          getCount("exams"),
+          getCount(
+            "exams"
+          ),
 
-          getCount("results"),
+          getCount(
+            "results"
+          ),
 
-          getCount("notices")
+          getCount(
+            "notices"
+          )
 
         ]);
 
 
         studentElement.textContent =
-          students === null ? "—" : students;
+          students === null
+            ? "—"
+            : students;
 
         teacherElement.textContent =
-          teachers === null ? "—" : teachers;
+          teachers === null
+            ? "—"
+            : teachers;
 
         examElement.textContent =
-          exams === null ? "—" : exams;
+          exams === null
+            ? "—"
+            : exams;
 
         resultElement.textContent =
-          results === null ? "—" : results;
+          results === null
+            ? "—"
+            : results;
 
         noticeElement.textContent =
-          notices === null ? "—" : notices;
+          notices === null
+            ? "—"
+            : notices;
 
 
         showStatus(
@@ -965,7 +1344,10 @@
 
       catch (error) {
 
-        console.error(error);
+        console.error(
+          "Statistics Error:",
+          error
+        );
 
         showStatus(
           "⚠️ Dashboard data load করতে সমস্যা হয়েছে।",
@@ -996,7 +1378,10 @@
 
       try {
 
-        await supabaseClient.auth.signOut();
+        await supabaseClient
+          .auth
+          .signOut();
+
 
         window.location.href =
           "index.html";
@@ -1005,10 +1390,13 @@
 
       catch (error) {
 
-        console.error(error);
+        console.error(
+          "Logout Error:",
+          error
+        );
 
         showStatus(
-          "Logout করতে সমস্যা হয়েছে।",
+          "❌ Logout করতে সমস্যা হয়েছে।",
           "error"
         );
 
@@ -1036,33 +1424,94 @@
 
     async function initializeDashboard() {
 
+      /*
+        Reset loading screen
+      */
+
+      const loading =
+        document.getElementById(
+          "loading"
+        );
+
+      const errorBox =
+        document.getElementById(
+          "loadingError"
+        );
+
+      const retryBtn =
+        document.getElementById(
+          "retryBtn"
+        );
+
+      const spinner =
+        document.querySelector(
+          ".spinner"
+        );
+
+
+      loading.style.display =
+        "flex";
+
+      errorBox.style.display =
+        "none";
+
+      retryBtn.style.display =
+        "none";
+
+      spinner.style.display =
+        "block";
+
+
+      /*
+        Check Admin
+      */
+
       const isAdmin =
         await checkAdmin();
 
 
       if (!isAdmin) {
+
         return;
+
       }
+
+
+      /*
+        Load statistics
+      */
+
+      showLoadingMessage(
+        "📊 Dashboard তথ্য লোড করা হচ্ছে..."
+      );
 
 
       await loadStatistics();
 
 
-      /* Hide loading */
+      /*
+        Hide loading
+      */
 
-      document.getElementById(
-        "loading"
-      ).style.display = "none";
+      hideLoading();
 
     }
 
 
-    /* Start */
+    /* =========================================
+       START DASHBOARD
+    ========================================= */
 
-    initializeDashboard();
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        initializeDashboard();
+
+      }
+    );
 
   </script>
 
 </body>
 </html>
-```
