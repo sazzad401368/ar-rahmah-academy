@@ -1,35 +1,31 @@
 <!DOCTYPE html>
-
 <html lang="bn">
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</title>
+  <title>Ar-Rahmah International Noorani Academy</title>
 
   <!-- Supabase -->
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     :root {
       --primary: #087443;
       --primary-dark: #055c35;
       --light-green: #e9f7ef;
-      --background: #f5f8f6;
+      --background: #f4f7f6;
       --white: #ffffff;
-      --text: #222;
-      --muted: #667085;
+      --text: #1f2937;
+      --muted: #6b7280;
       --danger: #c62828;
-      --shadow: 0 5px 20px rgba(0,0,0,0.08);
+      --shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
       --radius: 16px;
     }
 
@@ -39,10 +35,9 @@
         "Hind Siliguri",
         Arial,
         sans-serif;
-
       background: var(--background);
       color: var(--text);
-      line-height: 1.7;
+      min-height: 100vh;
     }
 
     /* =========================
@@ -52,62 +47,57 @@
     header {
       background: linear-gradient(
         135deg,
-        #087443,
-        #075b36
+        var(--primary),
+        var(--primary-dark)
       );
-
       color: white;
-      padding: 24px 15px;
-      text-align: center;
+      padding: 25px 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
     }
 
-    header h1 {
-      font-size: 28px;
-      margin-bottom: 5px;
-    }
-
-    header p {
-      font-size: 15px;
-      opacity: 0.95;
-    }
-
-    /* =========================
-       NAVIGATION
-    ========================= */
-
-    nav {
-      background: #065c36;
-
+    .header-content {
+      max-width: 1200px;
+      margin: auto;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-
-      box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    nav a {
-      color: white;
-      text-decoration: none;
+    .brand h1 {
+      font-size: 27px;
+      margin-bottom: 6px;
+    }
 
-      padding: 12px 17px;
-
+    .brand p {
       font-size: 15px;
-
-      transition: 0.2s;
+      opacity: 0.92;
     }
 
-    nav a:hover {
-      background: rgba(255,255,255,0.12);
+    .admin-button {
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.14);
+      color: white;
+      padding: 11px 18px;
+      border-radius: 30px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .admin-button:hover {
+      background: rgba(255, 255, 255, 0.23);
     }
 
     /* =========================
-       MAIN CONTAINER
+       MAIN
     ========================= */
 
     .container {
       max-width: 1200px;
-      margin: auto;
-      padding: 25px 15px 50px;
+      margin: 30px auto;
+      padding: 0 20px 50px;
     }
 
     /* =========================
@@ -116,214 +106,136 @@
 
     .hero {
       background: white;
-
       border-radius: var(--radius);
-
-      padding: 40px 25px;
-
-      text-align: center;
-
+      padding: 40px 30px;
       box-shadow: var(--shadow);
-
+      text-align: center;
       border-top: 5px solid var(--primary);
-
-      margin-bottom: 30px;
     }
 
     .hero-icon {
       font-size: 55px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .hero h2 {
       color: var(--primary);
-      font-size: 30px;
+      font-size: 29px;
       margin-bottom: 10px;
     }
 
     .hero p {
-      max-width: 800px;
-      margin: auto;
-
       color: var(--muted);
-
+      line-height: 1.8;
       font-size: 16px;
-      line-height: 1.9;
-    }
-
-    /* =========================
-       SECTION TITLE
-    ========================= */
-
-    .section-title {
-      color: var(--primary);
-
-      text-align: center;
-
-      font-size: 22px;
-
-      margin: 30px 0 18px;
+      max-width: 750px;
+      margin: auto;
     }
 
     /* =========================
        CARDS
     ========================= */
 
+    .cards-title {
+      margin: 35px 0 18px;
+      color: var(--primary);
+      font-size: 21px;
+      text-align: center;
+    }
+
     .cards {
       display: grid;
-
       grid-template-columns:
         repeat(auto-fit, minmax(240px, 1fr));
-
       gap: 20px;
     }
 
     .card {
       background: white;
-
       padding: 25px;
-
       border-radius: var(--radius);
-
       box-shadow: var(--shadow);
-
       text-align: center;
-
       transition: 0.25s;
     }
 
     .card:hover {
       transform: translateY(-4px);
-
-      box-shadow:
-        0 10px 28px rgba(0,0,0,0.11);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.11);
     }
 
     .card-icon {
-      font-size: 43px;
-      margin-bottom: 10px;
+      font-size: 42px;
+      margin-bottom: 12px;
     }
 
     .card h3 {
       color: var(--primary);
-
+      margin-bottom: 8px;
       font-size: 19px;
-
-      margin-bottom: 7px;
     }
 
     .card p {
       color: var(--muted);
-
       font-size: 14px;
-
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     /* =========================
-       ONLINE SERVICES
+       ADMIN LOGIN MODAL
     ========================= */
 
-    .service-card {
-      background: white;
-
-      padding: 25px;
-
-      border-radius: var(--radius);
-
-      box-shadow: var(--shadow);
-
-      text-align: center;
+    #loginModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.62);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
     }
 
-    .service-card h3 {
-      color: var(--primary);
+    .login-box {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      animation: popup 0.2s ease;
+    }
 
+    @keyframes popup {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .login-header .icon {
+      font-size: 45px;
       margin-bottom: 8px;
     }
 
-    .service-card p {
-      color: var(--muted);
-
-      font-size: 14px;
-
-      margin-bottom: 15px;
-    }
-
-    .service-btn {
-      display: inline-block;
-
-      background: var(--primary);
-
-      color: white;
-
-      text-decoration: none;
-
-      border: none;
-
-      padding: 10px 20px;
-
-      border-radius: 9px;
-
-      cursor: pointer;
-
-      font-size: 14px;
-
-      font-family: inherit;
-
-      transition: 0.2s;
-    }
-
-    .service-btn:hover {
-      background: var(--primary-dark);
-    }
-
-    /* =========================
-       ADMIN LOGIN
-    ========================= */
-
-    #admin-login {
-      scroll-margin-top: 20px;
-    }
-
-    .admin-section {
-      margin-top: 35px;
-    }
-
-    .admin-box {
-      max-width: 450px;
-
-      margin: auto;
-
-      background: white;
-
-      padding: 30px;
-
-      border-radius: var(--radius);
-
-      box-shadow: var(--shadow);
-
-      border-top: 5px solid var(--primary);
-    }
-
-    .admin-box h3 {
-      text-align: center;
-
+    .login-header h2 {
       color: var(--primary);
-
-      margin-bottom: 7px;
-
-      font-size: 22px;
+      margin-bottom: 6px;
     }
 
-    .admin-description {
-      text-align: center;
-
+    .login-header p {
       color: var(--muted);
-
       font-size: 14px;
-
-      margin-bottom: 22px;
     }
 
     .form-group {
@@ -332,60 +244,40 @@
 
     .form-group label {
       display: block;
-
-      font-size: 14px;
-
+      margin-bottom: 7px;
       font-weight: 600;
-
-      margin-bottom: 6px;
+      color: var(--text);
+      font-size: 14px;
     }
 
     .form-group input {
       width: 100%;
-
-      padding: 13px;
-
+      padding: 13px 14px;
       border: 1px solid #d1d5db;
-
-      border-radius: 9px;
-
+      border-radius: 10px;
       outline: none;
-
       font-size: 15px;
-
       font-family: inherit;
+      transition: 0.2s;
     }
 
     .form-group input:focus {
       border-color: var(--primary);
-
-      box-shadow:
-        0 0 0 3px
-        rgba(8,116,67,0.10);
+      box-shadow: 0 0 0 3px rgba(8, 116, 67, 0.1);
     }
 
     .login-btn {
       width: 100%;
-
       padding: 13px;
-
       border: none;
-
-      border-radius: 9px;
-
+      border-radius: 10px;
       background: var(--primary);
-
       color: white;
-
       font-size: 16px;
-
       font-weight: 600;
-
       cursor: pointer;
-
-      font-family: inherit;
-
       transition: 0.2s;
+      font-family: inherit;
     }
 
     .login-btn:hover {
@@ -394,37 +286,47 @@
 
     .login-btn:disabled {
       opacity: 0.65;
-
       cursor: not-allowed;
     }
 
+    .close-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 11px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      background: white;
+      color: var(--text);
+      font-size: 15px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .close-btn:hover {
+      background: #f3f4f6;
+    }
+
+    /* =========================
+       LOGIN STATUS
+    ========================= */
+
     #loginStatus {
       display: none;
-
-      padding: 11px;
-
       margin-bottom: 15px;
-
+      padding: 11px;
       border-radius: 9px;
-
       text-align: center;
-
       font-size: 14px;
+      line-height: 1.5;
     }
 
     .status-success {
-      display: block !important;
-
       background: #e8f7ee;
-
       color: #087443;
     }
 
     .status-error {
-      display: block !important;
-
       background: #fdecec;
-
       color: #b42318;
     }
 
@@ -434,19 +336,15 @@
 
     footer {
       background: var(--primary-dark);
-
       color: white;
-
       text-align: center;
-
-      padding: 25px 15px;
-
+      padding: 22px 15px;
       margin-top: 40px;
     }
 
     footer p {
       font-size: 14px;
-
+      line-height: 1.7;
       opacity: 0.92;
     }
 
@@ -456,30 +354,34 @@
 
     @media (max-width: 650px) {
 
-      header h1 {
-        font-size: 21px;
+      header {
+        padding: 20px 15px;
       }
 
-      header p {
-        font-size: 13px;
+      .header-content {
+        flex-direction: column;
+        text-align: center;
       }
 
-      nav a {
-        padding: 10px 12px;
+      .brand h1 {
+        font-size: 22px;
+      }
 
+      .brand p {
         font-size: 13px;
       }
 
       .container {
-        padding: 20px 13px 35px;
+        margin-top: 20px;
+        padding: 0 14px 35px;
       }
 
       .hero {
-        padding: 30px 18px;
+        padding: 30px 20px;
       }
 
       .hero h2 {
-        font-size: 24px;
+        font-size: 23px;
       }
 
       .hero p {
@@ -490,14 +392,11 @@
         grid-template-columns: 1fr;
       }
 
-      .admin-box {
-        padding: 23px 18px;
+      .login-box {
+        padding: 25px 20px;
       }
-
     }
-
   </style>
-
 </head>
 
 <body>
@@ -508,51 +407,30 @@
 
   <header>
 
-```
-<h1>
-  আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
-</h1>
+    <div class="header-content">
 
-<p>
-  ইসলামিক ও সাধারণ শিক্ষার সমন্বিত শিক্ষা প্রতিষ্ঠান
-</p>
-```
+      <div class="brand">
+
+        <h1>🌿 আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</h1>
+
+        <p>
+          ইসলামিক ও সাধারণ শিক্ষার সমন্বিত শিক্ষা প্রতিষ্ঠান
+        </p>
+
+      </div>
+
+      <button
+        class="admin-button"
+        onclick="openLogin()">
+
+        🔐 Admin Login
+
+      </button>
+
+    </div>
 
   </header>
 
-  <!-- =========================
-       NAVIGATION
-  ========================= -->
-
-  <nav>
-
-```
-<a href="index.html">
-  🏠 হোম
-</a>
-
-<a href="students.html">
-  👨‍🎓 শিক্ষার্থী
-</a>
-
-<a href="result.html">
-  📊 ফলাফল
-</a>
-
-<a href="notices.html">
-  📢 নোটিশ
-</a>
-
-<a href="admin-exams.html">
-  📝 পরীক্ষা
-</a>
-
-<a href="#admin-login">
-  🔐 Admin Login
-</a>
-```
-
-  </nav>
 
   <!-- =========================
        MAIN
@@ -560,363 +438,112 @@
 
   <main class="container">
 
-```
-<!-- =========================
-     HERO
-========================= -->
+    <!-- HERO -->
 
-<section class="hero">
+    <section class="hero">
 
-  <div class="hero-icon">
-    📚
-  </div>
+      <div class="hero-icon">
+        📚
+      </div>
 
-  <h2>
-    আসসালামু আলাইকুম
-  </h2>
+      <h2>
+        স্বাগতম
+      </h2>
 
-  <p>
-    আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমির
-    অফিসিয়াল ওয়েবসাইটে আপনাকে স্বাগতম।
-    এখানে একাডেমির শিক্ষার্থী, পরীক্ষা,
-    ফলাফল, নোটিশ ও অন্যান্য গুরুত্বপূর্ণ
-    তথ্য পাওয়া যাবে।
-  </p>
+      <p>
+        আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমির
+        অফিসিয়াল ওয়েবসাইটে আপনাকে স্বাগতম।
+        এখানে শিক্ষার্থী, পরীক্ষা, ফলাফল ও
+        একাডেমির গুরুত্বপূর্ণ তথ্য পাওয়া যাবে।
+      </p>
 
-</section>
+    </section>
 
 
-<!-- =========================
-     EDUCATION PROGRAM
-========================= -->
+    <!-- FEATURES -->
 
-<h2 class="section-title">
-  🌟 আমাদের শিক্ষা কার্যক্রম
-</h2>
+    <h2 class="cards-title">
+      🌟 আমাদের কার্যক্রম
+    </h2>
 
+    <section class="cards">
 
-<section class="cards">
+      <div class="card">
 
+        <div class="card-icon">
+          📖
+        </div>
 
-  <div class="card">
+        <h3>
+          নূরানী কায়দা
+        </h3>
 
-    <div class="card-icon">
-      📖
-    </div>
+        <p>
+          শুদ্ধভাবে কুরআন শিক্ষা ও
+          নূরানী কায়দা অনুশীলন।
+        </p>
 
-    <h3>
-      নূরানী কায়দা শিক্ষা
-    </h3>
+      </div>
 
-    <p>
-      শুদ্ধভাবে কুরআন পড়ার প্রাথমিক
-      শিক্ষা ও নূরানী কায়দা অনুশীলন।
-    </p>
 
-  </div>
+      <div class="card">
 
+        <div class="card-icon">
+          🕌
+        </div>
 
-  <div class="card">
+        <h3>
+          কুরআন ও তাজবীদ
+        </h3>
 
-    <div class="card-icon">
-      🕌
-    </div>
+        <p>
+          শুদ্ধ তাজবীদসহ কুরআন
+          তেলাওয়াত শিক্ষা।
+        </p>
 
-    <h3>
-      কুরআন ও তাজবীদ
-    </h3>
+      </div>
 
-    <p>
-      শুদ্ধ তাজবীদসহ কুরআন তেলাওয়াত
-      শেখানো হয়।
-    </p>
 
-  </div>
+      <div class="card">
 
+        <div class="card-icon">
+          🎓
+        </div>
 
-  <div class="card">
+        <h3>
+          সাধারণ শিক্ষা
+        </h3>
 
-    <div class="card-icon">
-      🎓
-    </div>
+        <p>
+          বাংলা, ইংরেজি, গণিতসহ
+          প্রয়োজনীয় সাধারণ শিক্ষা।
+        </p>
 
-    <h3>
-      কুরআন হেফজ
-    </h3>
+      </div>
 
-    <p>
-      শিক্ষার্থীদের জন্য নিয়মতান্ত্রিক
-      কুরআন হেফজ প্রোগ্রাম।
-    </p>
 
-  </div>
+      <div class="card">
 
+        <div class="card-icon">
+          📝
+        </div>
 
-  <div class="card">
+        <h3>
+          পরীক্ষা ও ফলাফল
+        </h3>
 
-    <div class="card-icon">
-      🤲
-    </div>
+        <p>
+          অনলাইনে পরীক্ষার ফলাফল
+          দেখার সুবিধা।
+        </p>
 
-    <h3>
-      নামাজ ও দোয়া
-    </h3>
+      </div>
 
-    <p>
-      নামাজ শিক্ষা ও দৈনন্দিন
-      প্রয়োজনীয় দোয়া শেখানো হয়।
-    </p>
 
-  </div>
-
-
-  <div class="card">
-
-    <div class="card-icon">
-      🌿
-    </div>
-
-    <h3>
-      আদব ও আখলাক
-    </h3>
-
-    <p>
-      ইসলামী আদব, আখলাক ও
-      নৈতিক শিক্ষা প্রদান।
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="card-icon">
-      🌐
-    </div>
-
-    <h3>
-      আরবি ও সাধারণ শিক্ষা
-    </h3>
-
-    <p>
-      আরবি কথোপকথন, ব্যাকরণ এবং
-      প্রয়োজনীয় সাধারণ শিক্ষা।
-    </p>
-
-  </div>
-
-
-</section>
-
-
-<!-- =========================
-     ONLINE SERVICES
-========================= -->
-
-<h2 class="section-title">
-  💻 অনলাইন সেবা
-</h2>
-
-
-<section class="cards">
-
-
-  <!-- STUDENTS -->
-
-  <div class="service-card">
-
-    <div class="card-icon">
-      👨‍🎓
-    </div>
-
-    <h3>
-      শিক্ষার্থী তথ্য
-    </h3>
-
-    <p>
-      শিক্ষার্থীদের তথ্য দেখতে
-      এখানে প্রবেশ করুন।
-    </p>
-
-    <a
-      href="students.html"
-      class="service-btn">
-
-      👨‍🎓 শিক্ষার্থী দেখুন
-
-    </a>
-
-  </div>
-
-
-  <!-- RESULTS -->
-
-  <div class="service-card">
-
-    <div class="card-icon">
-      📊
-    </div>
-
-    <h3>
-      পরীক্ষার ফলাফল
-    </h3>
-
-    <p>
-      Student ID ও পরীক্ষার নাম দিয়ে
-      ফলাফল দেখুন।
-    </p>
-
-    <a
-      href="result.html"
-      class="service-btn">
-
-      📊 ফলাফল দেখুন
-
-    </a>
-
-  </div>
-
-
-  <!-- NOTICES -->
-
-  <div class="service-card">
-
-    <div class="card-icon">
-      📢
-    </div>
-
-    <h3>
-      নোটিশ
-    </h3>
-
-    <p>
-      একাডেমির গুরুত্বপূর্ণ
-      নোটিশ দেখতে এখানে যান।
-    </p>
-
-    <a
-      href="notices.html"
-      class="service-btn">
-
-      📢 নোটিশ দেখুন
-
-    </a>
-
-  </div>
-
-
-  <!-- EXAMS -->
-
-  <div class="service-card">
-
-    <div class="card-icon">
-      📝
-    </div>
-
-    <h3>
-      পরীক্ষা
-    </h3>
-
-    <p>
-      একাডেমির পরীক্ষার
-      তথ্য দেখুন।
-    </p>
-
-    <a
-      href="admin-exams.html"
-      class="service-btn">
-
-      📝 পরীক্ষা
-
-    </a>
-
-  </div>
-
-
-</section>
-
-
-<!-- =========================
-     ADMIN LOGIN
-========================= -->
-
-<section
-  id="admin-login"
-  class="admin-section">
-
-  <h2 class="section-title">
-    🔐 Administrator Login
-  </h2>
-
-
-  <div class="admin-box">
-
-    <h3>
-      Admin Panel
-    </h3>
-
-    <p class="admin-description">
-      শুধুমাত্র অনুমোদিত Administrator-এর জন্য।
-    </p>
-
-
-    <!-- STATUS -->
-
-    <div id="loginStatus"></div>
-
-
-    <!-- EMAIL -->
-
-    <div class="form-group">
-
-      <label for="adminEmail">
-        📧 Admin Email
-      </label>
-
-      <input
-        type="email"
-        id="adminEmail"
-        placeholder="Admin Email লিখুন"
-        autocomplete="email">
-
-    </div>
-
-
-    <!-- PASSWORD -->
-
-    <div class="form-group">
-
-      <label for="adminPassword">
-        🔑 Password
-      </label>
-
-      <input
-        type="password"
-        id="adminPassword"
-        placeholder="Password লিখুন"
-        autocomplete="current-password">
-
-    </div>
-
-
-    <!-- LOGIN BUTTON -->
-
-    <button
-      id="loginButton"
-      class="login-btn"
-      onclick="adminLogin()">
-
-      🔐 Login
-
-    </button>
-
-
-  </div>
-
-</section>
-```
+    </section>
 
   </main>
+
 
   <!-- =========================
        FOOTER
@@ -924,17 +551,109 @@
 
   <footer>
 
-```
-<p>
-  © 2026 আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
-</p>
+    <p>
+      © 2026 আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
+    </p>
 
-<p>
-  সকল অধিকার সংরক্ষিত।
-</p>
-```
+    <p>
+      সকল অধিকার সংরক্ষিত।
+    </p>
 
   </footer>
+
+
+  <!-- =========================
+       ADMIN LOGIN MODAL
+  ========================= -->
+
+  <div id="loginModal">
+
+    <div class="login-box">
+
+      <div class="login-header">
+
+        <div class="icon">
+          🔐
+        </div>
+
+        <h2>
+          Admin Login
+        </h2>
+
+        <p>
+          শুধুমাত্র অনুমোদিত Administrator-এর জন্য
+        </p>
+
+      </div>
+
+
+      <!-- LOGIN STATUS -->
+
+      <div id="loginStatus"></div>
+
+
+      <!-- EMAIL -->
+
+      <div class="form-group">
+
+        <label for="adminEmail">
+          📧 Email Address
+        </label>
+
+        <input
+          type="email"
+          id="adminEmail"
+          placeholder="Admin Email"
+          autocomplete="email"
+          required>
+
+      </div>
+
+
+      <!-- PASSWORD -->
+
+      <div class="form-group">
+
+        <label for="adminPassword">
+          🔑 Password
+        </label>
+
+        <input
+          type="password"
+          id="adminPassword"
+          placeholder="Password"
+          autocomplete="current-password"
+          required>
+
+      </div>
+
+
+      <!-- LOGIN BUTTON -->
+
+      <button
+        id="loginButton"
+        class="login-btn"
+        onclick="adminLogin()">
+
+        🔐 Login
+
+      </button>
+
+
+      <!-- CLOSE -->
+
+      <button
+        class="close-btn"
+        onclick="closeLogin()">
+
+        ✕ বন্ধ করুন
+
+      </button>
+
+    </div>
+
+  </div>
+
 
   <!-- =========================
        JAVASCRIPT
@@ -942,14 +661,12 @@
 
   <script>
 
-
     /* =========================================
        SUPABASE CONFIG
     ========================================= */
 
     const SUPABASE_URL =
       "https://pkznaencgprqzvdzapfi.supabase.co";
-
 
     const SUPABASE_KEY =
       "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
@@ -963,7 +680,46 @@
 
 
     /* =========================================
-       SHOW LOGIN STATUS
+       OPEN LOGIN
+    ========================================= */
+
+    function openLogin() {
+
+      const modal =
+        document.getElementById("loginModal");
+
+      modal.style.display = "flex";
+
+      clearLoginStatus();
+
+      setTimeout(() => {
+
+        document
+          .getElementById("adminEmail")
+          .focus();
+
+      }, 100);
+
+    }
+
+
+    /* =========================================
+       CLOSE LOGIN
+    ========================================= */
+
+    function closeLogin() {
+
+      document
+        .getElementById("loginModal")
+        .style.display = "none";
+
+      clearLoginStatus();
+
+    }
+
+
+    /* =========================================
+       LOGIN STATUS
     ========================================= */
 
     function showLoginStatus(
@@ -972,9 +728,7 @@
     ) {
 
       const status =
-        document.getElementById(
-          "loginStatus"
-        );
+        document.getElementById("loginStatus");
 
       status.textContent = message;
 
@@ -983,19 +737,15 @@
           ? "status-success"
           : "status-error";
 
+      status.style.display = "block";
+
     }
 
-
-    /* =========================================
-       CLEAR LOGIN STATUS
-    ========================================= */
 
     function clearLoginStatus() {
 
       const status =
-        document.getElementById(
-          "loginStatus"
-        );
+        document.getElementById("loginStatus");
 
       status.textContent = "";
 
@@ -1018,14 +768,13 @@
           .value
           .trim();
 
-
       const password =
         document
           .getElementById("adminPassword")
           .value;
 
 
-      /* Empty fields */
+      /* Empty field check */
 
       if (!email || !password) {
 
@@ -1040,9 +789,7 @@
 
 
       const loginButton =
-        document.getElementById(
-          "loginButton"
-        );
+        document.getElementById("loginButton");
 
 
       loginButton.disabled = true;
@@ -1055,7 +802,6 @@
 
 
       try {
-
 
         /* =====================================
            SUPABASE AUTH LOGIN
@@ -1074,7 +820,7 @@
           });
 
 
-        /* Login failed */
+        /* Login error */
 
         if (error) {
 
@@ -1093,12 +839,9 @@
         }
 
 
-        /* User not found */
+        /* User পাওয়া যায়নি */
 
-        if (
-          !data ||
-          !data.user
-        ) {
+        if (!data || !data.user) {
 
           showLoginStatus(
             "❌ Login করা যায়নি।",
@@ -1111,7 +854,7 @@
 
 
         /* =====================================
-           ADMIN TABLE VERIFICATION
+           CHECK ADMINS TABLE
         ===================================== */
 
         const {
@@ -1121,14 +864,11 @@
           await supabaseClient
             .from("admins")
             .select("id")
-            .eq(
-              "id",
-              data.user.id
-            )
+            .eq("id", data.user.id)
             .maybeSingle();
 
 
-        /* Admin query error */
+        /* Admin table error */
 
         if (adminError) {
 
@@ -1149,9 +889,7 @@
         }
 
 
-        /* =====================================
-           NOT ADMIN
-        ===================================== */
+        /* User is not admin */
 
         if (!adminData) {
 
@@ -1168,7 +906,7 @@
 
 
         /* =====================================
-           ADMIN VERIFIED
+           SUCCESS
         ===================================== */
 
         showLoginStatus(
@@ -1177,26 +915,19 @@
         );
 
 
-        setTimeout(
-          function() {
+        setTimeout(() => {
 
-            window.location.href =
-              "admin.html";
+          window.location.href =
+            "admin.html";
 
-          },
-          700
-        );
-
+        }, 700);
 
       }
 
 
       catch (error) {
 
-        console.error(
-          "Unexpected Login Error:",
-          error
-        );
+        console.error(error);
 
         showLoginStatus(
           "❌ Login করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।",
@@ -1228,11 +959,32 @@
         "keydown",
         function(event) {
 
-          if (
-            event.key === "Enter"
-          ) {
+          if (event.key === "Enter") {
 
             adminLogin();
+
+          }
+
+        }
+      );
+
+
+    /* =========================================
+       CLICK OUTSIDE MODAL
+    ========================================= */
+
+    document
+      .getElementById("loginModal")
+      .addEventListener(
+        "click",
+        function(event) {
+
+          if (
+            event.target ===
+            this
+          ) {
+
+            closeLogin();
 
           }
 
@@ -1261,7 +1013,9 @@
         }
 
 
-        /* Check admin */
+        /* =====================================
+           CHECK ADMIN
+        ===================================== */
 
         const {
           data: adminData,
@@ -1270,10 +1024,7 @@
           await supabaseClient
             .from("admins")
             .select("id")
-            .eq(
-              "id",
-              session.user.id
-            )
+            .eq("id", session.user.id)
             .maybeSingle();
 
 
@@ -1283,7 +1034,7 @@
         ) {
 
           console.log(
-            "Admin session is active."
+            "Existing admin session found."
           );
 
         }
@@ -1293,7 +1044,7 @@
       catch (error) {
 
         console.error(
-          "Session Check Error:",
+          "Session check error:",
           error
         );
 
@@ -1303,11 +1054,10 @@
 
 
     /* =========================================
-       START
+       INITIALIZE
     ========================================= */
 
     checkExistingSession();
-
 
   </script>
 
