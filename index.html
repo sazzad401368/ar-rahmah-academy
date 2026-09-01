@@ -1,55 +1,2050 @@
-<!DOCTYPE html>
+জি, শুরু করি। ✅
+admin-exams.html তৈরি হয়েছে — এখন সেটাকে Admin Dashboard-এর সাথে যুক্ত করব।
 
+আপনার দেওয়া index/admin dashboard কোডে পরীক্ষা অংশে এখনো Coming Soon আছে। সেটি পরিবর্তন করব।
+
+🔹 ধাপ ১ — এই অংশটি খুঁজুন
+<button
+  class="manage-btn disabled-btn"
+  onclick="comingSoon()">
+  📝 Coming Soon
+</button>
+
+এটি পরীক্ষা (Exams) কার্ডের ভিতরে আছে।
+
+🔹 ধাপ ২ — পুরোটা মুছে এর জায়গায় দিন
+<button
+  class="manage-btn"
+  onclick="goTo('admin-exams.html')">
+  📝 Manage Exams
+</button>
+🔹 তাহলে Exams Card হবে
+<!-- Exams -->
+<div class="management-card">
+
+  <div class="management-icon">
+    📝
+  </div>
+
+  <h3>পরীক্ষা</h3>
+
+  <p>
+    পরীক্ষা তৈরি ও
+    পরীক্ষার তথ্য পরিচালনা করুন।
+  </p>
+
+  <button
+    class="manage-btn"
+    onclick="goTo('admin-exams.html')">
+    📝 Manage Exams
+  </button>
+
+</div>
+🔹 ধাপ ৩ — Save করুন
+
+তারপর GitHub-এ:
+
+Commit message:
+
+Connect Exams management page
+
+তারপর Commit changes চাপুন। ✅
+
+এরপর কী হবে?
+
+Admin Dashboard → 📝 Manage Exams চাপলে সরাসরি:
+
+admin-exams.html
+
+পেজে যাবে।
+
+তারপর আমরা admin-exams.html-এর ভিতরে আসল কাজ করব:
+
+➕ নতুন পরীক্ষা তৈরি
+✏️ পরীক্ষার তথ্য পরিবর্তন
+🗑️ পরীক্ষা মুছে ফেলা
+📋 সব পরীক্ষার তালিকা
+📅 Start Date / End Date
+🔐 শুধু Admin-এর জন্য নিরাপদ করা
+
+এখন শুধু ধাপ ১–৩ করুন। হয়ে গেলে আমাকে বলবেন: Exams যুক্ত হয়েছে — তারপর আমরা admin-exams.html-এর মূল কাজ শুরু করব।
+
+Today 5:57 PM
+
+index/admin dashboard কোন টায় খুজবো ?
+
+জি, index/admin dashboard বলতে আমি আপনার index.html-এর কথাই বলেছি—যে ফাইলের মধ্যে আপনি উপরে দেওয়া পুরো Admin Dashboard কোডটি রেখেছেন।
+
+আপনার ক্ষেত্রে:
+
+index.html → Admin Dashboard
+admin-exams.html → নতুন তৈরি করা পরীক্ষা পরিচালনার পেজ
+এখন যা করবেন
+
+GitHub-এ আপনার ar-rahmah-academy repository খুলুন।
+
+তারপর index.html ফাইলটি খুলবেন।
+সেখানেই এই অংশটি খুঁজবেন:
+
+<button
+  class="manage-btn disabled-btn"
+  onclick="comingSoon()">
+  📝 Coming Soon
+</button>
+
+এটি পরীক্ষা কার্ডের মধ্যে থাকবে।
+
+এর জায়গায় দেবেন:
+
+<button
+  class="manage-btn"
+  onclick="goTo('admin-exams.html')">
+  📝 Manage Exams
+</button>
+
+⚠️ admin-exams.html-এ এটা খুঁজবেন না।
+এখন পরিবর্তন করতে হবে index.html-এ।
+
+আপনি চাইলে GitHub-এ index.html খুলে একটি ছবি পাঠান, আমি ঠিক কোথায় ক্লিক করবেন এবং কোন অংশ বদলাবেন একদম ধাপে ধাপে দেখিয়ে দেব।
+
+Today 9:14 PM
+Pasted text(5).txt
+Document
+এখানে আছে ?
+
+হ্যাঁ, আমরা এখান থেকেই এগোতে পারি। ✅
+
+আপনি যে Admin Dashboard-এর কোড দিয়েছেন, সেটি admin-dashboard.html ফাইলের জন্য।
+
+আমাদের বর্তমান অবস্থাটা হলো:
+
+✅ index.html → মূল ওয়েবসাইট / Admin Login
+✅ admin-dashboard.html → Admin Dashboard
+✅ students.html → শিক্ষার্থী পরিচালনা
+✅ result.html → ফলাফল পরিচালনা
+✅ notices.html → নোটিশ পরিচালনা
+✅ admin-teachers.html → শিক্ষক পরিচালনা
+✅ admin-exams.html → পরীক্ষা পরিচালনা — এটা এখন তৈরি হয়েছে
+⏳ পরীক্ষার খাতা / QR Code → পরে
+
+এখন পরবর্তী কাজ হবে admin-dashboard.html-এর “📝 পরীক্ষা” বাটনটি ঠিক করা, যাতে Coming Soon না দেখিয়ে সরাসরি admin-exams.html খুলে।
+
+আপনি চাইলে এখন আমি ঠিক কোন লাইনটি বদলাবেন, সেটি একদম ধাপে ধাপে দেখাই।
+
+ঠিক কোন লাইনটি বদলাবেন, সেটি একদম ধাপে ধাপে দেখাও !
+
+অবশ্যই। 👍 আমরা কোনো কিছু ডিলিট করব না—শুধু admin-dashboard.html-এর পরীক্ষার বাটনটি চালু করব।
+
+আপনার দেওয়া কোডে এখন এই অংশটি আছে:
+
+<!-- Exams -->
+<div class="management-card">
+
+  <div class="management-icon">
+    📝
+  </div>
+
+  <h3>পরীক্ষা</h3>
+
+  <p>
+    পরীক্ষা তৈরি ও
+    পরীক্ষার তথ্য পরিচালনা করুন।
+  </p>
+
+  <button
+    class="manage-btn disabled-btn"
+    onclick="comingSoon()">
+    📝 Coming Soon
+  </button>
+
+</div>
+ধাপ ১ — এই অংশটি খুঁজুন
+
+admin-dashboard.html খুলে Ctrl + F চাপুন।
+
+তারপর লিখুন:
+
+Coming Soon
+
+আপনি পরীক্ষার অংশে এই কোডটি পাবেন:
+
+<button
+  class="manage-btn disabled-btn"
+  onclick="comingSoon()">
+  📝 Coming Soon
+</button>
+ধাপ ২ — শুধু এই অংশটুকু পরিবর্তন করুন
+
+আগেরটা:
+
+<button
+  class="manage-btn disabled-btn"
+  onclick="comingSoon()">
+  📝 Coming Soon
+</button>
+
+নতুনটা:
+
+<button
+  class="manage-btn"
+  onclick="goTo('admin-exams.html')">
+  📝 Manage Exams
+</button>
+ধাপ ৩ — পুরো Exams অংশটি এমন হবে
+<!-- Exams -->
+<div class="management-card">
+
+  <div class="management-icon">
+    📝
+  </div>
+
+  <h3>পরীক্ষা</h3>
+
+  <p>
+    পরীক্ষা তৈরি ও
+    পরীক্ষার তথ্য পরিচালনা করুন।
+  </p>
+
+  <button
+    class="manage-btn"
+    onclick="goTo('admin-exams.html')">
+    📝 Manage Exams
+  </button>
+
+</div>
+ধাপ ৪ — Save / Commit
+
+এরপর Save করুন।
+
+যদি GitHub-এ কাজ করেন:
+
+Commit message:
+
+Enable Exams management page
+
+তারপর Commit changes চাপবেন। ✅
+
+ধাপ ৫ — কী হবে?
+
+Admin Dashboard-এ গেলে:
+
+📝 পরীক্ষা
+
+এর নিচে আর
+
+📝 Coming Soon
+
+দেখাবে না।
+
+এর পরিবর্তে দেখাবে:
+
+📝 Manage Exams
+
+ওখানে ক্লিক করলে সরাসরি:
+
+admin-exams.html
+
+পেজটি খুলবে। 🎯
+
+এখন আপাতত অন্য কোনো কোডে হাত দেবেন না। শুধু এই পরিবর্তনটুকু করুন। পরিবর্তন করার পর আমাকে বলবেন “হয়ে গেছে”—তারপর আমরা admin-exams.html-এর কাজ পরীক্ষা করব।
+
+Today 10:32 PM
+ডাইরেক্ট এমিনে নিয়ে জাচ্ছে কেনো ?
+Pasted text(6).txt
+Document
+Pasted text(7).txt
+Document
+
+অবশ্যই। 👍 এবার ঠিকভাবে ঠিক করি।
+
+আপনার দেওয়া কোডটি admin.html-এর জন্য। index.html-এ এটি রাখা যাবে না। তবে যেহেতু এখন সমস্যাটা তৈরি হয়েছে, আমি আপনাকে সম্পূর্ণ নতুন, সংশোধিত admin.html কোড দিচ্ছি।
+
+এবার বিশেষভাবে আমি Loading আটকে যাওয়ার সমস্যাটিও ঠিক করেছি। checkAdmin() ব্যর্থ হলেও Loading screen আর অনির্দিষ্টকাল থাকবে না।
+
+admin.html → পুরো পুরোনো কোড মুছে এই কোড দিন
+<!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</title>
+  <title>Admin Dashboard | Ar-Rahmah Academy</title>
 
   <!-- Supabase -->
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #087443;
+      --primary-dark: #055c35;
+      --light-green: #e9f7ef;
+      --background: #f4f7f6;
+      --white: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --danger: #c62828;
+      --shadow: 0 5px 20px rgba(0,0,0,0.07);
+      --radius: 16px;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f8f6;
-      color: #222;
-      line-height: 1.7;
+      font-family:
+        "Noto Sans Bengali",
+        "Hind Siliguri",
+        Arial,
+        sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
     }
+
+    /* HEADER */
 
     header {
-      background: #087443;
+      background: linear-gradient(135deg, #087443, #075b36);
       color: white;
-      padding: 22px 15px;
-      text-align: center;
+      padding: 24px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
     }
 
-    header h1 {
-      font-size: 28px;
+    .header-content {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand h1 {
+      font-size: 25px;
       margin-bottom: 5px;
     }
 
-    header p {
-      font-size: 15px;
+    .brand p {
+      font-size: 14px;
+      opacity: 0.9;
     }
 
-    nav {
-      background: #065c36;
+    .admin-badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 10px 15px;
+      border-radius: 30px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    /* MAIN */
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
+    }
+
+    .welcome {
+      background: var(--white);
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+      border-left: 5px solid var(--primary);
+    }
+
+    .welcome h2 {
+      color: var(--primary);
+      margin-bottom: 7px;
+      font-size: 23px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section-title {
+      margin: 30px 0 15px;
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    /* STATISTICS */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 22px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: 0.25s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+    }
+
+    .stat-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 14px;
+      background: var(--light-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .stat-info p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .stat-number {
+      font-size: 25px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    /* MANAGEMENT */
+
+    .management-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .management-card {
+      background: white;
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: 0.25s;
+    }
+
+    .management-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+    }
+
+    .management-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .management-card h3 {
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-size: 19px;
+    }
+
+    .management-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 45px;
+    }
+
+    .manage-btn {
+      margin-top: 17px;
+      width: 100%;
+      padding: 11px 15px;
+      border: none;
+      border-radius: 9px;
+      background: var(--primary);
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .manage-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .disabled-btn {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .disabled-btn:hover {
+      background: #9ca3af;
+    }
+
+    /* STATUS */
+
+    #status {
+      margin: 25px 0;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .status-success {
+      background: #e8f7ee;
+      color: #087443;
+    }
+
+    .status-error {
+      background: #fdecec;
+      color: #b42318;
+    }
+
+    /* ACTIONS */
+
+    .bottom-actions {
+      margin-top: 30px;
       display: flex;
       justify-content: center;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    nav a {
+    .logout {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 9px;
+      background: var(--danger);
       color: white;
-      text-decoration: none;
-      padding: 12px 17px;
-      t
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .refresh {
+      padding: 12px 28px;
+      border: 1px solid var(--primary);
+      border-radius: 9px;
+      background: white;
+      color: var(--primary);
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .refresh:hover {
+      background: var(--light-green);
+    }
+
+    /* LOADING */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader-box {
+      text-align: center;
+      color: var(--primary);
+      padding: 25px;
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #d9eee3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 650px) {
+
+      header {
+        padding: 20px 15px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .brand h1 {
+        font-size: 21px;
+      }
+
+      .container {
+        margin-top: 20px;
+        padding: 0 14px 30px;
+      }
+
+      .welcome {
+        padding: 20px;
+      }
+
+      .welcome h2 {
+        font-size: 20px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 15px 10px;
+        gap: 9px;
+      }
+
+      .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 23px;
+      }
+
+      .stat-number {
+        font-size: 21px;
+      }
+
+      .management-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOADING -->
+
+  <div id="loading">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <p id="loadingText">Admin Panel যাচাই করা হচ্ছে...</p>
+    </div>
+  </div>
+
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="header-content">
+
+      <div class="brand">
+        <h1>🔐 Admin Dashboard</h1>
+        <p>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</p>
+      </div>
+
+      <div class="admin-badge">
+        👤 Administrator
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main class="container">
+
+    <section class="welcome">
+
+      <h2>আসসালামু আলাইকুম, Admin! 👋</h2>
+
+      <p>
+        আপনার Admin Panel-এ স্বাগতম।
+        এখান থেকে একাডেমির শিক্ষার্থী, ফলাফল,
+        শিক্ষক, পরীক্ষা ও নোটিশ পরিচালনা করতে পারবেন।
+      </p>
+
+    </section>
+
+
+    <h2 class="section-title">
+      📊 একাডেমির সংক্ষিপ্ত তথ্য
+    </h2>
+
+
+    <section class="stats">
+
+      <div class="stat-card">
+        <div class="stat-icon">👨‍🎓</div>
+
+        <div class="stat-info">
+          <p>মোট শিক্ষার্থী</p>
+          <div id="studentCount" class="stat-number">—</div>
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-icon">👨‍🏫</div>
+
+        <div class="stat-info">
+          <p>মোট শিক্ষক</p>
+          <div id="teacherCount" class="stat-number">—</div>
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+
+        <div class="stat-info">
+          <p>মোট পরীক্ষা</p>
+          <div id="examCount" class="stat-number">—</div>
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+
+        <div class="stat-info">
+          <p>মোট ফলাফল</p>
+          <div id="resultCount" class="stat-number">—</div>
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-icon">📢</div>
+
+        <div class="stat-info">
+          <p>মোট নোটিশ</p>
+          <div id="noticeCount" class="stat-number">—</div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <h2 class="section-title">
+      ⚙️ Management
+    </h2>
+
+
+    <section class="management-grid">
+
+
+      <!-- STUDENTS -->
+
+      <div class="management-card">
+
+        <div class="management-icon">👨‍🎓</div>
+
+        <h3>শিক্ষার্থী</h3>
+
+        <p>
+          শিক্ষার্থীদের তথ্য যোগ,
+          পরিবর্তন ও পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn"
+          onclick="goTo('students.html')">
+
+          👨‍🎓 Manage Students
+
+        </button>
+
+      </div>
+
+
+      <!-- RESULTS -->
+
+      <div class="management-card">
+
+        <div class="management-icon">📊</div>
+
+        <h3>ফলাফল</h3>
+
+        <p>
+          পরীক্ষার ফলাফল যোগ,
+          পরিবর্তন ও পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn"
+          onclick="goTo('result.html')">
+
+          📊 Manage Results
+
+        </button>
+
+      </div>
+
+
+      <!-- NOTICES -->
+
+      <div class="management-card">
+
+        <div class="management-icon">📢</div>
+
+        <h3>নোটিশ</h3>
+
+        <p>
+          একাডেমির গুরুত্বপূর্ণ
+          নোটিশ পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn"
+          onclick="goTo('notices.html')">
+
+          📢 Manage Notices
+
+        </button>
+
+      </div>
+
+
+      <!-- EXAMS -->
+
+      <div class="management-card">
+
+        <div class="management-icon">📝</div>
+
+        <h3>পরীক্ষা</h3>
+
+        <p>
+          পরীক্ষা তৈরি ও
+          পরীক্ষার তথ্য পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn"
+          onclick="goTo('admin-exams.html')">
+
+          📝 Manage Exams
+
+        </button>
+
+      </div>
+
+
+      <!-- EXAM PAPERS -->
+
+      <div class="management-card">
+
+        <div class="management-icon">📄</div>
+
+        <h3>পরীক্ষার খাতা</h3>
+
+        <p>
+          পরীক্ষার প্রশ্নপত্র ও
+          ফাইল পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn disabled-btn"
+          onclick="comingSoon()">
+
+          📄 Coming Soon
+
+        </button>
+
+      </div>
+
+
+      <!-- TEACHERS -->
+
+      <div class="management-card">
+
+        <div class="management-icon">👨‍🏫</div>
+
+        <h3>শিক্ষক</h3>
+
+        <p>
+          শিক্ষকদের তথ্য
+          পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn"
+          onclick="goTo('admin-teachers.html')">
+
+          👨‍🏫 Manage Teachers
+
+        </button>
+
+      </div>
+
+
+      <!-- QR CODE -->
+
+      <div class="management-card">
+
+        <div class="management-icon">📱</div>
+
+        <h3>QR Code</h3>
+
+        <p>
+          ফলাফল ও অন্যান্য
+          QR Code পরিচালনা করুন।
+        </p>
+
+        <button
+          class="manage-btn disabled-btn"
+          onclick="comingSoon()">
+
+          📱 Coming Soon
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- STATUS -->
+
+    <div id="status"></div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="bottom-actions">
+
+      <button
+        class="refresh"
+        onclick="loadStatistics()">
+
+        🔄 Refresh Dashboard
+
+      </button>
+
+      <button
+        class="logout"
+        onclick="logout()">
+
+        🚪 Logout
+
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    /* =========================================
+       SUPABASE CONFIG
+    ========================================= */
+
+    const SUPABASE_URL =
+      "https://pkznaencgprqzvdzapfi.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON";
+
+
+    /* =========================================
+       SUPABASE CLIENT
+    ========================================= */
+
+    let supabaseClient = null;
+
+
+    /* =========================================
+       LOADING CONTROL
+    ========================================= */
+
+    function hideLoading() {
+
+      const loading =
+        document.getElementById("loading");
+
+      if (loading) {
+        loading.style.display = "none";
+      }
+
+    }
+
+
+    function showLoading(message) {
+
+      const loading =
+        document.getElementById("loading");
+
+      const text =
+        document.getElementById("loadingText");
+
+      if (text) {
+        text.textContent = message;
+      }
+
+      if (loading) {
+        loading.style.display = "flex";
+      }
+
+    }
+
+
+    /* =========================================
+       STATUS
+    ========================================= */
+
+    function showStatus(message, type = "success") {
+
+      const status =
+        document.getElementById("status");
+
+      if (!status) return;
+
+      status.textContent = message;
+
+      status.className =
+        type === "error"
+          ? "status-error"
+          : "status-success";
+
+    }
+
+
+    /* =========================================
+       PAGE NAVIGATION
+    ========================================= */
+
+    function goTo(page) {
+
+      window.location.href = page;
+
+    }
+
+
+    /* =========================================
+       INITIALIZE SUPABASE
+    ========================================= */
+
+    function initializeSupabase() {
+
+      try {
+
+        if (
+          !window.supabase ||
+          typeof window.supabase.createClient !== "function"
+        ) {
+
+          throw new Error(
+            "Supabase library load হয়নি।"
+          );
+
+        }
+
+
+        supabaseClient =
+          window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+          );
+
+
+        return true;
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Supabase initialization error:",
+          error
+        );
+
+        showStatus(
+          "❌ Supabase চালু করা যায়নি।",
+          "error"
+        );
+
+        return false;
+
+      }
+
+    }
+
+
+    /* =========================================
+       ADMIN AUTHENTICATION
+    ========================================= */
+
+    async function checkAdmin() {
+
+      try {
+
+        showLoading(
+          "Admin Panel যাচাই করা হচ্ছে..."
+        );
+
+
+        if (!supabaseClient) {
+
+          showStatus(
+            "❌ Supabase সংযোগ পাওয়া যায়নি।",
+            "error"
+          );
+
+          hideLoading();
+
+          return false;
+
+        }
+
+
+        const {
+          data: { user },
+          error: userError
+        } =
+          await supabaseClient.auth.getUser();
+
+
+        /* No logged-in user */
+
+        if (userError || !user) {
+
+          console.log(
+            "No authenticated user.",
+            userError
+          );
+
+          window.location.href =
+            "index.html#admin-login";
+
+          return false;
+
+        }
+
+
+        /* =====================================
+           CHECK ADMINS TABLE
+        ===================================== */
+
+        const {
+          data: adminData,
+          error: adminError
+        } =
+          await supabaseClient
+            .from("admins")
+            .select("id")
+            .eq("id", user.id)
+            .maybeSingle();
+
+
+        if (adminError) {
+
+          console.error(
+            "Admin table error:",
+            adminError
+          );
+
+          showStatus(
+            "❌ Admin যাচাই করতে সমস্যা হয়েছে।",
+            "error"
+          );
+
+          hideLoading();
+
+          return false;
+
+        }
+
+
+        /* User is not admin */
+
+        if (!adminData) {
+
+          await supabaseClient.auth.signOut();
+
+          window.location.href =
+            "index.html#admin-login";
+
+          return false;
+
+        }
+
+
+        showStatus(
+          "✅ Admin authentication verified"
+        );
+
+
+        return true;
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Authentication error:",
+          error
+        );
+
+        showStatus(
+          "❌ Admin যাচাই করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+        hideLoading();
+
+        return false;
+
+      }
+
+    }
+
+
+    /* =========================================
+       DATABASE COUNT
+    ========================================= */
+
+    async function getCount(tableName) {
+
+      try {
+
+        const {
+          count,
+          error
+        } =
+          await supabaseClient
+            .from(tableName)
+            .select("*", {
+              count: "exact",
+              head: true
+            });
+
+
+        if (error) {
+
+          console.error(
+            `Error loading ${tableName}:`,
+            error
+          );
+
+          return null;
+
+        }
+
+
+        return count ?? 0;
+
+      }
+
+      catch (error) {
+
+        console.error(
+          `Count error ${tableName}:`,
+          error
+        );
+
+        return null;
+
+      }
+
+    }
+
+
+    /* =========================================
+       LOAD STATISTICS
+    ========================================= */
+
+    async function loadStatistics() {
+
+      if (!supabaseClient) {
+
+        showStatus(
+          "❌ Supabase সংযোগ পাওয়া যায়নি।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      const studentElement =
+        document.getElementById("studentCount");
+
+      const teacherElement =
+        document.getElementById("teacherCount");
+
+      const examElement =
+        document.getElementById("examCount");
+
+      const resultElement =
+        document.getElementById("resultCount");
+
+      const noticeElement =
+        document.getElementById("noticeCount");
+
+
+      studentElement.textContent = "…";
+      teacherElement.textContent = "…";
+      examElement.textContent = "…";
+      resultElement.textContent = "…";
+      noticeElement.textContent = "…";
+
+
+      try {
+
+        const [
+          students,
+          teachers,
+          exams,
+          results,
+          notices
+        ] = await Promise.all([
+
+          getCount("students"),
+
+          getCount("teachers"),
+
+          getCount("exams"),
+
+          getCount("results"),
+
+          getCount("notices")
+
+        ]);
+
+
+        studentElement.textContent =
+          students === null ? "—" : students;
+
+        teacherElement.textContent =
+          teachers === null ? "—" : teachers;
+
+        examElement.textContent =
+          exams === null ? "—" : exams;
+
+        resultElement.textContent =
+          results === null ? "—" : results;
+
+        noticeElement.textContent =
+          notices === null ? "—" : notices;
+
+
+        showStatus(
+          "✅ Dashboard data successfully loaded"
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Statistics error:",
+          error
+        );
+
+        showStatus(
+          "⚠️ Dashboard data load করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+    ========================================= */
+
+    async function logout() {
+
+      const confirmed =
+        confirm(
+          "আপনি কি Admin Panel থেকে Logout করতে চান?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      try {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href =
+          "index.html";
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        showStatus(
+          "Logout করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       COMING SOON
+    ========================================= */
+
+    function comingSoon() {
+
+      alert(
+        "এই Management Page-এর কাজ এখনো তৈরি করা হয়নি।\n\nপরবর্তী ধাপে এটি তৈরি করা হবে।"
+      );
+
+    }
+
+
+    /* =========================================
+       INITIALIZE DASHBOARD
+    ========================================= */
+
+    async function initializeDashboard() {
+
+      try {
+
+        /* Initialize Supabase */
+
+        const initialized =
+          initializeSupabase();
+
+
+        if (!initialized) {
+
+          hideLoading();
+
+          return;
+
+        }
+
+
+        /* Check Admin */
+
+        const isAdmin =
+          await checkAdmin();
+
+
+        if (!isAdmin) {
+
+          return;
+
+        }
+
+
+        /* Load statistics */
+
+        await loadStatistics();
+
+
+        /* Hide loading */
+
+        hideLoading();
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Dashboard initialization error:",
+          error
+        );
+
+        showStatus(
+          "❌ Dashboard চালু করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+        hideLoading();
+
+      }
+
+    }
+
+
+    /* =========================================
+       START
+    ========================================= */
+
+    initializeDashboard();
+
+  </script>
+
+</body>
+</html>
+এখন খুব গুরুত্বপূর্ণ ৩টি কাজ
+
+১. এই কোডটি শুধু admin.html-এ বসাবেন।
+
+২. index.html-এ এই Dashboard-এর কোড রাখবেন না।
+index.html-এ আপনার মূল Website এবং Admin Login-এর কোড থাকবে।
+
+৩. তারপর GitHub-এ:
+
+Copy → Paste → Commit changes করুন। ✅
+
+এরপর ওয়েবসাইট খুলে সরাসরি admin.html নয়, আগে আপনার মূল index.html খুলবেন।
+
+যদি এরপরও সরাসরি Admin Dashboard চলে যায়, তাহলে সমস্যা index.html-এর ভিতরের Admin Login/redirect অংশে—সেক্ষেত্রে index.html-এর বর্তমান পুরো কোডটা আমাকে দিলে আমি সেটাও একবারে ঠিক করে দেব।
+
+Update admin.html  ?
+
+হ্যাঁ, ঠিক তাই। ✅
+
+এখন GitHub-এ admin.html ফাইলটি খুলে Update admin.html করবেন।
+
+ধাপগুলো:
+
+admin.html খুলুন
+পুরো পুরোনো কোড মুছে দিন
+আমি যে নতুন পুরো কোডটি দিলাম, সেটি Copy করুন
+admin.html-এ Paste করুন
+নিচে Commit changes চাপুন
+
+⚠️ index.html এখন স্পর্শ করবেন না।
+এই ধাপে শুধু admin.html → Update admin.html → Commit changes।
+
+তারপর আমাকে শুধু বলবেন:
+
+Update admin.html হয়ে গেছে ✅
+
+তারপর আমরা index.html-এর সমস্যাটা পরীক্ষা করব।
+
+Update admin.html হয়ে গেছে ✅
+
+দারুণ! ✅ admin.html আপডেট হয়ে গেছে।
+
+এখন আর কোনো কোড কাটাছেঁড়া করবেন না।
+
+পরবর্তী ধাপ — index.html পরীক্ষা
+
+এখন আপনার GitHub-এর index.html ফাইলটি খুলুন।
+
+👉 শুধু index.html-এর বর্তমান পুরো কোডটা এখানে পাঠান।
+
+আমি দেখে বের করব কেন ওয়েবসাইট খুললে সরাসরি Admin Panel-এ চলে যাচ্ছে এবং কোথায় redirect হচ্ছে।
+
+তারপর আমি আপনাকে পুরো ঠিক করা index.html কোড দেব—আপনি আগের মতো:
+
+Copy → Paste → Commit changes করবেন। 👍
+
+Chat paused until usage resets at 10:57 PM
+You’ve reached the limit for chats that include files or images. Start a new text-only chat or upgrade to continue now.
+New chat
+Claim free offer
+
+<!DOCTYPE html>
+
+<html lang="bn"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</title>
+
+<!-- Supabase -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style> * { box-sizing: border-box; margin: 0; padding: 0; } body { font-family: Arial, sans-serif; background: #f5f8f6; color: #222; line-height: 1.7; } header { background: #087443; color: white; padding: 22px 15px; text-align: center; } header h1 { font-size: 28px; margin-bottom: 5px; } header p { font-size: 15px; } nav { background: #065c36; display: flex; justify-content: center; flex-wrap: wrap; } nav a { color: white; text-decoration: none; padding: 12px 17px; transition: 0.2s; } nav a:hover { background: #087443; } /* HERO */ .hero { text-align: center; padding: 65px 20px; background: white; } .hero h2 { font-size: 32px; color: #087443; margin-bottom: 15px; } .hero p { max-width: 700px; margin: auto; font-size: 17px; } .hero-button { display: inline-block; margin-top: 25px; padding: 12px 25px; background: #087443; color: white; text-decoration: none; border-radius: 7px; font-size: 16px; } .hero-button:hover { background: #065c36; } /* GENERAL SECTION */ .section { max-width: 1100px; margin: auto; padding: 50px 20px; } .section-title { text-align: center; color: #087443; margin-bottom: 30px; font-size: 27px; } .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; } .card { background: white; padding: 25px; border-radius: 12px; text-align: center; box-shadow: 0 3px 12px rgba(0,0,0,0.08); } .card h3 { color: #087443; margin-bottom: 10px; } /* RESULT SEARCH */ .result-section { background: #eef7f1; padding: 55px 20px; } .result-box { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.10); } .result-box h2 { text-align: center; color: #087443; margin-bottom: 8px; font-size: 28px; } .result-description { text-align: center; color: #666; margin-bottom: 25px; } .search-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; } .input-group label { display: block; font-weight: bold; margin-bottom: 6px; color: #333; } .input-group input { width: 100%; padding: 13px; border: 1px solid #ccc; border-radius: 7px; font-size: 16px; outline: none; } .input-group input:focus { border-color: #087443; } .search-button { display: block; width: 100%; margin-top: 20px; padding: 13px; border: none; border-radius: 7px; background: #087443; color: white; font-size: 17px; cursor: pointer; } .search-button:hover { background: #065c36; } #resultMessage { text-align: center; margin-top: 15px; font-weight: bold; } /* RESULT CARD */ #resultCard { display: none; margin-top: 30px; border: 1px solid #d8e8dd; border-radius: 12px; overflow: hidden; } .student-header { background: #087443; color: white; padding: 20px; text-align: center; } .student-header h3 { font-size: 24px; margin-bottom: 5px; } .student-info { padding: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; background: #f8fbf9; } .info-item { padding: 10px; text-align: center; } .info-item strong { display: block; color: #087443; margin-bottom: 3px; } .marks-table-wrapper { overflow-x: auto; } .marks-table { width: 100%; border-collapse: collapse; min-width: 600px; } .marks-table th, .marks-table td { border: 1px solid #ddd; padding: 11px; text-align: center; } .marks-table th { background: #087443; color: white; } .total-row { background: #f0f7f2; font-weight: bold; } .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; } .summary-box { text-align: center; padding: 15px; border-radius: 8px; background: #f1f7f3; } .summary-box span { display: block; font-size: 14px; color: #666; } .summary-box strong { display: block; font-size: 24px; color: #087443; } .pass { color: #087443 !important; } .fail { color: #b42318 !important; } /* LOGIN */ .login-box { display: none; max-width: 400px; margin: 30px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.12); } .login-box h2 { text-align: center; color: #087443; margin-bottom: 20px; } .login-box input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; } .login-box button { width: 100%; padding: 12px; margin-top: 12px; background: #087443; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; } .message { margin-top: 12px; text-align: center; font-weight: bold; } /* FOOTER */ footer { background: #065c36; color: white; text-align: center; padding: 25px 15px; margin-top: 30px; } /* MOBILE */ @media (max-width: 700px) { header h1 { font-size: 22px; } nav a { padding: 10px 11px; font-size: 14px; } .hero { padding: 45px 15px; } .hero h2 { font-size: 25px; } .section { padding: 40px 15px; } .search-grid { grid-template-columns: 1fr; } .student-info { grid-template-columns: 1fr; } .summary { grid-template-columns: 1fr; } .result-box { padding: 20px 15px; } } </style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header> <h1>আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি</h1> <p>Ar-Rahmah International Noorani Academy</p> </header>
+
+<!-- NAVIGATION -->
+
+<nav>
+
+<a href="#">হোম</a>
+
+<a href="about.html">
+  আমাদের সম্পর্কে
+</a>
+
+<a href="teachers.html">
+  শিক্ষকবৃন্দ
+</a>
+
+<a href="notice.html">
+  নোটিশ
+</a>
+
+<a href="#public-result">
+  পরীক্ষার ফলাফল
+</a>
+
+<a href="#contact">
+  যোগাযোগ
+</a>
+
+<a href="#admin-login">
+  🔐 Admin Login
+</a>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h2>স্বাগতম</h2>
+
+<p>
+  জ্ঞান, নৈতিকতা ও আদর্শ শিক্ষার সমন্বয়ে
+  একটি সুন্দর ভবিষ্যৎ গড়ার প্রত্যয়ে
+  আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি।
+</p>
+
+<a
+  href="#public-result"
+  class="hero-button"
+>
+  🔎 ফলাফল দেখুন
+</a>
+
+</section>
+
+<!-- EDUCATION PROGRAM -->
+
+<section class="section">
+
+<h2 class="section-title">
+  আমাদের শিক্ষা কার্যক্রম
+</h2>
+
+<div class="cards">
+
+  <div class="card">
+    <h3>📖 নূরানী কায়দা</h3>
+    <p>
+      শুদ্ধভাবে কুরআন শিক্ষা ও পড়ার
+      প্রাথমিক প্রশিক্ষণ।
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🕌 কুরআন ও তাজবীদ</h3>
+    <p>
+      শুদ্ধ তাজবীদের সঙ্গে কুরআন
+      তেলাওয়াত শিক্ষা।
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>📚 সাধারণ শিক্ষা</h3>
+    <p>
+      বাংলা, ইংরেজি, গণিত ও অন্যান্য
+      প্রয়োজনীয় বিষয়।
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🌙 আদব ও আখলাক</h3>
+    <p>
+      নৈতিকতা, শিষ্টাচার ও সুন্দর
+      চরিত্র গঠনের শিক্ষা।
+    </p>
+  </div>
+
+</div>
+
+</section>
+
+<!-- PUBLIC RESULT SEARCH -->
+
+<section id="public-result" class="result-section" >
+
+<div class="result-box">
+
+  <h2>
+    🔎 পরীক্ষার ফলাফল দেখুন
+  </h2>
+
+  <p class="result-description">
+    Student ID এবং পরীক্ষার নাম দিয়ে
+    শিক্ষার্থীর ফলাফল খুঁজুন।
+  </p>
+
+
+  <div class="search-grid">
+
+    <div class="input-group">
+
+      <label for="searchStudentId">
+        👨‍🎓 Student ID
+      </label>
+
+      <input
+        type="text"
+        id="searchStudentId"
+        placeholder="যেমন: 1001"
+      >
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label for="searchExamName">
+        📝 পরীক্ষার নাম
+      </label>
+
+      <input
+        type="text"
+        id="searchExamName"
+        list="examNames"
+        placeholder="যেমন: বার্ষিক পরীক্ষা"
+      >
+
+      <datalist id="examNames">
+
+        <option value="বার্ষিক পরীক্ষা"></option>
+        <option value="অর্ধবার্ষিক পরীক্ষা"></option>
+        <option value="মাসিক পরীক্ষা"></option>
+        <option value="নির্বাচনী পরীক্ষা"></option>
+
+      </datalist>
+
+    </div>
+
+  </div>
+
+
+  <button
+    class="search-button"
+    onclick="searchResult()"
+  >
+    🔎 ফলাফল দেখুন
+  </button>
+
+
+  <div id="resultMessage"></div>
+
+
+  <!-- RESULT -->
+
+  <div id="resultCard">
+
+    <div class="student-header">
+
+      <h3 id="studentName">
+        -
+      </h3>
+
+      <p>
+        পরীক্ষার ফলাফল
+      </p>
+
+    </div>
+
+
+    <!-- STUDENT INFORMATION -->
+
+    <div class="student-info">
+
+      <div class="info-item">
+
+        <strong>
+          Student ID
+        </strong>
+
+        <span id="showStudentId">
+          -
+        </span>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <strong>
+          🏫 শ্রেণি
+        </strong>
+
+        <span id="studentClass">
+          -
+        </span>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <strong>
+          🔢 রোল
+        </strong>
+
+        <span id="studentRoll">
+          -
+        </span>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <strong>
+          📝 পরীক্ষার নাম
+        </strong>
+
+        <span id="showExamName">
+          -
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- MARKS TABLE -->
+
+    <div class="marks-table-wrapper">
+
+      <table class="marks-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              বিষয়
+            </th>
+
+            <th>
+              প্রাপ্ত নম্বর
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr>
+            <td>🇧🇩 বাংলা</td>
+            <td id="markBangla">0</td>
+          </tr>
+
+          <tr>
+            <td>🇬🇧 ইংরেজি</td>
+            <td id="markEnglish">0</td>
+          </tr>
+
+          <tr>
+            <td>➗ গণিত</td>
+            <td id="markMath">0</td>
+          </tr>
+
+          <tr>
+            <td>🕌 আরবি</td>
+            <td id="markArabic">0</td>
+          </tr>
+
+          <tr>
+            <td>🌍 সাধারণ জ্ঞান</td>
+            <td id="markGeneral">0</td>
+          </tr>
+
+          <tr class="total-row">
+
+            <td>
+              মোট নম্বর
+            </td>
+
+            <td id="totalMarks">
+              0
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+      <div class="summary-box">
+
+        <span>
+          📊 শতকরা
+        </span>
+
+        <strong id="percentage">
+          0%
+        </strong>
+
+      </div>
+
+
+      <div class="summary-box">
+
+        <span>
+          📋 ফলাফল
+        </span>
+
+        <strong id="finalResult">
+          -
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+<!-- ADMIN LOGIN -->
+
+<section id="admin-login" class="login-box" >
+
+<h2>
+  🔐 Admin Login
+</h2>
+
+
+<input
+  type="email"
+  id="email"
+  placeholder="Admin Email"
+>
+
+
+<input
+  type="password"
+  id="password"
+  placeholder="Password"
+>
+
+
+<button onclick="adminLogin()">
+  Login
+</button>
+
+
+<div
+  id="message"
+  class="message"
+></div>
+
+</section>
+
+<!-- ONLINE SERVICES -->
+
+<section class="section">
+
+<h2 class="section-title">
+  অনলাইন সেবা
+</h2>
+
+
+<div class="cards">
+
+  <div class="card">
+
+    <h3>📢 নোটিশ</h3>
+
+    <p>
+      মাদ্রাসার গুরুত্বপূর্ণ নোটিশ
+      দেখুন।
+    </p>
+
+    <a
+      href="notice.html"
+      class="hero-button"
+    >
+      দেখুন
+    </a>
+
+  </div>
+
+
+  <div class="card">
+
+    <h3>📊 পরীক্ষার ফলাফল</h3>
+
+    <p>
+      অনলাইনে শিক্ষার্থীদের পরীক্ষার
+      ফলাফল দেখুন।
+    </p>
+
+    <a
+      href="#public-result"
+      class="hero-button"
+    >
+      ফলাফল দেখুন
+    </a>
+
+  </div>
+
+
+  <div class="card">
+
+    <h3>📄 পরীক্ষার খাতা</h3>
+
+    <p>
+      QR Code-এর মাধ্যমে পরীক্ষার
+      খাতা দেখার সুবিধা।
+    </p>
+
+  </div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer id="contact">
+
+<p>
+  © 2026 আর রহমাহ ইন্টারন্যাশনাল নূরানী একাডেমি
+</p>
+
+<p>
+  সকল অধিকার সংরক্ষিত
+</p>
+
+</footer>
+
+<script> // ========================================== // SUPABASE CONNECTION // ========================================== const SUPABASE_URL = "https://pkznaencgprqzvdzapfi.supabase.co"; const SUPABASE_KEY = "sb_publishable__kretQlB4kdzQp7pyi4opg_Xlf0qsON"; const supabaseClient = window.supabase.createClient( SUPABASE_URL, SUPABASE_KEY ); // ========================================== // PUBLIC RESULT SEARCH // ========================================== async function searchResult() { const studentId = document .getElementById("searchStudentId") .value .trim(); const examName = document .getElementById("searchExamName") .value .trim(); const message = document.getElementById( "resultMessage" ); const resultCard = document.getElementById( "resultCard" ); // Hide previous result resultCard.style.display = "none"; // Check input if (!studentId || !examName) { message.textContent = "⚠️ Student ID এবং পরীক্ষার নাম দিন।"; message.style.color = "#b42318"; return; } message.textContent = "⏳ ফলাফল খোঁজা হচ্ছে..."; message.style.color = "#087443"; // ======================================== // SEARCH EXAM RESULT // ======================================== const { data: resultData, error: resultError } = await supabaseClient .from("exam_results") .select(` id, student_id, exam_name, bangla, english, math, arabic, general_knowledge `) .eq("student_id", studentId) .eq("exam_name", examName) .maybeSingle(); if (resultError) { console.error( "Result Error:", resultError ); message.textContent = "❌ ফলাফল খুঁজতে সমস্যা হয়েছে।"; message.style.color = "#b42318"; return; } if (!resultData) { message.textContent = "❌ এই Student ID ও পরীক্ষার নামে কোনো ফলাফল পাওয়া যায়নি।"; message.style.color = "#b42318"; return; } // ======================================== // SEARCH STUDENT INFORMATION // ======================================== const { data: studentData, error: studentError } = await supabaseClient .from("students") .select(` id, name, class_name, roll `) .eq("id", studentId) .maybeSingle(); if (studentError) { console.error( "Student Error:", studentError ); message.textContent = "❌ শিক্ষার্থীর তথ্য পাওয়া যায়নি।"; message.style.color = "#b42318"; return; } if (!studentData) { message.textContent = "❌ এই Student ID-এর শিক্ষার্থীর তথ্য পাওয়া যায়নি।"; message.style.color = "#b42318"; return; } // ======================================== // MARKS // ======================================== const bangla = Number(resultData.bangla) || 0; const english = Number(resultData.english) || 0; const math = Number(resultData.math) || 0; const arabic = Number(resultData.arabic) || 0; const generalKnowledge = Number( resultData.general_knowledge ) || 0; // ======================================== // TOTAL // ======================================== const total = bangla + english + math + arabic + generalKnowledge; // 5 subjects × 100 = 500 const percentage = (total / 500) * 100; // ======================================== // RESULT // ======================================== let finalResult; if (percentage >= 33) { finalResult = "পাস"; } else { finalResult = "ফেল"; } // ======================================== // SHOW STUDENT INFORMATION // ======================================== document.getElementById( "studentName" ).textContent = studentData.name || "-"; document.getElementById( "showStudentId" ).textContent = studentData.id || "-"; document.getElementById( "studentClass" ).textContent = studentData.class_name || "-"; document.getElementById( "studentRoll" ).textContent = studentData.roll || "-"; document.getElementById( "showExamName" ).textContent = resultData.exam_name || "-"; // ======================================== // SHOW MARKS // ======================================== document.getElementById( "markBangla" ).textContent = bangla; document.getElementById( "markEnglish" ).textContent = english; document.getElementById( "markMath" ).textContent = math; document.getElementById( "markArabic" ).textContent = arabic; document.getElementById( "markGeneral" ).textContent = generalKnowledge; document.getElementById( "totalMarks" ).textContent = total; document.getElementById( "percentage" ).textContent = percentage.toFixed(2) + "%"; const finalResultElement = document.getElementById( "finalResult" ); finalResultElement.textContent = finalResult; // Result color finalResultElement.className = finalResult === "পাস" ? "pass" : "fail"; // ======================================== // SHOW RESULT CARD // ======================================== resultCard.style.display = "block"; message.textContent = "✅ ফলাফল পাওয়া গেছে।"; message.style.color = "#087443"; // Scroll to result resultCard.scrollIntoView({ behavior: "smooth", block: "start" }); } // ========================================== // ENTER KEY FOR SEARCH // ========================================== document .getElementById("searchStudentId") .addEventListener( "keydown", function(event) { if (event.key === "Enter") { searchResult(); } } ); document .getElementById("searchExamName") .addEventListener( "keydown", function(event) { if (event.key === "Enter") { searchResult(); } } ); // ========================================== // SHOW ADMIN LOGIN // ========================================== document .querySelector( 'a[href="#admin-login"]' ) .addEventListener( "click", function() { document .getElementById("admin-login") .style.display = "block"; } ); // ========================================== // ADMIN LOGIN // ========================================== async function adminLogin() { const email = document .getElementById("email") .value .trim(); const password = document .getElementById("password") .value; const message = document.getElementById( "message" ); if (!email || !password) { message.textContent = "Email এবং Password দিন।"; message.style.color = "#b42318"; return; } message.textContent = "Login হচ্ছে..."; message.style.color = "#087443"; const { data, error } = await supabaseClient.auth .signInWithPassword({ email: email, password: password }); if (error) { message.textContent = "Login ব্যর্থ: " + error.message; message.style.color = "#b42318"; return; } // ======================================== // CHECK ADMIN // ======================================== const { data: adminData, error: adminError } = await supabaseClient .from("admins") .select("id") .eq("id", data.user.id) .maybeSingle(); if ( adminError || !adminData ) { await supabaseClient .auth .signOut(); message.textContent = "এই Account-এর Admin অনুমতি নেই।"; message.style.color = "#b42318"; return; } message.textContent = "✅ Admin Login সফল হয়েছে!"; message.style.color = "#087443"; setTimeout( function() { window.location.href = "admin.html"; }, 1000 ); } </script>
+
+</body> </html>
+
+Close
